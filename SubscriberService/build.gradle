@@ -1,0 +1,64 @@
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'jetty'
+
+sourceCompatibility = 1.6
+
+repositories {
+	mavenLocal()
+    mavenCentral()
+}
+
+configurations {
+    jaxb
+}
+
+dependencies {
+	println "Setting up dependencies for SubscriberService"
+    compile 'org.springframework:spring-context:3.1.0.RELEASE'
+    compile 'org.springframework.ws:spring-ws-core:2.0.2.RELEASE'
+    compile 'org.springframework:spring-test:2.5'
+    compile 'javax.xml:jaxb-api:2.1'
+    compile 'org.apache.ws.commons.schema:XmlSchema:1.3.2'
+    
+    compile group: 'commons-io', name: 'commons-io', version: '1.4'
+   	compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1'
+    
+    jaxb group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
+	jaxb group: 'com.sun.xml.bind', name: 'jaxb-xjc', version: '2.1.6'
+    
+}
+
+eclipseClasspath.dependsOn(cleanEclipseClasspath)
+
+task jaxb << {
+    ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask',  classpath: configurations.jaxb.asPath)
+          ant.xjc(destdir: "src/main/java/generated", package: "com.thales.ntis.subscriber.datex") {
+                  schema(dir: "src/main/webapp/WEB-INF", includes: 'subscriber.xsd')
+          }
+}
+compileJava.dependsOn(jaxb)
+
+
+//To deploy war file to Tomcat, CATALINA_HOME should be set in the System's environment variables
+task deployTomcat(type: Copy) {
+	env = System.getenv()
+    from 'build/libs/SubscriberService.war'
+    into env.CATALINA_HOME+'\\webapps'
+}
+deployTomcat.dependsOn(war)
+
+
+httpPort = 8080
+stopPort = 8090
+stopKey = 'foo'
+
+test.dependsOn(jettyRun)
+
+gradle.taskGraph.whenReady {graph ->
+    if (graph.hasTask(test)) {
+        [jettyRun]*.daemon = true
+    }
+}
+
+//Note: To deploy on jetty run "gradle -i jettyRunWar". To stop jetty run "gradle -i jettyStop"
