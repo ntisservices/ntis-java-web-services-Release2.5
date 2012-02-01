@@ -54,17 +54,19 @@ public class AverageSpeedFusedDataServiceImpl extends AbstractDatexService
 		try {
 			fusedDataPublication = (FusedDataPublication) d2LogicalModel
 					.getPayloadPublication();
+			if (fusedDataPublication != null
+					&& fusedDataPublication.getFusedData().get(0) != null) {
+				// You could use the FusedDataPublication and extract the
+				// corresponding fields.
 
-			// You could use the FusedDataPublication and extract the
-			// corresponding fields.
-
-			LOG.debug("createdUtc is "
-					+ fusedDataPublication.getFusedData().get(0)
-							.getCreatedUtc().toString());
-			LOG.debug("Local is "
-					+ fusedDataPublication.getFusedData().get(0).getMarkets()
-							.get(0).getCreatedLocal().toString());
-
+				LOG.debug("createdUtc is "
+						+ fusedDataPublication.getFusedData().get(0)
+								.getCreatedUtc().toString());
+				LOG.debug("Local is "
+						+ fusedDataPublication.getFusedData().get(0)
+								.getMarkets().get(0).getCreatedLocal()
+								.toString());
+			}
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
 		}

@@ -58,33 +58,26 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
 			measuredDataPublication = (MeasuredDataPublication) d2LogicalModel
 					.getPayloadPublication();
 
+			if (measuredDataPublication != null
+					&& measuredDataPublication.getHeaderInformation() != null) {
+				LOG.debug("measurementSiteReference ID is "
+						+ measuredDataPublication.getSiteMeasurements().get(0)
+								.getMeasurementSiteReference().getId());
+				LOG.debug("measurementSiteReference time default is "
+						+ measuredDataPublication.getSiteMeasurements().get(0)
+								.getMeasurementTimeDefault().toString());
+
+				// You can convert the site measurements to your model objects
+				// and subsequently persist/manipulate your model objects
+				List<TrafficData> trafficData = convertToModelObjects(measuredDataPublication
+						.getSiteMeasurements());
+
+			}
+
 		} catch (Exception e) {
+			LOG.error("Error while obtaining MeasuredDataPublication");
 			LOG.error(e.getMessage());
 		}
-
-		if (measuredDataPublication != null) {
-			LOG.debug("MeasuredDataPublication is "
-					+ d2LogicalModel.getPayloadPublication());
-		} else {
-			throw new RuntimeException(
-					"MeasuredDataPublication is null! Incoming request does not appear to be valid!");
-		}
-
-		if (measuredDataPublication != null
-				&& measuredDataPublication.getHeaderInformation() != null) {
-			LOG.debug("measurementSiteReference ID is "
-					+ measuredDataPublication.getSiteMeasurements().get(0)
-							.getMeasurementSiteReference().getId());
-			LOG.debug("measurementSiteReference time default is "
-					+ measuredDataPublication.getSiteMeasurements().get(0)
-							.getMeasurementTimeDefault().toString());
-		}
-
-		// You can pass the site measurements to a helper method and get the
-		// model objects. When you have the traffic information which has been
-		// converted to your domain objects and store/send it.
-		List<TrafficData> trafficData = convertToModelObjects(measuredDataPublication
-				.getSiteMeasurements());
 
 		DeliverMIDASTrafficDataResponse response = new DeliverMIDASTrafficDataResponse();
 		response.setStatus("DeliverMIDASTrafficDataRequest: Successful Delivery");

@@ -151,6 +151,7 @@ public class SubscriberServiceITest extends
 
 	private D2LogicalModel getD2LogicalModel() {
 		D2LogicalModel d2LogicalModel = new D2LogicalModel();
+		d2LogicalModel.setModelBaseVersion("2");
 		d2LogicalModel.setExchange(new Exchange());
 		d2LogicalModel.getExchange().setSupplierIdentification(
 				new InternationalIdentifier());

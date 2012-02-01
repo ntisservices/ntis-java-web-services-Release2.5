@@ -57,14 +57,16 @@ public class AverageJourneyTimeServiceImpl extends AbstractDatexService
 
 			// You could use the FusedDataPublication and extract the
 			// corresponding fields.
-
-			LOG.debug("createdUtc is "
-					+ fusedDataPublication.getFusedData().get(0)
-							.getCreatedUtc().toString());
-			LOG.debug("Local is "
-					+ fusedDataPublication.getFusedData().get(0).getMarkets()
-							.get(0).getCreatedLocal().toString());
-
+			if (fusedDataPublication != null
+					&& fusedDataPublication.getFusedData().get(0) != null) {
+				LOG.debug("createdUtc is "
+						+ fusedDataPublication.getFusedData().get(0)
+								.getCreatedUtc().toString());
+				LOG.debug("Local is "
+						+ fusedDataPublication.getFusedData().get(0)
+								.getMarkets().get(0).getCreatedLocal()
+								.toString());
+			}
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
 		}

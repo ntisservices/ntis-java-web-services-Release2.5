@@ -54,12 +54,16 @@ public class ANPRTrafficDataServiceImpl extends AbstractDatexService implements
 			journeyTimePublication = (JourneyTimePublication) d2LogicalModel
 					.getPayloadPublication();
 
-			// You could use the JourneyTimePublication and extract the
-			// corresponding fields.
-			LOG.debug("JourneyTime: Timestamp is "
-					+ journeyTimePublication.getJourneyTimes().getJourneyTime()
-							.get(0).getTimeStamp().toString());
-
+			if (journeyTimePublication != null
+					&& journeyTimePublication.getJourneyTimes()
+							.getJourneyTime().get(0) != null) {
+				// You could use the JourneyTimePublication and extract the
+				// corresponding fields.
+				LOG.debug("JourneyTime: Timestamp is "
+						+ journeyTimePublication.getJourneyTimes()
+								.getJourneyTime().get(0).getTimeStamp()
+								.toString());
+			}
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
 		}
