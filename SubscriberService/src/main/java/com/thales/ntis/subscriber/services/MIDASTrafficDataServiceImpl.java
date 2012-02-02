@@ -69,7 +69,8 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
 
 				// You can convert the site measurements to your model objects
 				// and subsequently persist/manipulate your model objects
-				List<TrafficData> trafficData = convertToModelObjects(measuredDataPublication
+				@SuppressWarnings("unused")
+                List<TrafficData> trafficData = convertToModelObjects(measuredDataPublication
 						.getSiteMeasurements());
 
 			}

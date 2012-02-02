@@ -23,8 +23,6 @@ import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
 import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
-import com.thales.ntis.subscriber.datex.DeliverFusedDataPublicationRequest;
-import com.thales.ntis.subscriber.datex.DeliverFusedDataPublicationResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
 
@@ -36,61 +34,52 @@ import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
  * 
  */
 public class MarshallingSubscriberServiceClient implements
-		SubscriberServiceClient {
+        SubscriberServiceClient {
 
-	@Override
-	public DeliverAverageSpeedFusedDataResponse invokeService(
-			DeliverAverageSpeedFusedDataRequest request) {
-		DeliverAverageSpeedFusedDataResponse response = (DeliverAverageSpeedFusedDataResponse) webServiceTemplate
-				.marshalSendAndReceive(request);
-		return response;
-	}
+    @Override
+    public DeliverAverageSpeedFusedDataResponse invokeService(
+            DeliverAverageSpeedFusedDataRequest request) {
+        DeliverAverageSpeedFusedDataResponse response = (DeliverAverageSpeedFusedDataResponse) webServiceTemplate
+                .marshalSendAndReceive(request);
+        return response;
+    }
 
-	@Override
-	public DeliverAverageSpeedFvdResponse invokeService(
-			DeliverAverageSpeedFvdRequest request) {
-		DeliverAverageSpeedFvdResponse response = (DeliverAverageSpeedFvdResponse) webServiceTemplate
-				.marshalSendAndReceive(request);
-		return response;
-	}
+    @Override
+    public DeliverAverageSpeedFvdResponse invokeService(
+            DeliverAverageSpeedFvdRequest request) {
+        DeliverAverageSpeedFvdResponse response = (DeliverAverageSpeedFvdResponse) webServiceTemplate
+                .marshalSendAndReceive(request);
+        return response;
+    }
 
-	@Override
-	public DeliverAverageJourneyTimeResponse invokeService(
-			DeliverAverageJourneyTimeRequest request) {
-		DeliverAverageJourneyTimeResponse response = (DeliverAverageJourneyTimeResponse) webServiceTemplate
-				.marshalSendAndReceive(request);
-		return response;
-	}
+    @Override
+    public DeliverAverageJourneyTimeResponse invokeService(
+            DeliverAverageJourneyTimeRequest request) {
+        DeliverAverageJourneyTimeResponse response = (DeliverAverageJourneyTimeResponse) webServiceTemplate
+                .marshalSendAndReceive(request);
+        return response;
+    }
 
-	@Override
-	public DeliverFusedDataPublicationResponse invokeService(
-			DeliverFusedDataPublicationRequest request) {
-		DeliverFusedDataPublicationResponse response = (DeliverFusedDataPublicationResponse) webServiceTemplate
-				.marshalSendAndReceive(request);
-		return response;
+    @Override
+    public DeliverMIDASTrafficDataResponse invokeService(
+            DeliverMIDASTrafficDataRequest request) {
+        DeliverMIDASTrafficDataResponse response = (DeliverMIDASTrafficDataResponse) webServiceTemplate
+                .marshalSendAndReceive(request);
+        return response;
+    }
 
-	}
+    @Override
+    public DeliverANPRTrafficDataResponse invokeService(
+            DeliverANPRTrafficDataRequest request) {
+        DeliverANPRTrafficDataResponse response = (DeliverANPRTrafficDataResponse) webServiceTemplate
+                .marshalSendAndReceive(request);
+        return response;
+    }
 
-	@Override
-	public DeliverMIDASTrafficDataResponse invokeService(
-			DeliverMIDASTrafficDataRequest request) {
-		DeliverMIDASTrafficDataResponse response = (DeliverMIDASTrafficDataResponse) webServiceTemplate
-				.marshalSendAndReceive(request);
-		return response;
-	}
+    // INJECTED
+    private WebServiceTemplate webServiceTemplate;
 
-	@Override
-	public DeliverANPRTrafficDataResponse invokeService(
-			DeliverANPRTrafficDataRequest request) {
-		DeliverANPRTrafficDataResponse response = (DeliverANPRTrafficDataResponse) webServiceTemplate
-				.marshalSendAndReceive(request);
-		return response;
-	}
-
-	// INJECTED
-	private WebServiceTemplate webServiceTemplate;
-
-	public void setWebServiceTemplate(WebServiceTemplate webServiceTemplate) {
-		this.webServiceTemplate = webServiceTemplate;
-	}
+    public void setWebServiceTemplate(WebServiceTemplate webServiceTemplate) {
+        this.webServiceTemplate = webServiceTemplate;
+    }
 }
