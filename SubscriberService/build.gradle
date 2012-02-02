@@ -37,6 +37,7 @@ task jaxb << {
                   schema(dir: "src/main/webapp/WEB-INF", includes: 'subscriber.xsd')
           }
 }
+eclipseClasspath.dependsOn(jaxb)
 compileJava.dependsOn(jaxb)
 
 
