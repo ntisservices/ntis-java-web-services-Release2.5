@@ -7,7 +7,17 @@
          version="2.4">
   <description>Subscriber Service</description>
   <display-name>Subscriber Call-back service</display-name>
+	
+	<filter>
+		<filter-name>2WayFilter</filter-name>
+		<filter-class>com.osmoticweb.gzipfilter.GZIP2WayFilter</filter-class>
+	</filter> 
 
+	<filter-mapping>
+		<filter-name>2WayFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 
+ 
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
@@ -34,19 +44,6 @@
     <url-pattern>/services/*</url-pattern>
   </servlet-mapping>
 
-
-  <filter>
-	<filter-name>GzipFilter</filter-name>
-	<filter-class>org.mortbay.servlet.GzipFilter</filter-class>
-	<init-param>
-		<param-name>mimeTypes</param-name>
-		<param-value>text/html,text/plain,text/xml,application/xhtml+xml,text/css,application/javascript,image/svg+xml</param-value>
-	</init-param>
-  </filter>
-  <filter-mapping>
-	<filter-name>GzipFilter</filter-name>
-	<url-pattern>*</url-pattern>
-  </filter-mapping> 
   
   <!--  
   <servlet-mapping>
