@@ -8,7 +8,7 @@
       class="org.springframework.ws.client.core.WebServiceTemplate">
     <property name="marshaller" ref="marshaller" />
     <property name="unmarshaller" ref="marshaller" />
-    <property name="defaultUri" value="http://localhost:8080/SubscriberService/services/" />
+    <property name="defaultUri" value="http://localhost:8880/SubscriberService/services/" />
   </bean>
   
   <bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">

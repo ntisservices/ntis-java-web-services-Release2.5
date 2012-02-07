@@ -101,7 +101,7 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
                         // getLaneNumberFromTrafficDataIndex to get the lane
                         // number
                         int laneNumber = getLaneNumberFromTrafficDataIndex(index);
-
+                        LOG.debug("laneNumber is "+laneNumber);
                         // To determine what type the sensor reading is,
                         // cast the basic data value to the appropriate type and
                         // retrieve the value of interest
