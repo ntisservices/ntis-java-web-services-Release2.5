@@ -10,7 +10,7 @@
 	
 	<filter>
 		<filter-name>2WayFilter</filter-name>
-		<filter-class>com.osmoticweb.gzipfilter.GZIP2WayFilter</filter-class>
+		<filter-class>com.thales.ntis.gzipfilter.GZIP2WayFilter</filter-class>
 	</filter> 
 
 	<filter-mapping>

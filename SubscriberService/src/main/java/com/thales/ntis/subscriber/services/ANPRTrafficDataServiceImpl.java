@@ -29,49 +29,49 @@ import com.thales.ntis.subscriber.datex.JourneyTimePublication;
  */
 
 public class ANPRTrafficDataServiceImpl extends AbstractDatexService implements
-		ANPRTrafficDataService {
+        ANPRTrafficDataService {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ANPRTrafficDataServiceImpl.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(ANPRTrafficDataServiceImpl.class);
 
-	@Override
-	public DeliverANPRTrafficDataResponse handle(
-			DeliverANPRTrafficDataRequest request) {
+    @Override
+    public DeliverANPRTrafficDataResponse handle(
+            DeliverANPRTrafficDataRequest request) {
 
-		LOG.info("NEW DeliverANPRTrafficDataRequest RECEIVED!");
+        LOG.info("NEW DeliverANPRTrafficDataRequest RECEIVED!");
 
-		D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
-		JourneyTimePublication journeyTimePublication = null;
+        D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
+        JourneyTimePublication journeyTimePublication = null;
 
-		// Validate the D2Logical Model
-		if (!validate(d2LogicalModel)) {
-			throw new RuntimeException(
-					"Incoming request does not appear to be valid!");
-		}
+        // Validate the D2Logical Model
+        if (!validate(d2LogicalModel)) {
+            throw new RuntimeException(
+                    "Incoming request does not appear to be valid!");
+        }
 
-		// JourneyTimePublication contains one or more journey-times
-		try {
-			journeyTimePublication = (JourneyTimePublication) d2LogicalModel
-					.getPayloadPublication();
+        // JourneyTimePublication contains one or more journey-times
+        try {
+            journeyTimePublication = (JourneyTimePublication) d2LogicalModel
+                    .getPayloadPublication();
 
-			if (journeyTimePublication != null
-					&& journeyTimePublication.getJourneyTimes()
-							.getJourneyTime().get(0) != null) {
-				// You could use the JourneyTimePublication and extract the
-				// corresponding fields.
-				LOG.debug("JourneyTime: Timestamp is "
-						+ journeyTimePublication.getJourneyTimes()
-								.getJourneyTime().get(0).getTimeStamp()
-								.toString());
-			}
-		} catch (Exception e) {
-			LOG.error(e.getMessage());
-		}
+            if (journeyTimePublication != null
+                    && journeyTimePublication.getJourneyTimes()
+                            .getJourneyTime().get(0) != null) {
+                // You could use the JourneyTimePublication and extract the
+                // corresponding fields.
+                LOG.debug("JourneyTime: Timestamp is "
+                        + journeyTimePublication.getJourneyTimes()
+                                .getJourneyTime().get(0).getTimeStamp()
+                                .toString());
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
 
-		DeliverANPRTrafficDataResponse response = new DeliverANPRTrafficDataResponse();
-		response.setStatus("DeliverANPRTrafficDataRequest: Successful Delivery");
+        DeliverANPRTrafficDataResponse response = new DeliverANPRTrafficDataResponse();
+        response.setStatus("DeliverANPRTrafficDataRequest: Successful Delivery");
 
-		return response;
-	}
+        return response;
+    }
 
 }

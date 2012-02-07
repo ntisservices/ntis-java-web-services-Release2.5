@@ -7,7 +7,7 @@
  OR SPECIAL DAMAGES.
  */
 
-package com.osmoticweb.gzipfilter;
+package com.thales.ntis.gzipfilter;
 
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;

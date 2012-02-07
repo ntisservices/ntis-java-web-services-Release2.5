@@ -18,10 +18,18 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.thales.ntis.subscriber.datex.BasicData;
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.MeasuredDataPublication;
+import com.thales.ntis.subscriber.datex.MeasuredValue;
+import com.thales.ntis.subscriber.datex.SiteMeasurements;
+import com.thales.ntis.subscriber.datex.SiteMeasurementsIndexMeasuredValue;
+import com.thales.ntis.subscriber.datex.TrafficConcentration;
+import com.thales.ntis.subscriber.datex.TrafficFlow;
+import com.thales.ntis.subscriber.datex.TrafficHeadway;
+import com.thales.ntis.subscriber.datex.TrafficSpeed;
 import com.thales.ntis.subscriber.model.TrafficData;
 
 /**
@@ -32,57 +40,121 @@ import com.thales.ntis.subscriber.model.TrafficData;
  */
 
 public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
-		MIDASTrafficDataService {
+        MIDASTrafficDataService {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(MIDASTrafficDataServiceImpl.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(MIDASTrafficDataServiceImpl.class);
 
-	@Override
-	public DeliverMIDASTrafficDataResponse handle(
-			DeliverMIDASTrafficDataRequest request) {
+    private static final int MAX_SENSOR_READINGS = 7;
 
-		LOG.info("NEW DeliverMIDASTrafficDataRequest RECEIVED!");
-		D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
-		MeasuredDataPublication measuredDataPublication = null;
+    /**
+     * This method extracts the D2LogicalModel from the incoming request and
+     * shows how to extract the Individual sensor readings for the MIDAS sites.
+     * 
+     */
+    @Override
+    public DeliverMIDASTrafficDataResponse handle(
+            DeliverMIDASTrafficDataRequest request) {
 
-		// Validate the D2Logical Model
-		if (!validate(d2LogicalModel)) {
-			throw new RuntimeException(
-					"Incoming request does not appear to be valid!");
-		}
+        LOG.info("NEW DeliverMIDASTrafficDataRequest RECEIVED!");
+        D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
+        MeasuredDataPublication measuredDataPublication = null;
 
-		// MeasuredDataPublication class contains the feed description, feed
-		// type, site measurements, publication time and
-		// other header information.
-		try {
-			measuredDataPublication = (MeasuredDataPublication) d2LogicalModel
-					.getPayloadPublication();
+        // Validate the D2Logical Model
+        if (!validate(d2LogicalModel)) {
+            throw new RuntimeException(
+                    "Incoming request does not appear to be valid!");
+        }
 
-			if (measuredDataPublication != null
-					&& measuredDataPublication.getHeaderInformation() != null) {
-				LOG.debug("measurementSiteReference ID is "
-						+ measuredDataPublication.getSiteMeasurements().get(0)
-								.getMeasurementSiteReference().getId());
-				LOG.debug("measurementSiteReference time default is "
-						+ measuredDataPublication.getSiteMeasurements().get(0)
-								.getMeasurementTimeDefault().toString());
+        // MeasuredDataPublication class contains the feed description, feed
+        // type, site measurements, publication time and
+        // other header information.
+        try {
+            measuredDataPublication = (MeasuredDataPublication) d2LogicalModel
+                    .getPayloadPublication();
 
-				// You can convert the site measurements to your model objects
-				// and subsequently persist/manipulate your model objects
-				@SuppressWarnings("unused")
+            if (measuredDataPublication != null
+                    && measuredDataPublication.getHeaderInformation() != null) {
+                LOG.debug("measurementSiteReference ID is "
+                        + measuredDataPublication.getSiteMeasurements().get(0)
+                                .getMeasurementSiteReference().getId());
+                LOG.debug("measurementSiteReference time default is "
+                        + measuredDataPublication.getSiteMeasurements().get(0)
+                                .getMeasurementTimeDefault().toString());
+
+                // Each MIDAS site is encapsulated within a SiteMeasurements
+                // object.
+                // Cycle through these to get to the sensor readings for a MIDAS
+                // site.
+                for (SiteMeasurements siteMeasurements : measuredDataPublication
+                        .getSiteMeasurements()) {
+
+                    // Cycle through the MeasuredValues to get the individual
+                    // sensor readings for a MIDAS site.
+                    for (SiteMeasurementsIndexMeasuredValue measuredValue : siteMeasurements
+                            .getMeasuredValue()) {
+                        int index = measuredValue.getIndex();
+
+                        // Each sensor reading has an index. This represents the
+                        // lane number the sensor reading is for. On retrieving
+                        // the index, you can use
+                        // getLaneNumberFromTrafficDataIndex to get the lane
+                        // number
+                        int laneNumber = getLaneNumberFromTrafficDataIndex(index);
+
+                        // To determine what type the sensor reading is,
+                        // cast the basic data value to the appropriate type and
+                        // retrieve the value of interest
+                        MeasuredValue mv = measuredValue.getMeasuredValue();
+                        BasicData basicData = mv.getBasicData();
+
+                        if (basicData instanceof TrafficFlow) {
+                            // For a lane, TrafficFlow will appear 4 times i.e.
+                            // flow1, flow2 .... flow4. It will appear in
+                            // order.
+
+                        } else if (basicData instanceof TrafficSpeed) {
+                            // Now you have TrafficSpeed. Cast it appropriately
+                            // to retrieve values you are interested in.
+
+                        } else if (basicData instanceof TrafficHeadway) {
+                            // Now you have TrafficHeadway. Cast it
+                            // appropriately
+                            // to retrieve values you are interested in.
+
+                        } else if (basicData instanceof TrafficConcentration) {
+                            // Now you have TrafficConcentration. Cast it
+                            // appropriately to retrieve values you are
+                            // interested in.
+
+                        }
+
+                    }
+                }
+
+                // You can convert the site measurements to your model objects
+                // and subsequently persist/manipulate your model objects
+                @SuppressWarnings("unused")
                 List<TrafficData> trafficData = convertToModelObjects(measuredDataPublication
-						.getSiteMeasurements());
+                        .getSiteMeasurements());
 
-			}
+            }
 
-		} catch (Exception e) {
-			LOG.error("Error while obtaining MeasuredDataPublication");
-			LOG.error(e.getMessage());
-		}
+        } catch (Exception e) {
+            LOG.error("Error while obtaining MeasuredDataPublication");
+            LOG.error(e.getMessage());
+        }
 
-		DeliverMIDASTrafficDataResponse response = new DeliverMIDASTrafficDataResponse();
-		response.setStatus("DeliverMIDASTrafficDataRequest: Successful Delivery");
+        DeliverMIDASTrafficDataResponse response = new DeliverMIDASTrafficDataResponse();
+        response.setStatus("DeliverMIDASTrafficDataRequest: Successful Delivery");
 
-		return response;
-	}
+        return response;
+    }
+
+    public int getLaneNumberFromTrafficDataIndex(int measuredValueIndex) {
+        if (measuredValueIndex == 0) {
+            return 1;
+        }
+        return (measuredValueIndex / MAX_SENSOR_READINGS) + 1;
+    }
 }

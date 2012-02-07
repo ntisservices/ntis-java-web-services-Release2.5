@@ -6,7 +6,7 @@
  OR INDIRECTLY FROM THE USE OF THE SOFTWARE, INCLUDING BUT NOT LIMITED TO INCIDENTAL, CONSEQUENTIAL 
  OR SPECIAL DAMAGES.
  */
-package com.osmoticweb.gzipfilter;
+package com.thales.ntis.gzipfilter;
 
 import java.io.IOException;
 import javax.servlet.Filter;
