@@ -13,7 +13,7 @@
           </ns3:supplierIdentification>
         </ns3:exchange>
         <ns3:payloadPublication
-          xmlns:ns5="http://www.thalesgroup.com/NTIS/Datex2Extensions/2.0"
+          xmlns:ns5="http://www.thalesgroup.com/NTIS/Datex2Extensions/1.0Beta1"
           lang="en" xsi:type="ns5:JourneyTimePublication">
           <ns3:feedDescription>
             <ns3:values>
