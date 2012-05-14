@@ -35,100 +35,97 @@ import com.thales.ntis.subscriber.services.MIDASTrafficDataService;
 /**
  * This is a reference SubscriberServiceEndpoint. Business logic is delegated to
  * separate service classes.
- * 
- * @author dev
- * 
  */
 
 @Endpoint
 public class SubscriberServiceEndpoint {
 
-	private ANPRTrafficDataService aNPRTrafficDataService;
-	private AverageJourneyTimeService averageJourneyTimeService;
-	private AverageSpeedFusedDataService averageSpeedFusedDataService;
-	private AverageSpeedFvdService averageSpeedFvdService;
-	private MIDASTrafficDataService mIDASTrafficDataService;
+    private ANPRTrafficDataService aNPRTrafficDataService;
+    private AverageJourneyTimeService averageJourneyTimeService;
+    private AverageSpeedFusedDataService averageSpeedFusedDataService;
+    private AverageSpeedFvdService averageSpeedFvdService;
+    private MIDASTrafficDataService mIDASTrafficDataService;
 
-	@PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageSpeedFusedDataRequest")
-	public DeliverAverageSpeedFusedDataResponse handle(
-			DeliverAverageSpeedFusedDataRequest request) {
+    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageSpeedFusedDataRequest")
+    public DeliverAverageSpeedFusedDataResponse handle(
+            DeliverAverageSpeedFusedDataRequest request) {
 
-		// Delegate the business logic implementation to a service.
-		DeliverAverageSpeedFusedDataResponse response = averageSpeedFusedDataService
-				.handle(request);
+        // Delegate the business logic implementation to a service.
+        DeliverAverageSpeedFusedDataResponse response = averageSpeedFusedDataService
+                .handle(request);
 
-		return response;
-	}
+        return response;
+    }
 
-	@PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageSpeedFvdRequest")
-	public DeliverAverageSpeedFvdResponse handle(
-			DeliverAverageSpeedFvdRequest request) {
+    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageSpeedFvdRequest")
+    public DeliverAverageSpeedFvdResponse handle(
+            DeliverAverageSpeedFvdRequest request) {
 
-		// Delegate the business logic implementation to a service.
-		DeliverAverageSpeedFvdResponse response = averageSpeedFvdService
-				.handle(request);
+        // Delegate the business logic implementation to a service.
+        DeliverAverageSpeedFvdResponse response = averageSpeedFvdService
+                .handle(request);
 
-		return response;
-	}
+        return response;
+    }
 
-	@PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageJourneyTimeRequest")
-	public DeliverAverageJourneyTimeResponse handle(
-			DeliverAverageJourneyTimeRequest request) {
+    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageJourneyTimeRequest")
+    public DeliverAverageJourneyTimeResponse handle(
+            DeliverAverageJourneyTimeRequest request) {
 
-		// Delegate the business logic implementation to a service.
-		DeliverAverageJourneyTimeResponse response = averageJourneyTimeService
-				.handle(request);
+        // Delegate the business logic implementation to a service.
+        DeliverAverageJourneyTimeResponse response = averageJourneyTimeService
+                .handle(request);
 
-		return response;
-	}
+        return response;
+    }
 
-	@PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverMIDASTrafficDataRequest")
-	public DeliverMIDASTrafficDataResponse handle(
-			DeliverMIDASTrafficDataRequest request) {
+    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverMIDASTrafficDataRequest")
+    public DeliverMIDASTrafficDataResponse handle(
+            DeliverMIDASTrafficDataRequest request) {
 
-		// Delegate the business logic implementation to a service.
-		DeliverMIDASTrafficDataResponse response = mIDASTrafficDataService
-				.handle(request);
+        // Delegate the business logic implementation to a service.
+        DeliverMIDASTrafficDataResponse response = mIDASTrafficDataService
+                .handle(request);
 
-		return response;
-	}
+        return response;
+    }
 
-	@PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverANPRTrafficDataRequest")
-	public DeliverANPRTrafficDataResponse handle(
-			DeliverANPRTrafficDataRequest request) {
+    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverANPRTrafficDataRequest")
+    public DeliverANPRTrafficDataResponse handle(
+            DeliverANPRTrafficDataRequest request) {
 
-		// Delegate the business logic implementation to a service.
-		DeliverANPRTrafficDataResponse response = aNPRTrafficDataService
-				.handle(request);
+        // Delegate the business logic implementation to a service.
+        DeliverANPRTrafficDataResponse response = aNPRTrafficDataService
+                .handle(request);
 
-		return response;
-	}
+        return response;
+    }
 
-	// INJECTED by the spring framework
+    // INJECTED by the spring framework
 
-	public void setaNPRTrafficDataService(
-			ANPRTrafficDataService aNPRTrafficDataService) {
-		this.aNPRTrafficDataService = aNPRTrafficDataService;
-	}
+    public void setaNPRTrafficDataService(
+            ANPRTrafficDataService aNPRTrafficDataService) {
+        this.aNPRTrafficDataService = aNPRTrafficDataService;
+    }
 
-	public void setAverageJourneyTimeService(
-			AverageJourneyTimeService averageJourneyTimeService) {
-		this.averageJourneyTimeService = averageJourneyTimeService;
-	}
+    public void setAverageJourneyTimeService(
+            AverageJourneyTimeService averageJourneyTimeService) {
+        this.averageJourneyTimeService = averageJourneyTimeService;
+    }
 
-	public void setAverageSpeedFusedDataService(
-			AverageSpeedFusedDataService averageSpeedFusedDataService) {
-		this.averageSpeedFusedDataService = averageSpeedFusedDataService;
-	}
+    public void setAverageSpeedFusedDataService(
+            AverageSpeedFusedDataService averageSpeedFusedDataService) {
+        this.averageSpeedFusedDataService = averageSpeedFusedDataService;
+    }
 
-	public void setAverageSpeedFvdService(
-			AverageSpeedFvdService averageSpeedFvdService) {
-		this.averageSpeedFvdService = averageSpeedFvdService;
-	}
+    public void setAverageSpeedFvdService(
+            AverageSpeedFvdService averageSpeedFvdService) {
+        this.averageSpeedFvdService = averageSpeedFvdService;
+    }
 
-	public void setmIDASTrafficDataService(
-			MIDASTrafficDataService mIDASTrafficDataService) {
-		this.mIDASTrafficDataService = mIDASTrafficDataService;
-	}
+    public void setmIDASTrafficDataService(
+            MIDASTrafficDataService mIDASTrafficDataService) {
+        this.mIDASTrafficDataService = mIDASTrafficDataService;
+    }
 
 }

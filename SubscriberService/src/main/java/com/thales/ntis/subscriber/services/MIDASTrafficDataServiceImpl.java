@@ -35,8 +35,6 @@ import com.thales.ntis.subscriber.model.TrafficData;
 /**
  * This is an example service class implementation.
  * 
- * @author dev
- * 
  */
 
 public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
@@ -75,10 +73,10 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
 
             if (measuredDataPublication != null
                     && measuredDataPublication.getHeaderInformation() != null) {
-                LOG.debug("measurementSiteReference ID is "
+                LOG.info("measurementSiteReference ID is "
                         + measuredDataPublication.getSiteMeasurements().get(0)
                                 .getMeasurementSiteReference().getId());
-                LOG.debug("measurementSiteReference time default is "
+                LOG.info("measurementSiteReference time default is "
                         + measuredDataPublication.getSiteMeasurements().get(0)
                                 .getMeasurementTimeDefault().toString());
 
@@ -101,7 +99,7 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
                         // getLaneNumberFromTrafficDataIndex to get the lane
                         // number
                         int laneNumber = getLaneNumberFromTrafficDataIndex(index);
-                        LOG.debug("laneNumber is "+laneNumber);
+                        LOG.debug("laneNumber is " + laneNumber);
                         // To determine what type the sensor reading is,
                         // cast the basic data value to the appropriate type and
                         // retrieve the value of interest

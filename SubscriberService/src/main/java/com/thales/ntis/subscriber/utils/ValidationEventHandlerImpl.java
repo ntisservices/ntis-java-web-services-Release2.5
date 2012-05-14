@@ -22,33 +22,31 @@ import org.slf4j.LoggerFactory;
 /**
  * This handler logs the marshaling and un-marshaling issues to console.
  * 
- * @author Dev
- * 
  */
 
 public class ValidationEventHandlerImpl implements ValidationEventHandler {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ValidationEventHandlerImpl.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(ValidationEventHandlerImpl.class);
 
-	@Override
-	public boolean handleEvent(ValidationEvent event) {
+    @Override
+    public boolean handleEvent(ValidationEvent event) {
 
-		switch (event.getSeverity()) {
-		case ValidationEvent.FATAL_ERROR:
-			LOG.error(event.toString());
-			break;
-		case ValidationEvent.ERROR:
-			LOG.error(event.toString());
-			break;
-		case ValidationEvent.WARNING:
-			LOG.warn(event.toString());
-			break;
-		default:
-			LOG.info(event.toString());
-			break;
-		}
+        switch (event.getSeverity()) {
+            case ValidationEvent.FATAL_ERROR:
+                LOG.error(event.toString());
+                break;
+            case ValidationEvent.ERROR:
+                LOG.error(event.toString());
+                break;
+            case ValidationEvent.WARNING:
+                LOG.warn(event.toString());
+                break;
+            default:
+                LOG.info(event.toString());
+                break;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }
