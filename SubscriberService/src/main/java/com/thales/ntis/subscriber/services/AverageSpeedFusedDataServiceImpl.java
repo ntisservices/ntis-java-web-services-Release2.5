@@ -24,57 +24,55 @@ import com.thales.ntis.subscriber.datex.FusedDataPublication;
 /**
  * This is an example service class implementation.
  * 
- * @author dev
- * 
  */
 
 public class AverageSpeedFusedDataServiceImpl extends AbstractDatexService
-		implements AverageSpeedFusedDataService {
+        implements AverageSpeedFusedDataService {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(AverageSpeedFusedDataServiceImpl.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(AverageSpeedFusedDataServiceImpl.class);
 
-	@Override
-	public DeliverAverageSpeedFusedDataResponse handle(
-			DeliverAverageSpeedFusedDataRequest request) {
+    @Override
+    public DeliverAverageSpeedFusedDataResponse handle(
+            DeliverAverageSpeedFusedDataRequest request) {
 
-		LOG.info("NEW DeliverAverageSpeedFusedDataRequest RECEIVED!");
+        LOG.info("NEW DeliverAverageSpeedFusedDataRequest RECEIVED!");
 
-		D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
-		FusedDataPublication fusedDataPublication = null;
+        D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
+        FusedDataPublication fusedDataPublication = null;
 
-		// Validate the D2Logical Model
-		if (!validate(d2LogicalModel)) {
-			throw new RuntimeException(
-					"Incoming request does not appear to be valid!");
-		}
+        // Validate the D2Logical Model
+        if (!validate(d2LogicalModel)) {
+            throw new RuntimeException(
+                    "Incoming request does not appear to be valid!");
+        }
 
-		// FusedDataPublication contains the journeytime, direction, code,
-		// region etc.
-		try {
-			fusedDataPublication = (FusedDataPublication) d2LogicalModel
-					.getPayloadPublication();
-			if (fusedDataPublication != null
-					&& fusedDataPublication.getFusedData().get(0) != null) {
-				// You could use the FusedDataPublication and extract the
-				// corresponding fields.
+        // FusedDataPublication contains the journeytime, direction, code,
+        // region etc.
+        try {
+            fusedDataPublication = (FusedDataPublication) d2LogicalModel
+                    .getPayloadPublication();
+            if (fusedDataPublication != null
+                    && fusedDataPublication.getFusedData().get(0) != null) {
+                // You could use the FusedDataPublication and extract the
+                // corresponding fields.
 
-				LOG.debug("createdUtc is "
-						+ fusedDataPublication.getFusedData().get(0)
-								.getCreatedUtc().toString());
-				LOG.debug("Local is "
-						+ fusedDataPublication.getFusedData().get(0)
-								.getMarkets().get(0).getCreatedLocal()
-								.toString());
-			}
-		} catch (Exception e) {
-			LOG.error(e.getMessage());
-		}
+                LOG.info("createdUtc is "
+                        + fusedDataPublication.getFusedData().get(0)
+                                .getCreatedUtc().toString());
+                LOG.info("Local is "
+                        + fusedDataPublication.getFusedData().get(0)
+                                .getMarkets().get(0).getCreatedLocal()
+                                .toString());
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
 
-		DeliverAverageSpeedFusedDataResponse response = new DeliverAverageSpeedFusedDataResponse();
-		response.setStatus("DeliverAverageSpeedFusedDataRequest: Successful Delivery");
+        DeliverAverageSpeedFusedDataResponse response = new DeliverAverageSpeedFusedDataResponse();
+        response.setStatus("DeliverAverageSpeedFusedDataRequest: Successful Delivery");
 
-		return response;
-	}
+        return response;
+    }
 
 }

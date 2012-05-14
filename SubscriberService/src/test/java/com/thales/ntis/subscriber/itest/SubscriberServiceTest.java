@@ -35,7 +35,7 @@ import com.thales.ntis.subscriber.datex.InternationalIdentifier;
  * 
  */
 
-public class SubscriberServiceITest extends
+public class SubscriberServiceTest extends
 		AbstractDependencyInjectionSpringContextTests {
 
 	SubscriberServiceClient marshalingClient = null;

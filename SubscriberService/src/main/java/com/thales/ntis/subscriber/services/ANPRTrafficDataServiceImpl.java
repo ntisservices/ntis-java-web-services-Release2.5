@@ -24,8 +24,6 @@ import com.thales.ntis.subscriber.datex.JourneyTimePublication;
 /**
  * This is an example service class implementation.
  * 
- * @author dev
- * 
  */
 
 public class ANPRTrafficDataServiceImpl extends AbstractDatexService implements
@@ -45,8 +43,7 @@ public class ANPRTrafficDataServiceImpl extends AbstractDatexService implements
 
         // Validate the D2Logical Model
         if (!validate(d2LogicalModel)) {
-            throw new RuntimeException(
-                    "Incoming request does not appear to be valid!");
+            throw new RuntimeException("Incoming request does not appear to be valid!");
         }
 
         // JourneyTimePublication contains one or more journey-times
@@ -59,7 +56,7 @@ public class ANPRTrafficDataServiceImpl extends AbstractDatexService implements
                             .getJourneyTime().get(0) != null) {
                 // You could use the JourneyTimePublication and extract the
                 // corresponding fields.
-                LOG.debug("JourneyTime: Timestamp is "
+                LOG.info("JourneyTime: Timestamp is "
                         + journeyTimePublication.getJourneyTimes()
                                 .getJourneyTime().get(0).getTimeStamp()
                                 .toString());

@@ -24,57 +24,55 @@ import com.thales.ntis.subscriber.datex.FusedDataPublication;
 /**
  * This is an example service class implementation.
  * 
- * @author dev
- * 
  */
 
 public class AverageSpeedFvdServiceImpl extends AbstractDatexService implements
-		AverageSpeedFvdService {
+        AverageSpeedFvdService {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(AverageSpeedFvdServiceImpl.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(AverageSpeedFvdServiceImpl.class);
 
-	@Override
-	public DeliverAverageSpeedFvdResponse handle(
-			DeliverAverageSpeedFvdRequest request) {
+    @Override
+    public DeliverAverageSpeedFvdResponse handle(
+            DeliverAverageSpeedFvdRequest request) {
 
-		LOG.info("NEW DeliverAverageSpeedFvdRequest RECEIVED!");
+        LOG.info("NEW DeliverAverageSpeedFvdRequest RECEIVED!");
 
-		D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
-		FusedDataPublication fusedDataPublication = null;
+        D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
+        FusedDataPublication fusedDataPublication = null;
 
-		// Validate the D2Logical Model
-		if (!validate(d2LogicalModel)) {
-			throw new RuntimeException(
-					"Incoming request does not appear to be valid!");
-		}
+        // Validate the D2Logical Model
+        if (!validate(d2LogicalModel)) {
+            throw new RuntimeException(
+                    "Incoming request does not appear to be valid!");
+        }
 
-		// FusedDataPublication contains the journeytime, direction, code,
-		// region etc.
-		try {
-			fusedDataPublication = (FusedDataPublication) d2LogicalModel
-					.getPayloadPublication();
+        // FusedDataPublication contains the journeytime, direction, code,
+        // region etc.
+        try {
+            fusedDataPublication = (FusedDataPublication) d2LogicalModel
+                    .getPayloadPublication();
 
-			if (fusedDataPublication != null
-					&& fusedDataPublication.getFusedData().get(0) != null) {
-				// You could use the FusedDataPublication and extract the
-				// corresponding fields.
-				LOG.debug("createdUtc is "
-						+ fusedDataPublication.getFusedData().get(0)
-								.getCreatedUtc().toString());
-				LOG.debug("Local is "
-						+ fusedDataPublication.getFusedData().get(0)
-								.getMarkets().get(0).getCreatedLocal()
-								.toString());
-			}
-		} catch (Exception e) {
-			LOG.error(e.getMessage());
-		}
+            if (fusedDataPublication != null
+                    && fusedDataPublication.getFusedData().get(0) != null) {
+                // You could use the FusedDataPublication and extract the
+                // corresponding fields.
+                LOG.info("createdUtc is "
+                        + fusedDataPublication.getFusedData().get(0)
+                                .getCreatedUtc().toString());
+                LOG.info("Local is "
+                        + fusedDataPublication.getFusedData().get(0)
+                                .getMarkets().get(0).getCreatedLocal()
+                                .toString());
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
 
-		DeliverAverageSpeedFvdResponse response = new DeliverAverageSpeedFvdResponse();
-		response.setStatus("DeliverAverageSpeedFvdRequest: Successful Delivery");
+        DeliverAverageSpeedFvdResponse response = new DeliverAverageSpeedFvdResponse();
+        response.setStatus("DeliverAverageSpeedFvdRequest: Successful Delivery");
 
-		return response;
-	}
+        return response;
+    }
 
 }
