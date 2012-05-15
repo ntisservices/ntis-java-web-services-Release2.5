@@ -6,7 +6,9 @@ You could import the project into eclipse and tailor it accordingly for your nee
 	
 Build Requirements	
 ------------------
-To build and deploy the application, Gradle 1.x and JDK 1.6.x needs to be installed and on your path (e.g. PATH=%PATH%;c:\gradle\bin;c:\jdk1.6.0_26\bin).	
+To build and deploy the application, Gradle 1.x and JDK 1.6.x needs to be installed and added to your path
+	
+	e.g. PATH=%PATH%;c:\gradle\bin;c:\jdk1.6.0_26\bin
 
 Setting the Eclipse classpath
 -----------------------------
