@@ -1,8 +1,8 @@
-NTIS Subscriber Service - README and FAQ
+NTIS Subscriber Service - README
 ========================================
 	
-This is an example implementation of NTIS Subscriber Service that uses the Spring web-services framework. 
-You could import the project into eclipse and tailor it accordingly for your needs.
+This is an example implementation of an NTIS Subscriber Service that uses the Spring web-services framework. 
+You can import the project into Eclipse and tailor it to suit your needs.
 	
 Build Requirements	
 ------------------
