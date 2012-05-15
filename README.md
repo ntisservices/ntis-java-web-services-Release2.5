@@ -24,7 +24,7 @@ From the project root directory simply run
 
 and the script will build the SubscriberService.war file under build/libs.
 
-Deploying to Jetty (from the script)
+Deploying to Jetty (using Gradle)
 ------------------------------------
 To deploy the application war file on jetty server with gradle, simply run
 	
@@ -33,7 +33,7 @@ To deploy the application war file on jetty server with gradle, simply run
 It will build and deploy the SubscriberService.war on jetty and the wsdl could be accessed from 
 http://localhost:8880/SubscriberService/services/subscriber.wsdl 
 
-Deploying to Tomcat (from the script)
+Deploying to Tomcat (using Gradle)
 -------------------------------------
 Ensure CATALINA_HOME points to a valid Tomcat 6.x installation. 
 
