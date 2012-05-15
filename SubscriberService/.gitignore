@@ -1,3 +1,5 @@
 /.gradle
 /build
 /.classpath
+/bin
+/SubscriberService.log
