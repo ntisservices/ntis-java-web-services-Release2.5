@@ -7,7 +7,11 @@ You could import the project into eclipse and tailor it accordingly for your nee
 DEPLOYING PRE-BUILT WAR FILE MANUALLY TO A TOMCAT 6.X INSTALLATION:
 --------------------------------------------------------
 Simply copy the SubscriberService.war file from build/libs folder to %CATALINA_HOME%/webapps folder. 
-Once deployed you could invoke the WSDL from http://localhost:8880/SubscriberService/services/subscriber.wsdl  
+Once deployed you could invoke the WSDL from http://localhost:8880/SubscriberService/services/subscriber.wsdl
+
+SETTING THE ECLIPSE CLASSPATH
+-----------------------------
+To set the Eclipse classpath, run gradle eclipseClasspath  
 
 BUILD THE WAR FROM THE SOURCE:
 -----------------------------------------------------	
