@@ -18,11 +18,11 @@
 						<ns3:country>gb</ns3:country>
 						<ns3:nationalIdentifier>THALES</ns3:nationalIdentifier>
 					</ns3:publicationCreator>
-					<ns3:headerInformation>
-						<ns4:confidentiality>restrictedToAuthoritiesTrafficOperatorsAndPublishers</ns4:confidentiality>
-						<ns4:informationStatus>real</ns4:informationStatus>
-						<ns4:urgency>normalUrgency</ns4:urgency>
-					</ns3:headerInformation>
+					<ns2:headerInformation>
+						<ns3:confidentiality>restrictedToAuthoritiesTrafficOperatorsAndPublishers</ns3:confidentiality>
+						<ns3:informationStatus>real</ns3:informationStatus>
+						<ns3:urgency>normalUrgency</ns3:urgency>
+					</ns2:headerInformation>
 					<ns2:fusedData>
 						<ns2:markets>
 							<ns2:createdLocal>2012-01-31T12:07:01.846Z</ns2:createdLocal>
