@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2011 Thales Transportation Systems UK
+	Copyright (C) 2012 Thales Transportation Systems UK
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
 	to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
 	and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -17,7 +17,10 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.thales.ntis.subscriber.dao.NetworkModelDao;
 import com.thales.ntis.subscriber.datex.BasicData;
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
@@ -36,14 +39,16 @@ import com.thales.ntis.subscriber.model.TrafficData;
  * This is an example service class implementation.
  * 
  */
-
+@Service
 public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
         MIDASTrafficDataService {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(MIDASTrafficDataServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MIDASTrafficDataServiceImpl.class);
 
     private static final int MAX_SENSOR_READINGS = 7;
+
+    @Autowired
+    private NetworkModelDao networkModelDao;
 
     /**
      * This method extracts the D2LogicalModel from the incoming request and
@@ -60,8 +65,7 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
 
         // Validate the D2Logical Model
         if (!validate(d2LogicalModel)) {
-            throw new RuntimeException(
-                    "Incoming request does not appear to be valid!");
+            throw new RuntimeException("Incoming request does not appear to be valid!");
         }
 
         // MeasuredDataPublication class contains the feed description, feed
@@ -73,33 +77,42 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
 
             if (measuredDataPublication != null
                     && measuredDataPublication.getHeaderInformation() != null) {
+
                 LOG.info("measurementSiteReference ID is "
                         + measuredDataPublication.getSiteMeasurements().get(0)
                                 .getMeasurementSiteReference().getId());
+
                 LOG.info("measurementSiteReference time default is "
                         + measuredDataPublication.getSiteMeasurements().get(0)
                                 .getMeasurementTimeDefault().toString());
 
                 // Each MIDAS site is encapsulated within a SiteMeasurements
-                // object.
-                // Cycle through these to get to the sensor readings for a MIDAS
-                // site.
+                // object. Cycle through these to get to the sensor readings for
+                // a MIDAS site.
                 for (SiteMeasurements siteMeasurements : measuredDataPublication
                         .getSiteMeasurements()) {
 
+                    // Each MIDAS site has a GUID; a unique identifier for the
+                    // site. This GUID should be used to find comprehensive
+                    // details about the MIDAS site (road name, location,
+                    // number of lanes, etc) from the Network Model (found at
+                    // TIH website)
+                    String siteGUID = siteMeasurements.getMeasurementSiteReference().getId();
+                    LOG.info("Retrieved traffic data info for MIDAS site " + siteGUID);
+
                     // Cycle through the MeasuredValues to get the individual
                     // sensor readings for a MIDAS site.
-                    for (SiteMeasurementsIndexMeasuredValue measuredValue : siteMeasurements
-                            .getMeasuredValue()) {
-                        int index = measuredValue.getIndex();
+                    for (SiteMeasurementsIndexMeasuredValue measuredValue : siteMeasurements.getMeasuredValue()) {
 
                         // Each sensor reading has an index. This represents the
                         // lane number the sensor reading is for. On retrieving
                         // the index, you can use
-                        // getLaneNumberFromTrafficDataIndex to get the lane
-                        // number
-                        int laneNumber = getLaneNumberFromTrafficDataIndex(index);
+                        // getLaneNumberFromSiteIndex()
+                        // to get the lane number.
+                        int siteIndex = measuredValue.getIndex();
+                        int laneNumber = getLaneNumberFromSiteIndex(siteGUID, siteIndex);
                         LOG.debug("laneNumber is " + laneNumber);
+
                         // To determine what type the sensor reading is,
                         // cast the basic data value to the appropriate type and
                         // retrieve the value of interest
@@ -117,8 +130,8 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
 
                         } else if (basicData instanceof TrafficHeadway) {
                             // Now you have TrafficHeadway. Cast it
-                            // appropriately
-                            // to retrieve values you are interested in.
+                            // appropriately to retrieve values you are
+                            // interested in.
 
                         } else if (basicData instanceof TrafficConcentration) {
                             // Now you have TrafficConcentration. Cast it
@@ -149,10 +162,26 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
         return response;
     }
 
-    public int getLaneNumberFromTrafficDataIndex(int measuredValueIndex) {
+    /*
+     * MIDAS sites consist of lanes. The measuredValueIndex represents a sensor
+     * reading <Flow, Speed, Headway, Concentration> for a particular lane. This
+     * method determines what lane a sensor reading is for.
+     * 
+     * To correctly work out the lane number, the method needs to determine the
+     * starting lane of the MIDAS site. Most MIDAS sites have a starting lane of
+     * 1. However, some MIDAS sites have a hard shoulder lane. These sites have
+     * a starting lane of 0. The method makes use of the Network model to
+     * determine whether a MIDAS has a starting lane of 0 or 1 and then in turn
+     * work out what lane the measuredValueIndex is for.
+     */
+    private int getLaneNumberFromSiteIndex(String siteGUID, int measuredValueIndex) {
+
+        int startingLane = networkModelDao.getStartingLaneForMidasSite(siteGUID);
+
         if (measuredValueIndex == 0) {
-            return 1;
+            return startingLane;
         }
-        return (measuredValueIndex / MAX_SENSOR_READINGS) + 1;
+
+        return (measuredValueIndex / MAX_SENSOR_READINGS) + startingLane;
     }
 }
