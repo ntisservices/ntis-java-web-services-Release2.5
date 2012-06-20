@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2011 Thales Transportation Systems UK
+	Copyright (C) 2012 Thales Transportation Systems UK
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
 	to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
 	and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -13,6 +13,7 @@
 
 package com.thales.ntis.subscriber.endpoints;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 
@@ -37,13 +38,22 @@ import com.thales.ntis.subscriber.services.MIDASTrafficDataService;
  * separate service classes.
  */
 
-@Endpoint
+@Endpoint("subscriberServiceEndpoint")
 public class SubscriberServiceEndpoint {
 
+    @Autowired
     private ANPRTrafficDataService aNPRTrafficDataService;
+
+    @Autowired
     private AverageJourneyTimeService averageJourneyTimeService;
+
+    @Autowired
     private AverageSpeedFusedDataService averageSpeedFusedDataService;
+
+    @Autowired
     private AverageSpeedFvdService averageSpeedFvdService;
+
+    @Autowired
     private MIDASTrafficDataService mIDASTrafficDataService;
 
     @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageSpeedFusedDataRequest")
@@ -100,32 +110,4 @@ public class SubscriberServiceEndpoint {
 
         return response;
     }
-
-    // INJECTED by the spring framework
-
-    public void setaNPRTrafficDataService(
-            ANPRTrafficDataService aNPRTrafficDataService) {
-        this.aNPRTrafficDataService = aNPRTrafficDataService;
-    }
-
-    public void setAverageJourneyTimeService(
-            AverageJourneyTimeService averageJourneyTimeService) {
-        this.averageJourneyTimeService = averageJourneyTimeService;
-    }
-
-    public void setAverageSpeedFusedDataService(
-            AverageSpeedFusedDataService averageSpeedFusedDataService) {
-        this.averageSpeedFusedDataService = averageSpeedFusedDataService;
-    }
-
-    public void setAverageSpeedFvdService(
-            AverageSpeedFvdService averageSpeedFvdService) {
-        this.averageSpeedFvdService = averageSpeedFvdService;
-    }
-
-    public void setmIDASTrafficDataService(
-            MIDASTrafficDataService mIDASTrafficDataService) {
-        this.mIDASTrafficDataService = mIDASTrafficDataService;
-    }
-
 }

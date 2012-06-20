@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2011 Thales Transportation Systems UK
+	Copyright (C) 2012 Thales Transportation Systems UK
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
 	to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
 	and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -15,6 +15,7 @@ package com.thales.ntis.subscriber.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
@@ -25,7 +26,7 @@ import com.thales.ntis.subscriber.datex.JourneyTimePublication;
  * This is an example service class implementation.
  * 
  */
-
+@Service
 public class ANPRTrafficDataServiceImpl extends AbstractDatexService implements
         ANPRTrafficDataService {
 
