@@ -1,0 +1,143 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:ns3="http://datex2.eu/schema/2/2_0" xmlns:sub="http://www.thalesgroup.com/NTIS/SubscriberService"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header />
+  <soapenv:Body>
+    <p:DeliverTMUTrafficDataRequest xmlns:d2lm="http://datex2.eu/schema/2/2_0" xmlns:p="http://www.thalesgroup.com/NTIS/SubscriberService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thalesgroup.com/NTIS/SubscriberService subscriber.xsd ">
+	<p:d2LogicalModel xmlns:ns2="http://datex2.eu/schema/2/2_0" xmlns:ns3="http://www.thalesgroup.com/NTIS/Datex2Extensions/1.0Beta1"
+		modelBaseVersion="2">
+		<ns2:exchange>
+			<ns2:supplierIdentification>
+				<ns2:country>gb</ns2:country>
+				<ns2:nationalIdentifier>NTIS DATEX II TMU Data
+			</ns2:nationalIdentifier>
+			</ns2:supplierIdentification>
+		</ns2:exchange>
+		<ns2:payloadPublication lang="en"
+			xsi:type="ns2:MeasuredDataPublication" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<ns2:feedDescription>
+				<ns2:values>
+					<ns2:value>NTIS DATEX II TMU Data</ns2:value>
+				</ns2:values>
+			</ns2:feedDescription>
+			<ns2:feedType>TMU Data</ns2:feedType>
+			<ns2:publicationTime>2012-10-26T09:23:00.037+01:00
+		</ns2:publicationTime>
+			<ns2:publicationCreator>
+				<ns2:country>gb</ns2:country>
+				<ns2:nationalIdentifier>NTIS DATEX II TMU Data
+			</ns2:nationalIdentifier>
+			</ns2:publicationCreator>
+			<ns2:measurementSiteTableReference
+				targetClass="MeasurementSiteTable" id="" version="1" />
+			<ns2:headerInformation>
+				<ns2:confidentiality>restrictedToAuthoritiesTrafficOperatorsAndPublishers</ns2:confidentiality>
+				<ns2:informationStatus>real</ns2:informationStatus>
+				<ns2:urgency>normalUrgency</ns2:urgency>
+			</ns2:headerInformation>
+			<ns2:siteMeasurements>
+				<ns2:measurementSiteReference
+					targetClass="MeasurementSiteRecord" version=""
+					id="C6E971CACAD3789BE0433CC411ACCCEA" />
+				<ns2:measurementTimeDefault>2012-04-12T11:02:00.000+01:00</ns2:measurementTimeDefault>
+				<ns2:measuredValue index="0">
+					<ns2:measuredValue>
+						<ns2:basicData xsi:type="ns2:TrafficSpeed">
+							<ns2:averageVehicleSpeed>
+								<ns2:speed>10.0</ns2:speed>
+							</ns2:averageVehicleSpeed>
+						</ns2:basicData>
+					</ns2:measuredValue>
+				</ns2:measuredValue>
+				<ns2:measuredValue index="1">
+					<ns2:measuredValue>
+						<ns2:basicData xsi:type="ns2:TrafficFlow">
+							<ns2:forVehiclesWithCharacteristicsOf>
+								<ns2:lengthCharacteristic>
+									<ns2:comparisonOperator>greaterThan</ns2:comparisonOperator>
+									<ns2:vehicleLength>5.2</ns2:vehicleLength>
+								</ns2:lengthCharacteristic>
+							</ns2:forVehiclesWithCharacteristicsOf>
+							<ns2:vehicleFlow>
+								<ns2:vehicleFlowRate>960</ns2:vehicleFlowRate>
+							</ns2:vehicleFlow>
+						</ns2:basicData>
+					</ns2:measuredValue>
+				</ns2:measuredValue>
+				<ns2:measuredValue index="2">
+					<ns2:measuredValue>
+						<ns2:basicData xsi:type="ns2:TrafficFlow">
+							<ns2:forVehiclesWithCharacteristicsOf>
+								<ns2:lengthCharacteristic>
+									<ns2:comparisonOperator>greaterThan</ns2:comparisonOperator>
+									<ns2:vehicleLength>5.2</ns2:vehicleLength>
+								</ns2:lengthCharacteristic>
+								<ns2:lengthCharacteristic>
+									<ns2:comparisonOperator>lessThanOrEqualTo</ns2:comparisonOperator>
+									<ns2:vehicleLength>6.6</ns2:vehicleLength>
+								</ns2:lengthCharacteristic>
+							</ns2:forVehiclesWithCharacteristicsOf>
+							<ns2:vehicleFlow>
+								<ns2:vehicleFlowRate>1080</ns2:vehicleFlowRate>
+							</ns2:vehicleFlow>
+						</ns2:basicData>
+					</ns2:measuredValue>
+				</ns2:measuredValue>
+				<ns2:measuredValue index="3">
+					<ns2:measuredValue>
+						<ns2:basicData xsi:type="ns2:TrafficFlow">
+							<ns2:forVehiclesWithCharacteristicsOf>
+								<ns2:lengthCharacteristic>
+									<ns2:comparisonOperator>greaterThan</ns2:comparisonOperator>
+									<ns2:vehicleLength>6.6</ns2:vehicleLength>
+								</ns2:lengthCharacteristic>
+								<ns2:lengthCharacteristic>
+									<ns2:comparisonOperator>lessThanOrEqualTo</ns2:comparisonOperator>
+									<ns2:vehicleLength>11.6</ns2:vehicleLength>
+								</ns2:lengthCharacteristic>
+							</ns2:forVehiclesWithCharacteristicsOf>
+							<ns2:vehicleFlow>
+								<ns2:vehicleFlowRate>1140</ns2:vehicleFlowRate>
+							</ns2:vehicleFlow>
+						</ns2:basicData>
+					</ns2:measuredValue>
+				</ns2:measuredValue>
+				<ns2:measuredValue index="4">
+					<ns2:measuredValue>
+						<ns2:basicData xsi:type="ns2:TrafficFlow">
+							<ns2:forVehiclesWithCharacteristicsOf>
+								<ns2:lengthCharacteristic>
+									<ns2:comparisonOperator>greaterThan</ns2:comparisonOperator>
+									<ns2:vehicleLength>11.6</ns2:vehicleLength>
+								</ns2:lengthCharacteristic>
+							</ns2:forVehiclesWithCharacteristicsOf>
+							<ns2:vehicleFlow>
+								<ns2:vehicleFlowRate>1200</ns2:vehicleFlowRate>
+							</ns2:vehicleFlow>
+						</ns2:basicData>
+					</ns2:measuredValue>
+				</ns2:measuredValue>
+				<ns2:measuredValue index="5">
+					<ns2:measuredValue>
+						<ns2:basicData xsi:type="ns2:TrafficHeadway">
+							<ns2:averageTimeHeadway>
+								<ns2:duration>25.0</ns2:duration>
+							</ns2:averageTimeHeadway>
+						</ns2:basicData>
+					</ns2:measuredValue>
+				</ns2:measuredValue>
+				<ns2:measuredValue index="6">
+					<ns2:measuredValue>
+						<ns2:basicData xsi:type="ns2:TrafficConcentration">
+							<ns2:occupancy>
+								<ns2:percentage>16.0</ns2:percentage>
+							</ns2:occupancy>
+						</ns2:basicData>
+					</ns2:measuredValue>
+				</ns2:measuredValue>
+			</ns2:siteMeasurements>
+		</ns2:payloadPublication>
+	</p:d2LogicalModel>
+</p:DeliverTMUTrafficDataRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

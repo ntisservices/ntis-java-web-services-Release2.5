@@ -26,7 +26,7 @@ public class VMSTrafficDataServiceImpl extends AbstractDatexService implements V
     @Override
     public DeliverVMSTrafficDataResponse handle(DeliverVMSTrafficDataRequest request) {
 
-        LOG.info("DeliverVMSTrafficDataRequest Received! request  : " + request.getD2LogicalModel().toString());
+        LOG.info("DeliverVMSTrafficDataRequest Received!");
 
         D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
         if (!validate(d2LogicalModel)) {
@@ -35,31 +35,33 @@ public class VMSTrafficDataServiceImpl extends AbstractDatexService implements V
         try {
             VmsPublication payloadPublication = (VmsPublication)
                     d2LogicalModel.getPayloadPublication();
-            VmsUnit vmsUnit =
-                    payloadPublication.getVmsUnit().get(0);
-            if (vmsUnit != null) {
-                LOG.info("Vmsunit GUID: " + vmsUnit.getVmsUnitReference().getId());
+            if (payloadPublication != null) {
+                VmsUnit vmsUnit =
+                        payloadPublication.getVmsUnit().get(0);
+                if (vmsUnit != null) {
+                    LOG.info("Vmsunit GUID: " + vmsUnit.getVmsUnitReference().getId());
 
-                List<VmsUnitVmsIndexVms> vmsIndexList = vmsUnit.getVms();
-                if (vmsIndexList.size() > 0) {
-                    VmsUnitVmsIndexVms vmsUnitVmsIndexVms =
-                            vmsIndexList.get(0);
-                    List<VmsMessageIndexVmsMessage> vmsMessageList =
-                            vmsUnitVmsIndexVms.getVms().getVmsMessage();
-                    if (vmsMessageList.size() > 0) {
-                        VmsMessage vmsMessage =
-                                vmsMessageList.get(0).getVmsMessage();
-                        List<TextPage> textPageList =
-                                vmsMessage.getTextPage();
-                        if (textPageList.size() > 0) {
-                            TextPage textPage = textPageList.get(0);
-                            VmsText vmsText =
-                                    textPage.getVmsText();
-                            List<VmsTextLineIndexVmsTextLine> vmsTextLineList = vmsText.getVmsTextLine();
-                            if (vmsTextLineList.size() > 0) {
-                                VmsTextLineIndexVmsTextLine vmsTextLineIndexVmsTextLine = vmsTextLineList.get(0);
-                                LOG.info(" vms text line " +
-                                        vmsTextLineIndexVmsTextLine.getVmsTextLine().getVmsTextLine());
+                    List<VmsUnitVmsIndexVms> vmsIndexList = vmsUnit.getVms();
+                    if (vmsIndexList.size() > 0) {
+                        VmsUnitVmsIndexVms vmsUnitVmsIndexVms =
+                                vmsIndexList.get(0);
+                        List<VmsMessageIndexVmsMessage> vmsMessageList =
+                                vmsUnitVmsIndexVms.getVms().getVmsMessage();
+                        if (vmsMessageList.size() > 0) {
+                            VmsMessage vmsMessage =
+                                    vmsMessageList.get(0).getVmsMessage();
+                            List<TextPage> textPageList =
+                                    vmsMessage.getTextPage();
+                            if (textPageList.size() > 0) {
+                                TextPage textPage = textPageList.get(0);
+                                VmsText vmsText =
+                                        textPage.getVmsText();
+                                List<VmsTextLineIndexVmsTextLine> vmsTextLineList = vmsText.getVmsTextLine();
+                                if (vmsTextLineList.size() > 0) {
+                                    VmsTextLineIndexVmsTextLine vmsTextLineIndexVmsTextLine = vmsTextLineList.get(0);
+                                    LOG.info(" vms text line " +
+                                            vmsTextLineIndexVmsTextLine.getVmsTextLine().getVmsTextLine());
+                                }
                             }
                         }
                     }
@@ -72,8 +74,6 @@ public class VMSTrafficDataServiceImpl extends AbstractDatexService implements V
 
         DeliverVMSTrafficDataResponse response = new DeliverVMSTrafficDataResponse();
         response.setStatus("DeliverVMSTrafficDataRequest: Successful Delivery");
-        LOG.info("Processed DeliverVMSTrafficDataRequest!");
-
         return response;
     }
 

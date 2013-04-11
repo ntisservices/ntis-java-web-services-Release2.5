@@ -83,9 +83,7 @@
 				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel" maxOccurs="1" minOccurs="1"></xs:element>
 			</xs:sequence>
 		</xs:complexType>
-	</xs:element>
-	
-		
+	</xs:element>		
     <xs:element name="DeliverVMSTrafficDataResponse">
 		<xs:complexType>
 			<xs:all>
@@ -93,4 +91,20 @@
 			</xs:all>
 		</xs:complexType>
 	</xs:element>
+	
+	<xs:element name="DeliverTMUTrafficDataRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel" maxOccurs="1" minOccurs="1"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>		
+    <xs:element name="DeliverTMUTrafficDataResponse">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="status" type="xs:string"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
 </xs:schema>

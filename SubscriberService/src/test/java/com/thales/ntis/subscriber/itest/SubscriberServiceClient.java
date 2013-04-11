@@ -23,6 +23,8 @@ import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
 import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataResponse;
 
@@ -45,4 +47,7 @@ public interface SubscriberServiceClient {
 
     public DeliverVMSTrafficDataResponse invokeService(
             DeliverVMSTrafficDataRequest request);
+
+    public DeliverTMUTrafficDataResponse invokeService(
+            DeliverTMUTrafficDataRequest request);
 }

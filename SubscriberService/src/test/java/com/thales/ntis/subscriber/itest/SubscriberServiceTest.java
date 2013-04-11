@@ -13,6 +13,8 @@
 
 package com.thales.ntis.subscriber.itest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
 import com.thales.ntis.subscriber.datex.CountryEnum;
@@ -25,6 +27,8 @@ import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
 import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.Exchange;
@@ -41,6 +45,7 @@ public class SubscriberServiceTest extends
         AbstractDependencyInjectionSpringContextTests {
 
     SubscriberServiceClient marshalingClient = null;
+    private static final Logger LOG = LoggerFactory.getLogger(SubscriberServiceTest.class);
 
     @Override
     protected String[] getConfigLocations() {
@@ -91,6 +96,15 @@ public class SubscriberServiceTest extends
 
     public void testVMSTrafficDataResponse() throws Exception {
         assertEquals(expectedVMSTrafficDataResponse().getStatus(), marshalingClient.invokeService(createVMSTrafficDataRequest())
+                .getStatus());
+    }
+
+    public void testTMUTrafficDataResponse() throws Exception {
+        LOG.info("expected TMUTrafficDataResponse().getStatus() " + expectedTMUTrafficDataResponse().getStatus());
+        LOG.info("actual TMUTrafficDataResponse().getStatus() "
+                + marshalingClient.invokeService(createTMUTrafficDataRequest())
+                        .getStatus());
+        assertEquals(expectedTMUTrafficDataResponse().getStatus(), marshalingClient.invokeService(createTMUTrafficDataRequest())
                 .getStatus());
     }
 
@@ -163,6 +177,18 @@ public class SubscriberServiceTest extends
 
     private DeliverVMSTrafficDataRequest createVMSTrafficDataRequest() {
         DeliverVMSTrafficDataRequest request = new DeliverVMSTrafficDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
+    }
+
+    private DeliverTMUTrafficDataResponse expectedTMUTrafficDataResponse() {
+        DeliverTMUTrafficDataResponse response = new DeliverTMUTrafficDataResponse();
+        response.setStatus("DeliverTMUTrafficDataRequest: Successful Delivery");
+        return response;
+    }
+
+    private DeliverTMUTrafficDataRequest createTMUTrafficDataRequest() {
+        DeliverTMUTrafficDataRequest request = new DeliverTMUTrafficDataRequest();
         request.setD2LogicalModel(getD2LogicalModel());
         return request;
     }
