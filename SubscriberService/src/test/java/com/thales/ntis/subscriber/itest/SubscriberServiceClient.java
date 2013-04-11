@@ -23,23 +23,26 @@ import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
 import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataResponse;
 
 public interface SubscriberServiceClient {
 
-	public DeliverAverageSpeedFusedDataResponse invokeService(
-			DeliverAverageSpeedFusedDataRequest request);
+    public DeliverAverageSpeedFusedDataResponse invokeService(
+            DeliverAverageSpeedFusedDataRequest request);
 
-	public DeliverAverageSpeedFvdResponse invokeService(
-			DeliverAverageSpeedFvdRequest request);
+    public DeliverAverageSpeedFvdResponse invokeService(
+            DeliverAverageSpeedFvdRequest request);
 
-	public DeliverAverageJourneyTimeResponse invokeService(
-			DeliverAverageJourneyTimeRequest request);
+    public DeliverAverageJourneyTimeResponse invokeService(
+            DeliverAverageJourneyTimeRequest request);
 
+    public DeliverMIDASTrafficDataResponse invokeService(
+            DeliverMIDASTrafficDataRequest request);
 
-	public DeliverMIDASTrafficDataResponse invokeService(
-			DeliverMIDASTrafficDataRequest request);
+    public DeliverANPRTrafficDataResponse invokeService(
+            DeliverANPRTrafficDataRequest request);
 
-	public DeliverANPRTrafficDataResponse invokeService(
-			DeliverANPRTrafficDataRequest request);
-
+    public DeliverVMSTrafficDataResponse invokeService(
+            DeliverVMSTrafficDataRequest request);
 }

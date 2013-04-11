@@ -36,6 +36,9 @@
 					value-ref="subscriberServiceEndpoint" />
 				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverANPRTrafficDataRequest"
 					value-ref="subscriberServiceEndpoint" />
+				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverVMSTrafficDataRequest"
+					value-ref="subscriberServiceEndpoint" />
+					
 			</map>
 		</property>
 		<property name="order" value="2" />

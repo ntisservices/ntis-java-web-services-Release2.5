@@ -1,0 +1,99 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:ns2="http://www.thalesgroup.com/NTIS/Datex2Extensions/1.0Beta1"
+	xmlns:ns3="http://datex2.eu/schema/2/2_0" xmlns:sub="http://www.thalesgroup.com/NTIS/SubscriberService"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Header />
+	<soapenv:Body>
+		<sub:DeliverVMSTrafficDataRequest>
+      <sub:d2LogicalModel
+        xmlns:ns2="http://www.thalesgroup.com/NTIS/Datex2Extensions/1.0Beta1"
+        modelBaseVersion="2">
+        <ns3:exchange>
+          <ns3:supplierIdentification>
+            <ns3:country>gb</ns3:country>
+            <ns3:nationalIdentifier>NTIS DATEX II Traffic Data
+            </ns3:nationalIdentifier>
+          </ns3:supplierIdentification>
+        </ns3:exchange>
+        
+        <ns3:payloadPublication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:type="ns3:VmsPublication" lang="en">
+        <ns3:feedDescription>
+            <ns3:values>
+                <ns3:value>NTIS VMS and Matrix Sign Status Data</ns3:value>
+            </ns3:values>
+        </ns3:feedDescription>
+        <ns3:publicationTime>1970-01-01T01:00:00.000+01:00</ns3:publicationTime>
+        <ns3:publicationCreator>
+            <ns3:country>gb</ns3:country>
+            <ns3:nationalIdentifier>NTIS</ns3:nationalIdentifier>
+        </ns3:publicationCreator>
+        <ns3:headerInformation>
+            <ns3:areaOfInterest>national</ns3:areaOfInterest>
+            <ns3:confidentiality>restrictedToAuthoritiesTrafficOperatorsAndPublishers</ns3:confidentiality>
+            <ns3:informationStatus>real</ns3:informationStatus>
+        </ns3:headerInformation>
+        
+         <ns3:vmsUnit>
+            <ns3:vmsUnitTableReference targetClass="VmsUnitTable" id="NTIS_VMS_Units" version="17.0" />
+            <ns3:vmsUnitReference targetClass="VmsUnitRecord" id="CFB613DE84FB3254E0433CC411ACFD01" version="" />
+            <ns3:vms vmsIndex="0">
+                <ns3:vms>
+                    <ns3:vmsWorking>true</ns3:vmsWorking>
+                    <ns3:vmsMessage messageIndex="0">
+                        <ns3:vmsMessage>
+                            <ns3:messageSetBy>
+                                <ns3:values>
+                                    <ns3:value lang="en">RCC #2</ns3:value>
+                                </ns3:values>
+                            </ns3:messageSetBy>
+                            <ns3:reasonForSetting>
+                                <ns3:values>
+                                    <ns3:value lang="en">Example reason for setting</ns3:value>
+                                </ns3:values>
+                            </ns3:reasonForSetting>
+                            <ns3:timeLastSet>1970-01-01T01:00:00.000+01:00</ns3:timeLastSet>
+                            <ns3:textPage pageNumber="0">
+                                <ns3:vmsText>
+                                    <ns3:vmsTextLine lineIndex="0">
+                                        <ns3:vmsTextLine>
+                                            <ns3:vmsTextLine>Sign</ns3:vmsTextLine>
+                                        </ns3:vmsTextLine>
+                                    </ns3:vmsTextLine>
+                                    <ns3:vmsTextLine lineIndex="1">
+                                        <ns3:vmsTextLine>
+                                            <ns3:vmsTextLine>Under</ns3:vmsTextLine>
+                                        </ns3:vmsTextLine>
+                                    </ns3:vmsTextLine>
+                                    <ns3:vmsTextLine lineIndex="2">
+                                        <ns3:vmsTextLine>
+                                            <ns3:vmsTextLine>Test</ns3:vmsTextLine>
+                                        </ns3:vmsTextLine>
+                                    </ns3:vmsTextLine>
+                                </ns3:vmsText>
+                            </ns3:textPage>
+                            <ns3:vmsPictogramDisplayArea pictogramDisplayAreaIndex="0">
+                                <ns3:vmsPictogramDisplayArea>
+                                    <ns3:vmsPictogram pictogramSequencingIndex="0">
+                                        <ns3:vmsPictogram>
+                                            <ns3:pictogramDescription>roadworks</ns3:pictogramDescription>
+                                            <ns3:additionalPictogramDescription>
+                                                <ns3:values>
+                                                    <ns3:value lang="en">SY04</ns3:value>
+                                                </ns3:values>
+                                            </ns3:additionalPictogramDescription>
+                                            <ns3:presenceOfRedTriangle>false</ns3:presenceOfRedTriangle>
+                                        </ns3:vmsPictogram>
+                                    </ns3:vmsPictogram>
+                                </ns3:vmsPictogramDisplayArea>
+                            </ns3:vmsPictogramDisplayArea>
+                        </ns3:vmsMessage>
+                    </ns3:vmsMessage>
+                </ns3:vms>
+            </ns3:vms>
+        </ns3:vmsUnit>        
+        </ns3:payloadPublication>          
+      </sub:d2LogicalModel>
+    </sub:DeliverVMSTrafficDataRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

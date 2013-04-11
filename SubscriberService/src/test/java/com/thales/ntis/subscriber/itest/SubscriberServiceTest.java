@@ -25,6 +25,8 @@ import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
 import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.Exchange;
 import com.thales.ntis.subscriber.datex.InternationalIdentifier;
 
@@ -36,130 +38,146 @@ import com.thales.ntis.subscriber.datex.InternationalIdentifier;
  */
 
 public class SubscriberServiceTest extends
-		AbstractDependencyInjectionSpringContextTests {
+        AbstractDependencyInjectionSpringContextTests {
 
-	SubscriberServiceClient marshalingClient = null;
+    SubscriberServiceClient marshalingClient = null;
 
-	@Override
-	protected String[] getConfigLocations() {
-		return new String[] { "classpath:/com/thales/ntis/subscriber/itest/subscriber-ws-client.xml" };
-	}
+    @Override
+    protected String[] getConfigLocations() {
+        return new String[] { "classpath:/com/thales/ntis/subscriber/itest/subscriber-ws-client.xml" };
+    }
 
-	public void onSetUp() {
-		marshalingClient = (SubscriberServiceClient) applicationContext
-				.getBean("marshallingClient");
+    public void onSetUp() {
+        marshalingClient = (SubscriberServiceClient) applicationContext
+                .getBean("marshallingClient");
 
-	}
+    }
 
-	public void testAverageSpeedFusedDataResponse() throws Exception {
-		assertEquals(
-				expectedAverageSpeedFusedDataResponse().getStatus(),
-				marshalingClient.invokeService(
-						createAverageSpeedFusedDataRequest()).getStatus());
+    public void testAverageSpeedFusedDataResponse() throws Exception {
+        assertEquals(
+                expectedAverageSpeedFusedDataResponse().getStatus(),
+                marshalingClient.invokeService(
+                        createAverageSpeedFusedDataRequest()).getStatus());
 
-	}
+    }
 
-	public void testAverageSpeedFvdResponse() throws Exception {
-		assertEquals(expectedAverageSpeedFvdResponse().getStatus(),
-				marshalingClient.invokeService(createAverageSpeedFvdRequest())
-						.getStatus());
+    public void testAverageSpeedFvdResponse() throws Exception {
+        assertEquals(expectedAverageSpeedFvdResponse().getStatus(),
+                marshalingClient.invokeService(createAverageSpeedFvdRequest())
+                        .getStatus());
 
-	}
+    }
 
-	public void testAverageJourneyTimeResponse() throws Exception {
-		assertEquals(
-				expectedAverageJourneyTimeResponse().getStatus(),
-				marshalingClient.invokeService(
-						createAverageJourneyTimeRequest()).getStatus());
+    public void testAverageJourneyTimeResponse() throws Exception {
+        assertEquals(
+                expectedAverageJourneyTimeResponse().getStatus(),
+                marshalingClient.invokeService(
+                        createAverageJourneyTimeRequest()).getStatus());
 
-	}
+    }
 
-	public void testMIDASTrafficDataResponse() throws Exception {
-		assertEquals(expectedMIDASTrafficDataResponse().getStatus(),
-				marshalingClient.invokeService(createMIDASTrafficDataRequest())
-						.getStatus());
+    public void testMIDASTrafficDataResponse() throws Exception {
+        assertEquals(expectedMIDASTrafficDataResponse().getStatus(),
+                marshalingClient.invokeService(createMIDASTrafficDataRequest())
+                        .getStatus());
 
-	}
+    }
 
-	public void testANPRTrafficDataResponse() throws Exception {
-		assertEquals(expectedANPRTrafficDataResponse().getStatus(),
-				marshalingClient.invokeService(createANPRTrafficDataRequest())
-						.getStatus());
+    public void testANPRTrafficDataResponse() throws Exception {
+        assertEquals(expectedANPRTrafficDataResponse().getStatus(),
+                marshalingClient.invokeService(createANPRTrafficDataRequest())
+                        .getStatus());
+    }
 
-	}
+    public void testVMSTrafficDataResponse() throws Exception {
+        assertEquals(expectedVMSTrafficDataResponse().getStatus(), marshalingClient.invokeService(createVMSTrafficDataRequest())
+                .getStatus());
+    }
 
-	private DeliverAverageSpeedFusedDataRequest createAverageSpeedFusedDataRequest() {
-		DeliverAverageSpeedFusedDataRequest request = new DeliverAverageSpeedFusedDataRequest();
-		request.setD2LogicalModel(getD2LogicalModel());
-		return request;
-	}
+    private DeliverAverageSpeedFusedDataRequest createAverageSpeedFusedDataRequest() {
+        DeliverAverageSpeedFusedDataRequest request = new DeliverAverageSpeedFusedDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
+    }
 
-	private DeliverAverageSpeedFusedDataResponse expectedAverageSpeedFusedDataResponse() {
-		DeliverAverageSpeedFusedDataResponse response = new DeliverAverageSpeedFusedDataResponse();
-		response.setStatus("DeliverAverageSpeedFusedDataRequest: Successful Delivery");
-		return response;
-	}
+    private DeliverAverageSpeedFusedDataResponse expectedAverageSpeedFusedDataResponse() {
+        DeliverAverageSpeedFusedDataResponse response = new DeliverAverageSpeedFusedDataResponse();
+        response.setStatus("DeliverAverageSpeedFusedDataRequest: Successful Delivery");
+        return response;
+    }
 
-	private DeliverAverageSpeedFvdRequest createAverageSpeedFvdRequest() {
-		DeliverAverageSpeedFvdRequest request = new DeliverAverageSpeedFvdRequest();
-		request.setD2LogicalModel(getD2LogicalModel());
-		return request;
+    private DeliverAverageSpeedFvdRequest createAverageSpeedFvdRequest() {
+        DeliverAverageSpeedFvdRequest request = new DeliverAverageSpeedFvdRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
 
-	}
+    }
 
-	private DeliverAverageSpeedFvdResponse expectedAverageSpeedFvdResponse() {
-		DeliverAverageSpeedFvdResponse response = new DeliverAverageSpeedFvdResponse();
-		response.setStatus("DeliverAverageSpeedFvdRequest: Successful Delivery");
-		return response;
-	}
+    private DeliverAverageSpeedFvdResponse expectedAverageSpeedFvdResponse() {
+        DeliverAverageSpeedFvdResponse response = new DeliverAverageSpeedFvdResponse();
+        response.setStatus("DeliverAverageSpeedFvdRequest: Successful Delivery");
+        return response;
+    }
 
-	private DeliverAverageSpeedFusedDataRequest createAverageJourneyTimeRequest() {
-		DeliverAverageSpeedFusedDataRequest request = new DeliverAverageSpeedFusedDataRequest();
-		request.setD2LogicalModel(getD2LogicalModel());
-		return request;
-	}
+    private DeliverAverageSpeedFusedDataRequest createAverageJourneyTimeRequest() {
+        DeliverAverageSpeedFusedDataRequest request = new DeliverAverageSpeedFusedDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
+    }
 
-	private DeliverAverageSpeedFusedDataResponse expectedAverageJourneyTimeResponse() {
-		DeliverAverageSpeedFusedDataResponse response = new DeliverAverageSpeedFusedDataResponse();
-		response.setStatus("DeliverAverageSpeedFusedDataRequest: Successful Delivery");
-		return response;
-	}
+    private DeliverAverageSpeedFusedDataResponse expectedAverageJourneyTimeResponse() {
+        DeliverAverageSpeedFusedDataResponse response = new DeliverAverageSpeedFusedDataResponse();
+        response.setStatus("DeliverAverageSpeedFusedDataRequest: Successful Delivery");
+        return response;
+    }
 
-	private DeliverMIDASTrafficDataRequest createMIDASTrafficDataRequest() {
-		DeliverMIDASTrafficDataRequest request = new DeliverMIDASTrafficDataRequest();
-		request.setD2LogicalModel(getD2LogicalModel());
-		return request;
-	}
+    private DeliverMIDASTrafficDataRequest createMIDASTrafficDataRequest() {
+        DeliverMIDASTrafficDataRequest request = new DeliverMIDASTrafficDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
+    }
 
-	private DeliverMIDASTrafficDataResponse expectedMIDASTrafficDataResponse() {
-		DeliverMIDASTrafficDataResponse response = new DeliverMIDASTrafficDataResponse();
-		response.setStatus("DeliverMIDASTrafficDataRequest: Successful Delivery");
-		return response;
-	}
+    private DeliverMIDASTrafficDataResponse expectedMIDASTrafficDataResponse() {
+        DeliverMIDASTrafficDataResponse response = new DeliverMIDASTrafficDataResponse();
+        response.setStatus("DeliverMIDASTrafficDataRequest: Successful Delivery");
+        return response;
+    }
 
-	private DeliverANPRTrafficDataRequest createANPRTrafficDataRequest() {
-		DeliverANPRTrafficDataRequest request = new DeliverANPRTrafficDataRequest();
-		request.setD2LogicalModel(getD2LogicalModel());
-		return request;
-	}
+    private DeliverANPRTrafficDataRequest createANPRTrafficDataRequest() {
+        DeliverANPRTrafficDataRequest request = new DeliverANPRTrafficDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
+    }
 
-	private DeliverANPRTrafficDataResponse expectedANPRTrafficDataResponse() {
-		DeliverANPRTrafficDataResponse response = new DeliverANPRTrafficDataResponse();
-		response.setStatus("DeliverANPRTrafficDataRequest: Successful Delivery");
-		return response;
-	}
+    private DeliverANPRTrafficDataResponse expectedANPRTrafficDataResponse() {
+        DeliverANPRTrafficDataResponse response = new DeliverANPRTrafficDataResponse();
+        response.setStatus("DeliverANPRTrafficDataRequest: Successful Delivery");
+        return response;
+    }
 
-	private D2LogicalModel getD2LogicalModel() {
-		D2LogicalModel d2LogicalModel = new D2LogicalModel();
-		d2LogicalModel.setModelBaseVersion("2");
-		d2LogicalModel.setExchange(new Exchange());
-		d2LogicalModel.getExchange().setSupplierIdentification(
-				new InternationalIdentifier());
+    private DeliverVMSTrafficDataResponse expectedVMSTrafficDataResponse() {
+        DeliverVMSTrafficDataResponse response = new DeliverVMSTrafficDataResponse();
+        response.setStatus("DeliverVMSTrafficDataRequest: Successful Delivery");
+        return response;
+    }
 
-		CountryEnum gb = CountryEnum.GB;
-		d2LogicalModel.getExchange().getSupplierIdentification().setCountry(gb);
-		d2LogicalModel.getExchange().getSupplierIdentification()
-				.setNationalIdentifier(CountryEnum.GB.name());
-		return d2LogicalModel;
-	}
+    private DeliverVMSTrafficDataRequest createVMSTrafficDataRequest() {
+        DeliverVMSTrafficDataRequest request = new DeliverVMSTrafficDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
+    }
+
+    private D2LogicalModel getD2LogicalModel() {
+        D2LogicalModel d2LogicalModel = new D2LogicalModel();
+        d2LogicalModel.setModelBaseVersion("2");
+        d2LogicalModel.setExchange(new Exchange());
+        d2LogicalModel.getExchange().setSupplierIdentification(
+                new InternationalIdentifier());
+
+        CountryEnum gb = CountryEnum.GB;
+        d2LogicalModel.getExchange().getSupplierIdentification().setCountry(gb);
+        d2LogicalModel.getExchange().getSupplierIdentification()
+                .setNationalIdentifier(CountryEnum.GB.name());
+        return d2LogicalModel;
+    }
 }

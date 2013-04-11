@@ -120,6 +120,12 @@
     </xs:sequence>
     <xs:attribute name="pictogramSequencingIndex" type="xs:int" use="required" />
   </xs:complexType>
+  <xs:complexType name="_VmsPictogramExtensionType">
+    <xs:sequence>
+      <xs:element name="vmsPictogramUK" type="D2LogicalModel:VmsPictogramUK" minOccurs="0" />
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="_VmsRecordPictogramDisplayAreaIndexVmsPictogramDisplayCharacteristics">
     <xs:sequence>
       <xs:element name="vmsPictogramDisplayCharacteristics" type="D2LogicalModel:VmsPictogramDisplayCharacteristics" minOccurs="1" maxOccurs="1" />
@@ -2298,6 +2304,8 @@
       <xs:element name="d2LogicalModelExtension" type="D2LogicalModel:_ExtensionType" minOccurs="0" />
     </xs:sequence>
     <xs:attribute name="modelBaseVersion" use="required" fixed="2" />
+    <xs:attribute name="extensionName" use="optional" default="NTIS Published Services" />
+    <xs:attribute name="extensionVersion" use="optional" default="1.0" />
   </xs:complexType>
   <xs:simpleType name="DangerousGoodsRegulationsEnum">
     <xs:annotation>
@@ -12605,6 +12613,73 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="VmsDatexPictogramEnumUK">
+    <xs:annotation>
+      <xs:documentation>NTIS extension: includes pictogram types used in the UK, additional to those included in the standard D2LogicalModel:VmsDatexPictogramEnum.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="off">
+        <xs:annotation>
+          <xs:documentation>VMS is switched off.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="undefined">
+        <xs:annotation>
+          <xs:documentation>VMS has an undefined setting.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="stop">
+        <xs:annotation>
+          <xs:documentation>Stop.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="motorwayDivertLeft">
+        <xs:annotation>
+          <xs:documentation>Motorway divert left.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="motorwayDivertRight">
+        <xs:annotation>
+          <xs:documentation>Motorway divert right.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="midasOff">
+        <xs:annotation>
+          <xs:documentation>MIDAS is switched off.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="amberFlashers">
+        <xs:annotation>
+          <xs:documentation>Amber flashers are switched on.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hardShoulderDivert">
+        <xs:annotation>
+          <xs:documentation>Divert onto hard shoulder.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="1Wicket">
+        <xs:annotation>
+          <xs:documentation>1 Wicket.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2Wickets">
+        <xs:annotation>
+          <xs:documentation>2 Wickets.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3Wickets">
+        <xs:annotation>
+          <xs:documentation>3 Wickets.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4Wickets">
+        <xs:annotation>
+          <xs:documentation>4 Wickets.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="VmsDatexSupplementalPictogramEnum">
     <xs:annotation>
       <xs:documentation>Types of pictograms displayable in supplementary panels (normally below the main pictogram display which it qualifies).</xs:documentation>
@@ -13054,7 +13129,7 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="vmsSupplementaryPanel" type="D2LogicalModel:VmsSupplementaryPanel" minOccurs="0" />
-      <xs:element name="vmsPictogramExtension" type="D2LogicalModel:_ExtensionType" minOccurs="0" />
+      <xs:element name="vmsPictogramExtension" type="D2LogicalModel:_VmsPictogramExtensionType" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="VmsPictogramDisplayArea">
@@ -13128,12 +13203,12 @@
       </xs:element>
       <xs:element name="pictogramPositionAbsolute" type="D2LogicalModel:PositionAbsoluteEnum" minOccurs="0" maxOccurs="1">
         <xs:annotation>
-          <xs:documentation>The position of the area in which the pictogram is displayed, i.e. at the left, right, top or bottom of the VMS display.</xs:documentation>
+          <xs:documentation>The position of the area in which the pictogram is displayed, i.e. at the , right, top or bottom of the VMS display.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="pictogramPositionX" type="D2LogicalModel:MetresAsFloat" minOccurs="0" maxOccurs="1">
         <xs:annotation>
-          <xs:documentation>The X-coordinate (horizontal) position of the area in which the pictogram is displayed measured from the bottom left of the sign's overall display area to the bottom left of the specific pictogram display area.</xs:documentation>
+          <xs:documentation>The X-coordinate (horizontal) position of the area in which the pictogram is displayed measured from the bottom  of the sign's overall display area to the bottom left of the specific pictogram display area.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="pictogramPositionY" type="D2LogicalModel:MetresAsFloat" minOccurs="0" maxOccurs="1">
@@ -13148,6 +13223,18 @@
       </xs:element>
       <xs:element name="vmsSupplementaryPanelCharacteristics" type="D2LogicalModel:VmsSupplementaryPanelCharacteristics" minOccurs="0" />
       <xs:element name="vmsPictogramDisplayCharacteristicsExtension" type="D2LogicalModel:_ExtensionType" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VmsPictogramUK">
+    <xs:annotation>
+      <xs:documentation>NTIS VMS Pictogram extension class for UK pictogram types.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="pictogramDescriptionUK" type="D2LogicalModel:VmsDatexPictogramEnumUK" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Type of UK pictogram.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="VmsPublication">

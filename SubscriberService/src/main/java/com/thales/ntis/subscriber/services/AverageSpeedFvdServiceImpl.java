@@ -13,6 +13,8 @@
 
 package com.thales.ntis.subscriber.services;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,9 @@ import org.springframework.stereotype.Service;
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
 import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
 import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
+import com.thales.ntis.subscriber.datex.FusedData;
 import com.thales.ntis.subscriber.datex.FusedDataPublication;
+import com.thales.ntis.subscriber.datex.ProcessedTrafficData;
 
 /**
  * This is an example service class implementation.
@@ -53,18 +57,18 @@ public class AverageSpeedFvdServiceImpl extends AbstractDatexService implements
         try {
             fusedDataPublication = (FusedDataPublication) d2LogicalModel
                     .getPayloadPublication();
-
-            if (fusedDataPublication != null
-                    && fusedDataPublication.getFusedData().get(0) != null) {
-                // You could use the FusedDataPublication and extract the
-                // corresponding fields.
-                LOG.info("createdUtc is "
-                        + fusedDataPublication.getFusedData().get(0)
-                                .getCreatedUtc().toString());
-                LOG.info("Local is "
-                        + fusedDataPublication.getFusedData().get(0)
-                                .getMarkets().get(0).getCreatedLocal()
-                                .toString());
+            // You could use the FusedDataPublication and extract the
+            // corresponding fields.
+            if (fusedDataPublication != null) {
+                List<FusedData> fusedDataList = fusedDataPublication.getFusedData();
+                if (fusedDataList.size() > 0) {
+                    FusedData fusedData = fusedDataList.get(0);
+                    LOG.info("createdUtc is " + fusedData.getCreatedUtc().toString());
+                    List<ProcessedTrafficData> trafficDataList = fusedData.getLinkData();
+                    if (trafficDataList.size() > 0) {
+                        LOG.info("speedFvdOnlyKph  " + trafficDataList.get(0).getSpeedFvdOnlyKph());
+                    }
+                }
             }
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -75,5 +79,4 @@ public class AverageSpeedFvdServiceImpl extends AbstractDatexService implements
 
         return response;
     }
-
 }

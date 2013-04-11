@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
 import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeRequest;
 import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeResponse;
+import com.thales.ntis.subscriber.datex.FusedData;
 import com.thales.ntis.subscriber.datex.FusedDataPublication;
 
 /**
@@ -58,13 +59,10 @@ public class AverageJourneyTimeServiceImpl extends AbstractDatexService
             // corresponding fields.
             if (fusedDataPublication != null
                     && fusedDataPublication.getFusedData().get(0) != null) {
-                LOG.info("createdUtc is "
-                        + fusedDataPublication.getFusedData().get(0)
-                                .getCreatedUtc().toString());
-                LOG.info("Local is "
-                        + fusedDataPublication.getFusedData().get(0)
-                                .getMarkets().get(0).getCreatedLocal()
-                                .toString());
+                FusedData fusedData = fusedDataPublication.getFusedData().get(0);
+                LOG.info("createdUtc is " + fusedData.getCreatedUtc().toString());
+                LOG.info("Max arrival Utc " + fusedData.getMaxArrivalUtc().toString());
+
             }
         } catch (Exception e) {
             LOG.error(e.getMessage());

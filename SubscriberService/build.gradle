@@ -5,8 +5,7 @@ apply plugin: 'jetty'
 sourceCompatibility = 1.6
 
 repositories {
-	mavenLocal()
-    mavenCentral()
+    mavenRepo urls:['http://thales-ntis-artifactory.co.uk/artifactory/repo/']
 }
 
 configurations {
