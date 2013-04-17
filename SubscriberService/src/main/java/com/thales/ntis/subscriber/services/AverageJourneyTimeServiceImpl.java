@@ -13,6 +13,8 @@
 
 package com.thales.ntis.subscriber.services;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeRequest;
 import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeResponse;
 import com.thales.ntis.subscriber.datex.FusedData;
 import com.thales.ntis.subscriber.datex.FusedDataPublication;
+import com.thales.ntis.subscriber.datex.ProcessedTrafficData;
 
 /**
  * This is an example service class implementation.
@@ -60,6 +63,11 @@ public class AverageJourneyTimeServiceImpl extends AbstractDatexService
             if (fusedDataPublication != null
                     && fusedDataPublication.getFusedData().get(0) != null) {
                 FusedData fusedData = fusedDataPublication.getFusedData().get(0);
+                List<ProcessedTrafficData> trafficDataList = fusedData.getLinkData();
+                if (trafficDataList.size() > 0) {
+                    LOG.info("JournetTime sec is " + trafficDataList.get(0).getJourneyTimeSec());
+                    LOG.info("Speed in Kph is " + trafficDataList.get(0).getSpeedKph());
+                }
                 LOG.info("createdUtc is " + fusedData.getCreatedUtc().toString());
                 LOG.info("Max arrival Utc " + fusedData.getMaxArrivalUtc().toString());
 
@@ -73,5 +81,4 @@ public class AverageJourneyTimeServiceImpl extends AbstractDatexService
 
         return response;
     }
-
 }

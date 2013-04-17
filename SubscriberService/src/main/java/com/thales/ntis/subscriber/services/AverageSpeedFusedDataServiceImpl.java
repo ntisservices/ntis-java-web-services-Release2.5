@@ -63,7 +63,10 @@ public class AverageSpeedFusedDataServiceImpl extends AbstractDatexService
                     LOG.info("createdUtc is " + fusedData.getCreatedUtc().toString());
                     List<ProcessedTrafficData> trafficDataList = fusedData.getLinkData();
                     if (trafficDataList.size() > 0) {
-                        LOG.info("speedKph  " + trafficDataList.get(0).getSpeedKph());
+                        LOG.info("speed sensor only Kph  " + trafficDataList.get(0).getSpeedSensorOnlyKph());
+                        LOG.info("volume vehicle per min " + trafficDataList.get(0).getVolumeVehiclesPerMin());
+                        LOG.info("occupancy percent  " + trafficDataList.get(0).getOccupancyPercent());
+                        LOG.info("headway deci seconds  " + trafficDataList.get(0).getHeadwayDeciseconds());
                     }
                 }
             }

@@ -26,7 +26,7 @@ public class VMSTrafficDataServiceImpl extends AbstractDatexService implements V
     @Override
     public DeliverVMSTrafficDataResponse handle(DeliverVMSTrafficDataRequest request) {
 
-        LOG.info("DeliverVMSTrafficDataRequest Received!");
+        LOG.info("NEW DeliverVMSTrafficDataRequest Received!");
 
         D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
         if (!validate(d2LogicalModel)) {

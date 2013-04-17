@@ -63,7 +63,8 @@ public class AverageSpeedFvdServiceImpl extends AbstractDatexService implements
                 List<FusedData> fusedDataList = fusedDataPublication.getFusedData();
                 if (fusedDataList.size() > 0) {
                     FusedData fusedData = fusedDataList.get(0);
-                    LOG.info("createdUtc is " + fusedData.getCreatedUtc().toString());
+                    LOG.info("Created UTC is " + fusedData.getCreatedUtc().toString());
+                    LOG.info("Max Arrival UTC is " + fusedData.getMaxArrivalUtc().toString());
                     List<ProcessedTrafficData> trafficDataList = fusedData.getLinkData();
                     if (trafficDataList.size() > 0) {
                         LOG.info("speedFvdOnlyKph  " + trafficDataList.get(0).getSpeedFvdOnlyKph());
