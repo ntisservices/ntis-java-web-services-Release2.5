@@ -24,21 +24,6 @@
 		</xs:complexContent>
 	</xs:complexType>
 
-	<xs:complexType name="FusedDataPublication">
-		<xs:annotation>
-			<xs:documentation>A collection of FusedData</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent mixed="false">
-			<xs:extension base="D2LogicalModel:PayloadPublication">
-				<xs:sequence>
-					<xs:element name="headerInformation" type="D2LogicalModel:HeaderInformation" />
-					<xs:element name="fusedData" type="FusedData" minOccurs="1"
-						maxOccurs="unbounded" />
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-
 	<xs:complexType name="JourneyTimes">
 		<xs:annotation>
 			<xs:documentation>A sequence of zero or more JourneyTime elements.

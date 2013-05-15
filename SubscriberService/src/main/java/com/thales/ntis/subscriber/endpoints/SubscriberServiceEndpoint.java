@@ -19,23 +19,20 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataResponse;
 import com.thales.ntis.subscriber.services.ANPRTrafficDataService;
-import com.thales.ntis.subscriber.services.AverageJourneyTimeService;
-import com.thales.ntis.subscriber.services.AverageSpeedFusedDataService;
-import com.thales.ntis.subscriber.services.AverageSpeedFvdService;
+import com.thales.ntis.subscriber.services.FVDTrafficDataService;
 import com.thales.ntis.subscriber.services.MIDASTrafficDataService;
+import com.thales.ntis.subscriber.services.SensorTrafficDataService;
 import com.thales.ntis.subscriber.services.TMUTrafficDataService;
 import com.thales.ntis.subscriber.services.VMSTrafficDataService;
 
@@ -51,15 +48,6 @@ public class SubscriberServiceEndpoint {
     private ANPRTrafficDataService aNPRTrafficDataService;
 
     @Autowired
-    private AverageJourneyTimeService averageJourneyTimeService;
-
-    @Autowired
-    private AverageSpeedFusedDataService averageSpeedFusedDataService;
-
-    @Autowired
-    private AverageSpeedFvdService averageSpeedFvdService;
-
-    @Autowired
     private MIDASTrafficDataService mIDASTrafficDataService;
 
     @Autowired
@@ -68,35 +56,28 @@ public class SubscriberServiceEndpoint {
     @Autowired
     private TMUTrafficDataService tMUTrafficDataService;
 
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageSpeedFusedDataRequest")
-    public DeliverAverageSpeedFusedDataResponse handle(
-            DeliverAverageSpeedFusedDataRequest request) {
+    @Autowired
+    private FVDTrafficDataService fvdTrafficDataService;
+
+    @Autowired
+    private SensorTrafficDataService sensorTrafficDataService;
+
+    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverSpeedFVDDataRequest")
+    public DeliverSpeedFVDDataResponse handle(
+            DeliverSpeedFVDDataRequest request) {
 
         // Delegate the business logic implementation to a service.
-        DeliverAverageSpeedFusedDataResponse response = averageSpeedFusedDataService
-                .handle(request);
+        DeliverSpeedFVDDataResponse response = fvdTrafficDataService.handle(request);
 
         return response;
     }
 
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageSpeedFvdRequest")
-    public DeliverAverageSpeedFvdResponse handle(
-            DeliverAverageSpeedFvdRequest request) {
+    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverSpeedSensorDataRequest")
+    public DeliverSpeedSensorDataResponse handle(
+            DeliverSpeedSensorDataRequest request) {
 
         // Delegate the business logic implementation to a service.
-        DeliverAverageSpeedFvdResponse response = averageSpeedFvdService
-                .handle(request);
-
-        return response;
-    }
-
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverAverageJourneyTimeRequest")
-    public DeliverAverageJourneyTimeResponse handle(
-            DeliverAverageJourneyTimeRequest request) {
-
-        // Delegate the business logic implementation to a service.
-        DeliverAverageJourneyTimeResponse response = averageJourneyTimeService
-                .handle(request);
+        DeliverSpeedSensorDataResponse response = sensorTrafficDataService.handle(request);
 
         return response;
     }

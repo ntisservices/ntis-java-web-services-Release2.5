@@ -26,11 +26,9 @@
 		class="org.springframework.ws.server.endpoint.mapping.PayloadRootQNameEndpointMapping">
 		<property name="endpointMap">
 			<map>
-				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverAverageSpeedFusedDataRequest"
+				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverSpeedFVDDataRequest"
 					value-ref="subscriberServiceEndpoint" />
-				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverAverageSpeedFvdRequest"
-					value-ref="subscriberServiceEndpoint" />
-				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverAverageJourneyTimeRequest"
+				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverSpeedSensorDataRequest"
 					value-ref="subscriberServiceEndpoint" />
 				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverMIDASTrafficDataRequest"
 					value-ref="subscriberServiceEndpoint" />

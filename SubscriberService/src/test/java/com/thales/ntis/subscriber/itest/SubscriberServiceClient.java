@@ -15,14 +15,12 @@ package com.thales.ntis.subscriber.itest;
 
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
@@ -30,14 +28,9 @@ import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataResponse;
 
 public interface SubscriberServiceClient {
 
-    public DeliverAverageSpeedFusedDataResponse invokeService(
-            DeliverAverageSpeedFusedDataRequest request);
+    public DeliverSpeedFVDDataResponse invokeService(DeliverSpeedFVDDataRequest request);
 
-    public DeliverAverageSpeedFvdResponse invokeService(
-            DeliverAverageSpeedFvdRequest request);
-
-    public DeliverAverageJourneyTimeResponse invokeService(
-            DeliverAverageJourneyTimeRequest request);
+    public DeliverSpeedSensorDataResponse invokeService(DeliverSpeedSensorDataRequest request);
 
     public DeliverMIDASTrafficDataResponse invokeService(
             DeliverMIDASTrafficDataRequest request);

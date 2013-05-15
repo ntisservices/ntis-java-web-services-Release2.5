@@ -21,12 +21,12 @@ import com.thales.ntis.subscriber.datex.CountryEnum;
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
@@ -58,27 +58,42 @@ public class SubscriberServiceTest extends
 
     }
 
-    public void testAverageSpeedFusedDataResponse() throws Exception {
-        assertEquals(
-                expectedAverageSpeedFusedDataResponse().getStatus(),
-                marshalingClient.invokeService(
-                        createAverageSpeedFusedDataRequest()).getStatus());
-
-    }
-
-    public void testAverageSpeedFvdResponse() throws Exception {
-        assertEquals(expectedAverageSpeedFvdResponse().getStatus(),
-                marshalingClient.invokeService(createAverageSpeedFvdRequest())
+    public void testDeliverSpeedFVDDataResponse() throws Exception {
+        assertEquals(expectedSpeedFVDDataResponse().getStatus(),
+                marshalingClient.invokeService(createDeliverSpeedFVDDataRequest())
                         .getStatus());
 
     }
 
-    public void testAverageJourneyTimeResponse() throws Exception {
-        assertEquals(
-                expectedAverageJourneyTimeResponse().getStatus(),
-                marshalingClient.invokeService(
-                        createAverageJourneyTimeRequest()).getStatus());
+    public void testDeliverSpeedSensorDataResponse() throws Exception {
+        assertEquals(expectedSpeedSensorDataResponse().getStatus(),
+                marshalingClient.invokeService(createDeliverSpeedSensorDataRequest())
+                        .getStatus());
 
+    }
+
+    private DeliverSpeedSensorDataResponse expectedSpeedSensorDataResponse() {
+        DeliverSpeedSensorDataResponse response = new DeliverSpeedSensorDataResponse();
+        response.setStatus("DeliverSpeedSensorDataRequest: Successful Delivery");
+        return response;
+    }
+
+    private DeliverSpeedSensorDataRequest createDeliverSpeedSensorDataRequest() {
+        DeliverSpeedSensorDataRequest request = new DeliverSpeedSensorDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
+    }
+
+    private DeliverSpeedFVDDataResponse expectedSpeedFVDDataResponse() {
+        DeliverSpeedFVDDataResponse response = new DeliverSpeedFVDDataResponse();
+        response.setStatus("DeliverSpeedFVDDataRequest: Successful Delivery");
+        return response;
+    }
+
+    private DeliverSpeedFVDDataRequest createDeliverSpeedFVDDataRequest() {
+        DeliverSpeedFVDDataRequest request = new DeliverSpeedFVDDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
     }
 
     public void testMIDASTrafficDataResponse() throws Exception {
@@ -106,43 +121,6 @@ public class SubscriberServiceTest extends
                         .getStatus());
         assertEquals(expectedTMUTrafficDataResponse().getStatus(), marshalingClient.invokeService(createTMUTrafficDataRequest())
                 .getStatus());
-    }
-
-    private DeliverAverageSpeedFusedDataRequest createAverageSpeedFusedDataRequest() {
-        DeliverAverageSpeedFusedDataRequest request = new DeliverAverageSpeedFusedDataRequest();
-        request.setD2LogicalModel(getD2LogicalModel());
-        return request;
-    }
-
-    private DeliverAverageSpeedFusedDataResponse expectedAverageSpeedFusedDataResponse() {
-        DeliverAverageSpeedFusedDataResponse response = new DeliverAverageSpeedFusedDataResponse();
-        response.setStatus("DeliverAverageSpeedFusedDataRequest: Successful Delivery");
-        return response;
-    }
-
-    private DeliverAverageSpeedFvdRequest createAverageSpeedFvdRequest() {
-        DeliverAverageSpeedFvdRequest request = new DeliverAverageSpeedFvdRequest();
-        request.setD2LogicalModel(getD2LogicalModel());
-        return request;
-
-    }
-
-    private DeliverAverageSpeedFvdResponse expectedAverageSpeedFvdResponse() {
-        DeliverAverageSpeedFvdResponse response = new DeliverAverageSpeedFvdResponse();
-        response.setStatus("DeliverAverageSpeedFvdRequest: Successful Delivery");
-        return response;
-    }
-
-    private DeliverAverageSpeedFusedDataRequest createAverageJourneyTimeRequest() {
-        DeliverAverageSpeedFusedDataRequest request = new DeliverAverageSpeedFusedDataRequest();
-        request.setD2LogicalModel(getD2LogicalModel());
-        return request;
-    }
-
-    private DeliverAverageSpeedFusedDataResponse expectedAverageJourneyTimeResponse() {
-        DeliverAverageSpeedFusedDataResponse response = new DeliverAverageSpeedFusedDataResponse();
-        response.setStatus("DeliverAverageSpeedFusedDataRequest: Successful Delivery");
-        return response;
     }
 
     private DeliverMIDASTrafficDataRequest createMIDASTrafficDataRequest() {

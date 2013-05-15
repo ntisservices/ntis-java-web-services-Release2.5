@@ -1,110 +1,111 @@
-<xs:schema version="1.0" targetNamespace="http://www.thalesgroup.com/NTIS/SubscriberService" xmlns:datex2="http://datex2.eu/schema/2/2_0"  xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  
-  <xs:import namespace="http://datex2.eu/schema/2/2_0" schemaLocation="DATEXIISchema_2_2_0withdefinitions.xsd" />
-  <xs:import namespace="http://www.thalesgroup.com/NTIS/Datex2Extensions/1.0Beta1" schemaLocation="DATEXII_NTISExtensions_1.0Beta1.xsd" />
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0"
+	targetNamespace="http://www.thalesgroup.com/NTIS/SubscriberService"
+	xmlns:datex2="http://datex2.eu/schema/2/2_0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xs:import namespace="http://datex2.eu/schema/2/2_0"
+		schemaLocation="DATEXIISchema_2_2_0withdefinitions.xsd" />
+	<xs:import namespace="http://www.thalesgroup.com/NTIS/Datex2Extensions/1.0Beta1"
+		schemaLocation="DATEXII_NTISExtensions_1.0Beta1.xsd" />
+
+	<xs:element name="DeliverMIDASTrafficDataRequest">
+
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel"
+					maxOccurs="1" minOccurs="1"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	
-	<xs:element name="DeliverAverageSpeedFusedDataRequest">
+	<xs:element name="DeliverMIDASTrafficDataResponse">
 		<xs:complexType>
 			<xs:all>
-				<xs:element name="D2LogicalModel" type="datex2:D2LogicalModel" minOccurs="1"/>
-			</xs:all>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="DeliverAverageSpeedFusedDataResponse">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="status" type="xs:string"/>
-			</xs:all>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="DeliverAverageSpeedFvdRequest">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="D2LogicalModel" type="datex2:D2LogicalModel" minOccurs="1"/>
-			</xs:all>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="DeliverAverageSpeedFvdResponse">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="status" type="xs:string"/>
+				<xs:element name="status" type="xs:string" />
 			</xs:all>
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="DeliverAverageJourneyTimeRequest">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="D2LogicalModel" type="datex2:D2LogicalModel" minOccurs="1"/>
-			</xs:all>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="DeliverAverageJourneyTimeResponse">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="status" type="xs:string"/>
-			</xs:all>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="DeliverMIDASTrafficDataRequest">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="D2LogicalModel" type="datex2:D2LogicalModel" minOccurs="1"/>
-			</xs:all>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="DeliverMIDASTrafficDataResponse">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="status" type="xs:string"/>
-			</xs:all>
-		</xs:complexType>
-	</xs:element>
-	
 	<xs:element name="DeliverANPRTrafficDataRequest">
 		<xs:complexType>
-			<xs:all>
-				<xs:element name="D2LogicalModel" type="datex2:D2LogicalModel" minOccurs="1"/>
-			</xs:all>
+			<xs:sequence>
+				<xs:element name="D2LogicalModel" type="datex2:D2LogicalModel"
+					minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="DeliverANPRTrafficDataResponse">
 		<xs:complexType>
 			<xs:all>
-				<xs:element name="status" type="xs:string"/>
+				<xs:element name="status" type="xs:string" />
 			</xs:all>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="DeliverVMSTrafficDataRequest">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel" maxOccurs="1" minOccurs="1"></xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>		
-    <xs:element name="DeliverVMSTrafficDataResponse">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="status" type="xs:string"/>
-			</xs:all>
-		</xs:complexType>
-	</xs:element>
-	
+
 	<xs:element name="DeliverTMUTrafficDataRequest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel" maxOccurs="1" minOccurs="1"></xs:element>
+				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel"
+					maxOccurs="1" minOccurs="1"></xs:element>
 			</xs:sequence>
 		</xs:complexType>
-	</xs:element>		
-    <xs:element name="DeliverTMUTrafficDataResponse">
+	</xs:element>
+	<xs:element name="DeliverTMUTrafficDataResponse">
 		<xs:complexType>
 			<xs:all>
-				<xs:element name="status" type="xs:string"/>
+				<xs:element name="status" type="xs:string" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DeliverVMSTrafficDataRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel"
+					maxOccurs="1" minOccurs="1"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DeliverVMSTrafficDataResponse">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="status" type="xs:string" />
 			</xs:all>
 		</xs:complexType>
 	</xs:element>
 	
+	<xs:element name="DeliverSpeedFVDDataRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel"
+					minOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeliverSpeedFVDDataResponse">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="status" type="xs:string" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DeliverSpeedSensorDataRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel"
+					minOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeliverSpeedSensorDataResponse">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="status" type="xs:string" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+
 </xs:schema>

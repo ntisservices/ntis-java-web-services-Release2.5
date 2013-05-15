@@ -17,14 +17,12 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageJourneyTimeResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFusedDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdRequest;
-import com.thales.ntis.subscriber.datex.DeliverAverageSpeedFvdResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
@@ -41,25 +39,15 @@ public class MarshallingSubscriberServiceClient implements
         SubscriberServiceClient {
 
     @Override
-    public DeliverAverageSpeedFusedDataResponse invokeService(
-            DeliverAverageSpeedFusedDataRequest request) {
-        DeliverAverageSpeedFusedDataResponse response = (DeliverAverageSpeedFusedDataResponse) webServiceTemplate
+    public DeliverSpeedFVDDataResponse invokeService(DeliverSpeedFVDDataRequest request) {
+        DeliverSpeedFVDDataResponse response = (DeliverSpeedFVDDataResponse) webServiceTemplate
                 .marshalSendAndReceive(request);
         return response;
     }
 
     @Override
-    public DeliverAverageSpeedFvdResponse invokeService(
-            DeliverAverageSpeedFvdRequest request) {
-        DeliverAverageSpeedFvdResponse response = (DeliverAverageSpeedFvdResponse) webServiceTemplate
-                .marshalSendAndReceive(request);
-        return response;
-    }
-
-    @Override
-    public DeliverAverageJourneyTimeResponse invokeService(
-            DeliverAverageJourneyTimeRequest request) {
-        DeliverAverageJourneyTimeResponse response = (DeliverAverageJourneyTimeResponse) webServiceTemplate
+    public DeliverSpeedSensorDataResponse invokeService(DeliverSpeedSensorDataRequest request) {
+        DeliverSpeedSensorDataResponse response = (DeliverSpeedSensorDataResponse) webServiceTemplate
                 .marshalSendAndReceive(request);
         return response;
     }
