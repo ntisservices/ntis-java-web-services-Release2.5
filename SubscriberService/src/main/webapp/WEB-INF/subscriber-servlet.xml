@@ -26,19 +26,28 @@
 		class="org.springframework.ws.server.endpoint.mapping.PayloadRootQNameEndpointMapping">
 		<property name="endpointMap">
 			<map>
-				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverSpeedFVDDataRequest"
+				<entry
+					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverSpeedFVDDataRequest"
 					value-ref="subscriberServiceEndpoint" />
-				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverSpeedSensorDataRequest"
+				<entry
+					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverSpeedSensorDataRequest"
 					value-ref="subscriberServiceEndpoint" />
-				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverMIDASTrafficDataRequest"
+				<entry
+					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverMIDASTrafficDataRequest"
 					value-ref="subscriberServiceEndpoint" />
-				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverANPRTrafficDataRequest"
+				<entry
+					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverANPRTrafficDataRequest"
 					value-ref="subscriberServiceEndpoint" />
-				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverVMSTrafficDataRequest"
+				<entry
+					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverVMSTrafficDataRequest"
 					value-ref="subscriberServiceEndpoint" />
-				<entry key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverTMUTrafficDataRequest"
+				<entry
+					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverTMUTrafficDataRequest"
 					value-ref="subscriberServiceEndpoint" />
-					
+				<entry
+					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverNtisModelNotificationDataRequest"
+					value-ref="subscriberServiceEndpoint" />
+
 			</map>
 		</property>
 		<property name="order" value="2" />

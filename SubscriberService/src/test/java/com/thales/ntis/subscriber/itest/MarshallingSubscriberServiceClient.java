@@ -19,6 +19,8 @@ import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataRequest;
@@ -77,6 +79,13 @@ public class MarshallingSubscriberServiceClient implements
     @Override
     public DeliverTMUTrafficDataResponse invokeService(DeliverTMUTrafficDataRequest request) {
         DeliverTMUTrafficDataResponse response = (DeliverTMUTrafficDataResponse) webServiceTemplate
+                .marshalSendAndReceive(request);
+        return response;
+    }
+
+    @Override
+    public DeliverNtisModelNotificationDataResponse invokeService(DeliverNtisModelNotificationDataRequest request) {
+        DeliverNtisModelNotificationDataResponse response = (DeliverNtisModelNotificationDataResponse) webServiceTemplate
                 .marshalSendAndReceive(request);
         return response;
     }

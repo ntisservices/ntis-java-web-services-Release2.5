@@ -21,6 +21,8 @@ import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataRequest;
@@ -32,6 +34,7 @@ import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataResponse;
 import com.thales.ntis.subscriber.services.ANPRTrafficDataService;
 import com.thales.ntis.subscriber.services.FVDTrafficDataService;
 import com.thales.ntis.subscriber.services.MIDASTrafficDataService;
+import com.thales.ntis.subscriber.services.NtisModelNotificationDataService;
 import com.thales.ntis.subscriber.services.SensorTrafficDataService;
 import com.thales.ntis.subscriber.services.TMUTrafficDataService;
 import com.thales.ntis.subscriber.services.VMSTrafficDataService;
@@ -61,6 +64,8 @@ public class SubscriberServiceEndpoint {
 
     @Autowired
     private SensorTrafficDataService sensorTrafficDataService;
+    @Autowired
+    private NtisModelNotificationDataService ntisModelNotificationDataService;
 
     @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverSpeedFVDDataRequest")
     public DeliverSpeedFVDDataResponse handle(
@@ -113,6 +118,13 @@ public class SubscriberServiceEndpoint {
     @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverTMUTrafficDataRequest")
     public DeliverTMUTrafficDataResponse handle(DeliverTMUTrafficDataRequest request) {
         DeliverTMUTrafficDataResponse response = tMUTrafficDataService.handle(request);
+        return response;
+    }
+    
+
+    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverNtisModelNotificationDataRequest")
+    public DeliverNtisModelNotificationDataResponse handle(DeliverNtisModelNotificationDataRequest request) {
+        DeliverNtisModelNotificationDataResponse response = ntisModelNotificationDataService.handle(request);
         return response;
     }
 }

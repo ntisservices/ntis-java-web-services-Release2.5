@@ -23,6 +23,8 @@ import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataRequest;
@@ -72,30 +74,6 @@ public class SubscriberServiceTest extends
 
     }
 
-    private DeliverSpeedSensorDataResponse expectedSpeedSensorDataResponse() {
-        DeliverSpeedSensorDataResponse response = new DeliverSpeedSensorDataResponse();
-        response.setStatus("DeliverSpeedSensorDataRequest: Successful Delivery");
-        return response;
-    }
-
-    private DeliverSpeedSensorDataRequest createDeliverSpeedSensorDataRequest() {
-        DeliverSpeedSensorDataRequest request = new DeliverSpeedSensorDataRequest();
-        request.setD2LogicalModel(getD2LogicalModel());
-        return request;
-    }
-
-    private DeliverSpeedFVDDataResponse expectedSpeedFVDDataResponse() {
-        DeliverSpeedFVDDataResponse response = new DeliverSpeedFVDDataResponse();
-        response.setStatus("DeliverSpeedFVDDataRequest: Successful Delivery");
-        return response;
-    }
-
-    private DeliverSpeedFVDDataRequest createDeliverSpeedFVDDataRequest() {
-        DeliverSpeedFVDDataRequest request = new DeliverSpeedFVDDataRequest();
-        request.setD2LogicalModel(getD2LogicalModel());
-        return request;
-    }
-
     public void testMIDASTrafficDataResponse() throws Exception {
         assertEquals(expectedMIDASTrafficDataResponse().getStatus(),
                 marshalingClient.invokeService(createMIDASTrafficDataRequest())
@@ -121,6 +99,35 @@ public class SubscriberServiceTest extends
                         .getStatus());
         assertEquals(expectedTMUTrafficDataResponse().getStatus(), marshalingClient.invokeService(createTMUTrafficDataRequest())
                 .getStatus());
+    }
+    
+    public void testNtisModelNotificationDataResponse() throws Exception {
+        assertEquals(expectedNtisModelNotificationDataResponse().getStatus(), marshalingClient.invokeService(createNtisModelNotificationDataRequest())
+                .getStatus());
+    }
+
+    private DeliverSpeedSensorDataResponse expectedSpeedSensorDataResponse() {
+        DeliverSpeedSensorDataResponse response = new DeliverSpeedSensorDataResponse();
+        response.setStatus("DeliverSpeedSensorDataRequest: Successful Delivery");
+        return response;
+    }
+
+    private DeliverSpeedSensorDataRequest createDeliverSpeedSensorDataRequest() {
+        DeliverSpeedSensorDataRequest request = new DeliverSpeedSensorDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
+    }
+
+    private DeliverSpeedFVDDataResponse expectedSpeedFVDDataResponse() {
+        DeliverSpeedFVDDataResponse response = new DeliverSpeedFVDDataResponse();
+        response.setStatus("DeliverSpeedFVDDataRequest: Successful Delivery");
+        return response;
+    }
+
+    private DeliverSpeedFVDDataRequest createDeliverSpeedFVDDataRequest() {
+        DeliverSpeedFVDDataRequest request = new DeliverSpeedFVDDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
     }
 
     private DeliverMIDASTrafficDataRequest createMIDASTrafficDataRequest() {
@@ -152,9 +159,21 @@ public class SubscriberServiceTest extends
         response.setStatus("DeliverVMSTrafficDataRequest: Successful Delivery");
         return response;
     }
+    
+    private DeliverNtisModelNotificationDataResponse expectedNtisModelNotificationDataResponse() {
+        DeliverNtisModelNotificationDataResponse response = new DeliverNtisModelNotificationDataResponse();
+        response.setStatus("DeliverNtisModelNotificationDataRequest: Successful Delivery");
+        return response;
+    }
 
     private DeliverVMSTrafficDataRequest createVMSTrafficDataRequest() {
         DeliverVMSTrafficDataRequest request = new DeliverVMSTrafficDataRequest();
+        request.setD2LogicalModel(getD2LogicalModel());
+        return request;
+    }
+    
+    private DeliverNtisModelNotificationDataRequest createNtisModelNotificationDataRequest() {
+        DeliverNtisModelNotificationDataRequest request = new DeliverNtisModelNotificationDataRequest();
         request.setD2LogicalModel(getD2LogicalModel());
         return request;
     }

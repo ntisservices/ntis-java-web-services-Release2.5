@@ -17,6 +17,8 @@ import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataRequest;
+import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
 import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
 import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataRequest;
@@ -43,4 +45,7 @@ public interface SubscriberServiceClient {
 
     public DeliverTMUTrafficDataResponse invokeService(
             DeliverTMUTrafficDataRequest request);
+
+    public DeliverNtisModelNotificationDataResponse invokeService(
+            DeliverNtisModelNotificationDataRequest request);
 }

@@ -108,4 +108,19 @@
 		</xs:complexType>
 	</xs:element>
 
+	<xs:element name="DeliverNtisModelNotificationDataRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="d2LogicalModel" type="datex2:D2LogicalModel"
+					minOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeliverNtisModelNotificationDataResponse">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="status" type="xs:string" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>
