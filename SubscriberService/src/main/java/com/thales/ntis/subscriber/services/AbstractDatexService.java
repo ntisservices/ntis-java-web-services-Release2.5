@@ -13,29 +13,24 @@
 
 package com.thales.ntis.subscriber.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
-import com.thales.ntis.subscriber.datex.SiteMeasurements;
-import com.thales.ntis.subscriber.model.TrafficData;
 
 public abstract class AbstractDatexService {
 
     private static final Logger LOG = LoggerFactory
             .getLogger(AbstractDatexService.class);
 
-    public boolean validate(D2LogicalModel d2LogicalModel) {
+    public boolean validate(D2LogicalModel request) {
 
         // D2LogicalModel is at the base element of the request so must not be
         // null.
-        if (d2LogicalModel != null) {
+        if (request != null) {
 
             if (LOG.isDebugEnabled()) {
-                LOG.debug("D2LogicalModel is " + d2LogicalModel);
+                LOG.debug("D2LogicalModel is " + request);
             }
 
         } else {
@@ -44,57 +39,18 @@ public abstract class AbstractDatexService {
         }
 
         // Exchange must not be null.
-        if (d2LogicalModel.getExchange() != null) {
+        if (request.getExchange() != null) {
             LOG.info("Country is "
-                    + d2LogicalModel.getExchange().getSupplierIdentification()
+                    + request.getExchange().getSupplierIdentification()
                             .getCountry().value());
             LOG.info("National Identifier is "
-                    + d2LogicalModel.getExchange().getSupplierIdentification()
+                    + request.getExchange().getSupplierIdentification()
                             .getNationalIdentifier());
         } else {
             LOG.error("Exchange is null! Incoming request does not appear to be valid!");
             return false;
         }
         return true;
-    }
-
-    /**
-     * The method below demonstrates how to extract SiteMeasurement from the
-     * incoming requests and convert it into a list of your own model classes.
-     * 
-     * @param siteMeasurements
-     * @return
-     */
-    public List<TrafficData> convertToModelObjects(final List<SiteMeasurements> siteMeasurements) {
-
-        LOG.info("Cycling through the list of site measurements");
-        LOG.info("Number of site measurements returned: " + siteMeasurements.size());
-
-        List<TrafficData> trafficDataList = new ArrayList<TrafficData>();
-
-        for (SiteMeasurements measurement : siteMeasurements) {
-            TrafficData trafficDatum = new TrafficData();
-
-            // This is how you can the Site Reference ID and set it on your
-            // domain class.
-            trafficDatum.setGuid(measurement.getMeasurementSiteReference()
-                    .getId());
-
-            /*
-             * You could calculate the lane and set it on your model object. For
-             * example trafficDatum.setLaneNumber(0);
-             * 
-             * Convert the basic data to either TrafficFlow,
-             * TrafficConcentration, TrafficSpeed or TrafficHeadway object and
-             * extract the values as below.
-             * 
-             * TrafficSpeed trafficSpeed = (TrafficSpeed) measurement
-             * .getMeasuredValue().get(0).getMeasuredValue() .getBasicData();
-             */
-
-            trafficDataList.add(trafficDatum);
-        }
-        return trafficDataList;
     }
 
 }

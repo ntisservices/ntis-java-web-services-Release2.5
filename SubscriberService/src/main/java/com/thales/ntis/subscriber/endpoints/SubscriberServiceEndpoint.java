@@ -13,31 +13,15 @@
 
 package com.thales.ntis.subscriber.endpoints;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 
-import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverNtisModelNotificationDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverSpeedSensorDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataResponse;
-import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataResponse;
-import com.thales.ntis.subscriber.services.ANPRTrafficDataService;
-import com.thales.ntis.subscriber.services.FVDTrafficDataService;
-import com.thales.ntis.subscriber.services.MIDASTrafficDataService;
-import com.thales.ntis.subscriber.services.NtisModelNotificationDataService;
-import com.thales.ntis.subscriber.services.SensorTrafficDataService;
-import com.thales.ntis.subscriber.services.TMUTrafficDataService;
-import com.thales.ntis.subscriber.services.VMSTrafficDataService;
+import com.thales.ntis.subscriber.datex.D2LogicalModel;
+import com.thales.ntis.subscriber.services.DatexIIService;
 
 /**
  * This is a reference SubscriberServiceEndpoint. Business logic is delegated to
@@ -47,84 +31,14 @@ import com.thales.ntis.subscriber.services.VMSTrafficDataService;
 @Endpoint("subscriberServiceEndpoint")
 public class SubscriberServiceEndpoint {
 
-    @Autowired
-    private ANPRTrafficDataService aNPRTrafficDataService;
+    private Logger log = LoggerFactory.getLogger(SubscriberServiceEndpoint.class);
 
     @Autowired
-    private MIDASTrafficDataService mIDASTrafficDataService;
+    private DatexIIService datexIIService;
 
-    @Autowired
-    private VMSTrafficDataService vMSTrafficDataService;
-
-    @Autowired
-    private TMUTrafficDataService tMUTrafficDataService;
-
-    @Autowired
-    private FVDTrafficDataService fvdTrafficDataService;
-
-    @Autowired
-    private SensorTrafficDataService sensorTrafficDataService;
-    @Autowired
-    private NtisModelNotificationDataService ntisModelNotificationDataService;
-
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverSpeedFVDDataRequest")
-    public DeliverSpeedFVDDataResponse handle(
-            DeliverSpeedFVDDataRequest request) {
-
-        // Delegate the business logic implementation to a service.
-        DeliverSpeedFVDDataResponse response = fvdTrafficDataService.handle(request);
-
-        return response;
-    }
-
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverSpeedSensorDataRequest")
-    public DeliverSpeedSensorDataResponse handle(
-            DeliverSpeedSensorDataRequest request) {
-
-        // Delegate the business logic implementation to a service.
-        DeliverSpeedSensorDataResponse response = sensorTrafficDataService.handle(request);
-
-        return response;
-    }
-
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverMIDASTrafficDataRequest")
-    public DeliverMIDASTrafficDataResponse handle(
-            DeliverMIDASTrafficDataRequest request) {
-
-        // Delegate the business logic implementation to a service.
-        DeliverMIDASTrafficDataResponse response = mIDASTrafficDataService
-                .handle(request);
-
-        return response;
-    }
-
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverANPRTrafficDataRequest")
-    public DeliverANPRTrafficDataResponse handle(
-            DeliverANPRTrafficDataRequest request) {
-
-        // Delegate the business logic implementation to a service.
-        DeliverANPRTrafficDataResponse response = aNPRTrafficDataService
-                .handle(request);
-
-        return response;
-    }
-
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverVMSTrafficDataRequest")
-    public DeliverVMSTrafficDataResponse handle(DeliverVMSTrafficDataRequest request) {
-        DeliverVMSTrafficDataResponse response = vMSTrafficDataService.handle(request);
-        return response;
-    }
-
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverTMUTrafficDataRequest")
-    public DeliverTMUTrafficDataResponse handle(DeliverTMUTrafficDataRequest request) {
-        DeliverTMUTrafficDataResponse response = tMUTrafficDataService.handle(request);
-        return response;
-    }
-    
-
-    @PayloadRoot(namespace = "http://www.thalesgroup.com/NTIS/SubscriberService", localPart = "DeliverNtisModelNotificationDataRequest")
-    public DeliverNtisModelNotificationDataResponse handle(DeliverNtisModelNotificationDataRequest request) {
-        DeliverNtisModelNotificationDataResponse response = ntisModelNotificationDataService.handle(request);
-        return response;
+    @PayloadRoot(namespace = "http://datex2.eu/schema/2/2_0", localPart = "d2LogicalModel")
+    public void handle(@RequestPayload D2LogicalModel request) {
+        log.info("Received request for subscription");
+        datexIIService.handle(request);
     }
 }

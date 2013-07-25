@@ -5,6 +5,12 @@
       <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="_GenericPublicationExtensionType">
+    <xs:sequence>
+      <xs:element name="ntisModelVersionInformation" type="D2LogicalModel:NtisModelVersionInformation" minOccurs="0" />
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="_IntermediatePointOnLinearElement">
     <xs:sequence>
       <xs:element name="referent" type="D2LogicalModel:Referent" minOccurs="1" maxOccurs="1" />
@@ -89,6 +95,12 @@
       <xs:element name="vmsText" type="D2LogicalModel:VmsText" minOccurs="1" maxOccurs="1" />
     </xs:sequence>
     <xs:attribute name="pageNumber" type="xs:int" use="required" />
+  </xs:complexType>
+  <xs:complexType name="_TrafficSpeedExtensionType">
+    <xs:sequence>
+      <xs:element name="speedFvdOnly" type="D2LogicalModel:SpeedFvdOnly" minOccurs="0" />
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
   </xs:complexType>
   <xs:complexType name="_VmsDynamicCharacteristicsPictogramDisplayAreaIndexVmsPictogramDisplayCharacteristics">
     <xs:sequence>
@@ -4101,7 +4113,7 @@
               <xs:documentation>The name of the generic publication.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="genericPublicationExtension" type="D2LogicalModel:_ExtensionType" minOccurs="0" />
+          <xs:element name="genericPublicationExtension" type="D2LogicalModel:_GenericPublicationExtensionType" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -6339,6 +6351,28 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="NtisModelVersionInformation">
+    <xs:annotation>
+      <xs:documentation>Version information for an instance of a published NTIS Network and Asset Reference Model.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="modelVersion" type="D2LogicalModel:String" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Version of the NTIS Model.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelPublicationTime" type="D2LogicalModel:DateTime" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Time and date that this version of the NTIS Model was made available for publication.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelFilename" type="D2LogicalModel:String" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Name of the packaged NTIS Model file, as published by the NTIS system.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="NumberOfAxlesCharacteristic">
     <xs:annotation>
       <xs:documentation>Number of axles characteristic of a vehicle.</xs:documentation>
@@ -9405,6 +9439,18 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="SpeedFvdOnly">
+    <xs:annotation>
+      <xs:documentation>NTIS TrafficSpeed extension class: includes attributes for speed calculations derived from combinations of Floating Vehicle Data (FVD) and Sensor (Measurement Site) Data.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="speed" type="D2LogicalModel:KilometresPerHour" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Calculated speed value, derived from Floating Vehicle Data (FVD).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="SpeedManagement">
     <xs:annotation>
       <xs:documentation>Speed management action that is instigated by the network/road operator.</xs:documentation>
@@ -10796,7 +10842,7 @@
             </xs:annotation>
           </xs:element>
           <xs:element name="speedPercentile" type="D2LogicalModel:SpeedPercentile" minOccurs="0" />
-          <xs:element name="trafficSpeedExtension" type="D2LogicalModel:_ExtensionType" minOccurs="0" />
+          <xs:element name="trafficSpeedExtension" type="D2LogicalModel:_TrafficSpeedExtensionType" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -12128,9 +12174,25 @@
       </xs:element>
       <xs:element name="vmsDynamicCharacteristics" type="D2LogicalModel:VmsDynamicCharacteristics" minOccurs="0" />
       <xs:element name="vmsFault" type="D2LogicalModel:VmsFault" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="vmsExtension" type="D2LogicalModel:_ExtensionType" minOccurs="0" />
+      <xs:element name="vmsExtension" type="D2LogicalModel:_VmsExtensionFaultType" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="_VmsExtensionFaultType">
+    <xs:sequence>
+      <xs:element name="vmsFaultDescription" type="D2LogicalModel:VmsDatexFaultEnum" minOccurs="0" maxOccurs="unbounded" />
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name = "VmsDatexFaultEnum">
+	  <xs:restriction base="xs:string">
+        <xs:enumeration value="Forced Off"/>
+        <xs:enumeration value="Message Displaced"/>
+        <xs:enumeration value="Severe Dependency Fault"/>
+        <xs:enumeration value="Unobtainable"/>
+        <xs:enumeration value="Message Fault"/>
+        <xs:enumeration value="Non- commissioned"/>    
+	  </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="VmsDatexPictogramEnum">
     <xs:annotation>
       <xs:documentation>Types of main pictograms.</xs:documentation>
@@ -13203,12 +13265,12 @@
       </xs:element>
       <xs:element name="pictogramPositionAbsolute" type="D2LogicalModel:PositionAbsoluteEnum" minOccurs="0" maxOccurs="1">
         <xs:annotation>
-          <xs:documentation>The position of the area in which the pictogram is displayed, i.e. at the , right, top or bottom of the VMS display.</xs:documentation>
+          <xs:documentation>The position of the area in which the pictogram is displayed, i.e. at the left, right, top or bottom of the VMS display.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="pictogramPositionX" type="D2LogicalModel:MetresAsFloat" minOccurs="0" maxOccurs="1">
         <xs:annotation>
-          <xs:documentation>The X-coordinate (horizontal) position of the area in which the pictogram is displayed measured from the bottom  of the sign's overall display area to the bottom left of the specific pictogram display area.</xs:documentation>
+          <xs:documentation>The X-coordinate (horizontal) position of the area in which the pictogram is displayed measured from the bottom left of the sign's overall display area to the bottom left of the specific pictogram display area.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="pictogramPositionY" type="D2LogicalModel:MetresAsFloat" minOccurs="0" maxOccurs="1">

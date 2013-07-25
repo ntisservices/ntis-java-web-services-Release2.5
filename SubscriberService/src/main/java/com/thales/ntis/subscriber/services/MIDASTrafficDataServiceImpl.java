@@ -13,6 +13,7 @@
 
 package com.thales.ntis.subscriber.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -23,8 +24,6 @@ import org.springframework.stereotype.Service;
 import com.thales.ntis.subscriber.dao.NetworkModelDao;
 import com.thales.ntis.subscriber.datex.BasicData;
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
-import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverMIDASTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.MeasuredDataPublication;
 import com.thales.ntis.subscriber.datex.MeasuredValue;
 import com.thales.ntis.subscriber.datex.SiteMeasurements;
@@ -40,8 +39,8 @@ import com.thales.ntis.subscriber.model.TrafficData;
  * 
  */
 @Service
-public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
-        MIDASTrafficDataService {
+public class MIDASTrafficDataServiceImpl implements
+        TrafficDataService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MIDASTrafficDataServiceImpl.class);
 
@@ -56,17 +55,11 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
      * 
      */
     @Override
-    public DeliverMIDASTrafficDataResponse handle(
-            DeliverMIDASTrafficDataRequest request) {
+    public void handle(
+            D2LogicalModel d2LogicalModel) {
 
-        LOG.info("NEW DeliverMIDASTrafficDataRequest RECEIVED!");
-        D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
+        LOG.info("handling MIDAS Request !");
         MeasuredDataPublication measuredDataPublication = null;
-
-        // Validate the D2Logical Model
-        if (!validate(d2LogicalModel)) {
-            throw new RuntimeException("Incoming request does not appear to be valid!");
-        }
 
         // MeasuredDataPublication class contains the feed description, feed
         // type, site measurements, publication time and
@@ -74,6 +67,8 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
         try {
             measuredDataPublication = (MeasuredDataPublication) d2LogicalModel
                     .getPayloadPublication();
+
+            LOG.info("Got MeasuredDataPublication from request");
 
             if (measuredDataPublication != null
                     && measuredDataPublication.getHeaderInformation() != null) {
@@ -156,10 +151,7 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
             LOG.error(e.getMessage());
         }
 
-        DeliverMIDASTrafficDataResponse response = new DeliverMIDASTrafficDataResponse();
-        response.setStatus("DeliverMIDASTrafficDataRequest: Successful Delivery");
-
-        return response;
+        LOG.info("MIDAS Request: Processing Completed Successfuly");
     }
 
     /*
@@ -183,5 +175,44 @@ public class MIDASTrafficDataServiceImpl extends AbstractDatexService implements
         }
 
         return (measuredValueIndex / MAX_SENSOR_READINGS) + startingLane;
+    }
+
+    /**
+     * The method below demonstrates how to extract SiteMeasurement from the
+     * incoming requests and convert it into a list of your own model classes.
+     * 
+     * @param siteMeasurements
+     * @return
+     */
+    public List<TrafficData> convertToModelObjects(final List<SiteMeasurements> siteMeasurements) {
+
+        LOG.info("Cycling through the list of site measurements");
+        LOG.info("Number of site measurements returned: " + siteMeasurements.size());
+
+        List<TrafficData> trafficDataList = new ArrayList<TrafficData>();
+
+        for (SiteMeasurements measurement : siteMeasurements) {
+            TrafficData trafficDatum = new TrafficData();
+
+            // This is how you can the Site Reference ID and set it on your
+            // domain class.
+            trafficDatum.setGuid(measurement.getMeasurementSiteReference()
+                    .getId());
+
+            /*
+             * You could calculate the lane and set it on your model object. For
+             * example trafficDatum.setLaneNumber(0);
+             * 
+             * Convert the basic data to either TrafficFlow,
+             * TrafficConcentration, TrafficSpeed or TrafficHeadway object and
+             * extract the values as below.
+             * 
+             * TrafficSpeed trafficSpeed = (TrafficSpeed) measurement
+             * .getMeasuredValue().get(0).getMeasuredValue() .getBasicData();
+             */
+
+            trafficDataList.add(trafficDatum);
+        }
+        return trafficDataList;
     }
 }

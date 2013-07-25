@@ -1,143 +1,418 @@
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-  xmlns:ns3="http://datex2.eu/schema/2/2_0" xmlns:sub="http://www.thalesgroup.com/NTIS/SubscriberService"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <soapenv:Header />
-  <soapenv:Body>
-    <p:DeliverTMUTrafficDataRequest xmlns:d2lm="http://datex2.eu/schema/2/2_0" xmlns:p="http://www.thalesgroup.com/NTIS/SubscriberService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thalesgroup.com/NTIS/SubscriberService subscriber.xsd ">
-	<p:d2LogicalModel xmlns:ns2="http://datex2.eu/schema/2/2_0" xmlns:ns3="http://www.thalesgroup.com/NTIS/Datex2Extensions/1.0Beta1"
-		modelBaseVersion="2">
-		<ns2:exchange>
-			<ns2:supplierIdentification>
-				<ns2:country>gb</ns2:country>
-				<ns2:nationalIdentifier>NTIS DATEX II TMU Data
-			</ns2:nationalIdentifier>
-			</ns2:supplierIdentification>
-		</ns2:exchange>
-		<ns2:payloadPublication lang="en"
-			xsi:type="ns2:MeasuredDataPublication" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-			<ns2:feedDescription>
-				<ns2:values>
-					<ns2:value>NTIS DATEX II TMU Data</ns2:value>
-				</ns2:values>
-			</ns2:feedDescription>
-			<ns2:feedType>TMU Data</ns2:feedType>
-			<ns2:publicationTime>2012-10-26T09:23:00.037+01:00
-		</ns2:publicationTime>
-			<ns2:publicationCreator>
-				<ns2:country>gb</ns2:country>
-				<ns2:nationalIdentifier>NTIS DATEX II TMU Data
-			</ns2:nationalIdentifier>
-			</ns2:publicationCreator>
-			<ns2:measurementSiteTableReference
-				targetClass="MeasurementSiteTable" id="" version="1" />
-			<ns2:headerInformation>
-				<ns2:confidentiality>restrictedToAuthoritiesTrafficOperatorsAndPublishers</ns2:confidentiality>
-				<ns2:informationStatus>real</ns2:informationStatus>
-				<ns2:urgency>normalUrgency</ns2:urgency>
-			</ns2:headerInformation>
-			<ns2:siteMeasurements>
-				<ns2:measurementSiteReference
-					targetClass="MeasurementSiteRecord" version=""
-					id="C6E971CACAD3789BE0433CC411ACCCEA" />
-				<ns2:measurementTimeDefault>2012-04-12T11:02:00.000+01:00</ns2:measurementTimeDefault>
-				<ns2:measuredValue index="0">
-					<ns2:measuredValue>
-						<ns2:basicData xsi:type="ns2:TrafficSpeed">
-							<ns2:averageVehicleSpeed>
-								<ns2:speed>10.0</ns2:speed>
-							</ns2:averageVehicleSpeed>
-						</ns2:basicData>
-					</ns2:measuredValue>
-				</ns2:measuredValue>
-				<ns2:measuredValue index="1">
-					<ns2:measuredValue>
-						<ns2:basicData xsi:type="ns2:TrafficFlow">
-							<ns2:forVehiclesWithCharacteristicsOf>
-								<ns2:lengthCharacteristic>
-									<ns2:comparisonOperator>greaterThan</ns2:comparisonOperator>
-									<ns2:vehicleLength>5.2</ns2:vehicleLength>
-								</ns2:lengthCharacteristic>
-							</ns2:forVehiclesWithCharacteristicsOf>
-							<ns2:vehicleFlow>
-								<ns2:vehicleFlowRate>960</ns2:vehicleFlowRate>
-							</ns2:vehicleFlow>
-						</ns2:basicData>
-					</ns2:measuredValue>
-				</ns2:measuredValue>
-				<ns2:measuredValue index="2">
-					<ns2:measuredValue>
-						<ns2:basicData xsi:type="ns2:TrafficFlow">
-							<ns2:forVehiclesWithCharacteristicsOf>
-								<ns2:lengthCharacteristic>
-									<ns2:comparisonOperator>greaterThan</ns2:comparisonOperator>
-									<ns2:vehicleLength>5.2</ns2:vehicleLength>
-								</ns2:lengthCharacteristic>
-								<ns2:lengthCharacteristic>
-									<ns2:comparisonOperator>lessThanOrEqualTo</ns2:comparisonOperator>
-									<ns2:vehicleLength>6.6</ns2:vehicleLength>
-								</ns2:lengthCharacteristic>
-							</ns2:forVehiclesWithCharacteristicsOf>
-							<ns2:vehicleFlow>
-								<ns2:vehicleFlowRate>1080</ns2:vehicleFlowRate>
-							</ns2:vehicleFlow>
-						</ns2:basicData>
-					</ns2:measuredValue>
-				</ns2:measuredValue>
-				<ns2:measuredValue index="3">
-					<ns2:measuredValue>
-						<ns2:basicData xsi:type="ns2:TrafficFlow">
-							<ns2:forVehiclesWithCharacteristicsOf>
-								<ns2:lengthCharacteristic>
-									<ns2:comparisonOperator>greaterThan</ns2:comparisonOperator>
-									<ns2:vehicleLength>6.6</ns2:vehicleLength>
-								</ns2:lengthCharacteristic>
-								<ns2:lengthCharacteristic>
-									<ns2:comparisonOperator>lessThanOrEqualTo</ns2:comparisonOperator>
-									<ns2:vehicleLength>11.6</ns2:vehicleLength>
-								</ns2:lengthCharacteristic>
-							</ns2:forVehiclesWithCharacteristicsOf>
-							<ns2:vehicleFlow>
-								<ns2:vehicleFlowRate>1140</ns2:vehicleFlowRate>
-							</ns2:vehicleFlow>
-						</ns2:basicData>
-					</ns2:measuredValue>
-				</ns2:measuredValue>
-				<ns2:measuredValue index="4">
-					<ns2:measuredValue>
-						<ns2:basicData xsi:type="ns2:TrafficFlow">
-							<ns2:forVehiclesWithCharacteristicsOf>
-								<ns2:lengthCharacteristic>
-									<ns2:comparisonOperator>greaterThan</ns2:comparisonOperator>
-									<ns2:vehicleLength>11.6</ns2:vehicleLength>
-								</ns2:lengthCharacteristic>
-							</ns2:forVehiclesWithCharacteristicsOf>
-							<ns2:vehicleFlow>
-								<ns2:vehicleFlowRate>1200</ns2:vehicleFlowRate>
-							</ns2:vehicleFlow>
-						</ns2:basicData>
-					</ns2:measuredValue>
-				</ns2:measuredValue>
-				<ns2:measuredValue index="5">
-					<ns2:measuredValue>
-						<ns2:basicData xsi:type="ns2:TrafficHeadway">
-							<ns2:averageTimeHeadway>
-								<ns2:duration>25.0</ns2:duration>
-							</ns2:averageTimeHeadway>
-						</ns2:basicData>
-					</ns2:measuredValue>
-				</ns2:measuredValue>
-				<ns2:measuredValue index="6">
-					<ns2:measuredValue>
-						<ns2:basicData xsi:type="ns2:TrafficConcentration">
-							<ns2:occupancy>
-								<ns2:percentage>16.0</ns2:percentage>
-							</ns2:occupancy>
-						</ns2:basicData>
-					</ns2:measuredValue>
-				</ns2:measuredValue>
-			</ns2:siteMeasurements>
-		</ns2:payloadPublication>
-	</p:d2LogicalModel>
-</p:DeliverTMUTrafficDataRequest>
-  </soapenv:Body>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header />
+	<soapenv:Body>
+		<d2lm:d2LogicalModel modelBaseVersion="2"
+			xmlns:d2lm="http://datex2.eu/schema/2/2_0">
+			<d2lm:exchange>
+				<d2lm:supplierIdentification>
+					<d2lm:country>gb</d2lm:country>
+					<d2lm:nationalIdentifier>NTIS</d2lm:nationalIdentifier>
+				</d2lm:supplierIdentification>
+			</d2lm:exchange>
+			<d2lm:payloadPublication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xsi:type="d2lm:MeasuredDataPublication" lang="en">
+				<d2lm:feedType>TMU Loop Traffic Data</d2lm:feedType>
+				<d2lm:publicationTime>2013-07-10T14:54:21.555+01:00
+				</d2lm:publicationTime>
+				<d2lm:publicationCreator>
+					<d2lm:country>gb</d2lm:country>
+					<d2lm:nationalIdentifier>NTIS</d2lm:nationalIdentifier>
+				</d2lm:publicationCreator>
+				<d2lm:measurementSiteTableReference
+					targetClass="MeasurementSiteTable" version="56.0"
+					id="NTIS_TMU_Measurement_Sites" />
+				<d2lm:headerInformation>
+					<d2lm:confidentiality>restrictedToAuthoritiesTrafficOperatorsAndPublishers
+					</d2lm:confidentiality>
+					<d2lm:informationStatus>real</d2lm:informationStatus>
+					<d2lm:urgency>normalUrgency</d2lm:urgency>
+				</d2lm:headerInformation>
+				<d2lm:siteMeasurements>
+					<d2lm:measurementSiteReference
+						targetClass="MeasurementSiteRecord" version="56.0"
+						id="C6E971CAD28D789BE0433CC411ACCCEA" />
+					<d2lm:measurementTimeDefault>2012-04-12T11:01:00.000Z
+					</d2lm:measurementTimeDefault>
+					<d2lm:measuredValue index="0">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficSpeed">
+								<d2lm:averageVehicleSpeed>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:speed>10.0</d2lm:speed>
+								</d2lm:averageVehicleSpeed>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="1">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficHeadway">
+								<d2lm:averageTimeHeadway>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:duration>15.0</d2lm:duration>
+								</d2lm:averageTimeHeadway>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="2">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficConcentration">
+								<d2lm:occupancy>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:percentage>16.0</d2lm:percentage>
+								</d2lm:occupancy>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="3">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>660</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="4">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>720</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="5">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>780</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="6">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>840</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+				</d2lm:siteMeasurements>
+				<d2lm:siteMeasurements>
+					<d2lm:measurementSiteReference
+						targetClass="MeasurementSiteRecord" version="56.0"
+						id="C6E971CAD28D789BE0433CC411ACCCEA" />
+					<d2lm:measurementTimeDefault>2012-04-12T11:02:00.000Z
+					</d2lm:measurementTimeDefault>
+					<d2lm:measuredValue index="0">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficSpeed">
+								<d2lm:averageVehicleSpeed>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:speed>20.0</d2lm:speed>
+								</d2lm:averageVehicleSpeed>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="1">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficHeadway">
+								<d2lm:averageTimeHeadway>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:duration>25.0</d2lm:duration>
+								</d2lm:averageTimeHeadway>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="2">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficConcentration">
+								<d2lm:occupancy>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:percentage>26.0</d2lm:percentage>
+								</d2lm:occupancy>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="3">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>1260</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="4">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>1320</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="5">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>1380</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="6">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>1440</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+				</d2lm:siteMeasurements>
+				<d2lm:siteMeasurements>
+					<d2lm:measurementSiteReference
+						targetClass="MeasurementSiteRecord" version="56.0"
+						id="C6E971CAD28D789BE0433CC411ACCCEA" />
+					<d2lm:measurementTimeDefault>2012-04-12T11:03:00.000Z
+					</d2lm:measurementTimeDefault>
+					<d2lm:measuredValue index="0">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficSpeed">
+								<d2lm:averageVehicleSpeed>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:speed>30.0</d2lm:speed>
+								</d2lm:averageVehicleSpeed>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="1">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficHeadway">
+								<d2lm:averageTimeHeadway>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:duration>35.0</d2lm:duration>
+								</d2lm:averageTimeHeadway>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="2">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficConcentration">
+								<d2lm:occupancy>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:percentage>36.0</d2lm:percentage>
+								</d2lm:occupancy>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="3">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>1860</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="4">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>1920</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="5">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>1980</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="6">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>2040</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+				</d2lm:siteMeasurements>
+				<d2lm:siteMeasurements>
+					<d2lm:measurementSiteReference
+						targetClass="MeasurementSiteRecord" version="56.0"
+						id="C6E971CAD28D789BE0433CC411ACCCEA" />
+					<d2lm:measurementTimeDefault>2012-04-12T11:04:00.000Z
+					</d2lm:measurementTimeDefault>
+					<d2lm:measuredValue index="0">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficSpeed">
+								<d2lm:averageVehicleSpeed>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:speed>40.0</d2lm:speed>
+								</d2lm:averageVehicleSpeed>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="1">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficHeadway">
+								<d2lm:averageTimeHeadway>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:duration>45.0</d2lm:duration>
+								</d2lm:averageTimeHeadway>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="2">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficConcentration">
+								<d2lm:occupancy>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:percentage>46.0</d2lm:percentage>
+								</d2lm:occupancy>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="3">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>2460</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="4">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>2520</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="5">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>2580</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="6">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>2640</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+				</d2lm:siteMeasurements>
+				<d2lm:siteMeasurements>
+					<d2lm:measurementSiteReference
+						targetClass="MeasurementSiteRecord" version="56.0"
+						id="C6E971CAD28D789BE0433CC411ACCCEA" />
+					<d2lm:measurementTimeDefault>2012-04-12T11:05:00.000Z
+					</d2lm:measurementTimeDefault>
+					<d2lm:measuredValue index="0">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficSpeed">
+								<d2lm:averageVehicleSpeed>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:speed>50.0</d2lm:speed>
+								</d2lm:averageVehicleSpeed>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="1">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficHeadway">
+								<d2lm:averageTimeHeadway>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:duration>55.0</d2lm:duration>
+								</d2lm:averageTimeHeadway>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="2">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficConcentration">
+								<d2lm:occupancy>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:percentage>56.0</d2lm:percentage>
+								</d2lm:occupancy>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="3">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>3060</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="4">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>3120</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="5">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>3180</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+					<d2lm:measuredValue index="6">
+						<d2lm:measuredValue>
+							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
+								<d2lm:vehicleFlow>
+									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:vehicleFlowRate>3240</d2lm:vehicleFlowRate>
+								</d2lm:vehicleFlow>
+							</d2lm:basicData>
+						</d2lm:measuredValue>
+					</d2lm:measuredValue>
+				</d2lm:siteMeasurements>
+			</d2lm:payloadPublication>
+		</d2lm:d2LogicalModel>
+	</soapenv:Body>
 </soapenv:Envelope>

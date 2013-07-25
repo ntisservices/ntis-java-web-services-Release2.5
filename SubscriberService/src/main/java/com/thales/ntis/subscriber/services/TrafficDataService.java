@@ -13,12 +13,11 @@
 
 package com.thales.ntis.subscriber.services;
 
-import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
+import com.thales.ntis.subscriber.datex.D2LogicalModel;
 
-public interface ANPRTrafficDataService {
+public interface TrafficDataService {
 
-    public abstract DeliverANPRTrafficDataResponse handle(
-            DeliverANPRTrafficDataRequest request);
+    public void handle(
+            D2LogicalModel request);
 
 }

@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
-import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverVMSTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.TextPage;
 import com.thales.ntis.subscriber.datex.VmsMessage;
 import com.thales.ntis.subscriber.datex.VmsMessageIndexVmsMessage;
@@ -19,19 +17,15 @@ import com.thales.ntis.subscriber.datex.VmsUnit;
 import com.thales.ntis.subscriber.datex.VmsUnitVmsIndexVms;
 
 @Service
-public class VMSTrafficDataServiceImpl extends AbstractDatexService implements VMSTrafficDataService {
+public class VMSTrafficDataServiceImpl implements TrafficDataService {
 
     private static final Logger LOG = LoggerFactory.getLogger(VMSTrafficDataServiceImpl.class);
 
     @Override
-    public DeliverVMSTrafficDataResponse handle(DeliverVMSTrafficDataRequest request) {
+    public void handle(D2LogicalModel d2LogicalModel) {
 
-        LOG.info("NEW DeliverVMSTrafficDataRequest Received!");
+        LOG.info("handling VMS Request !");
 
-        D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
-        if (!validate(d2LogicalModel)) {
-            throw new RuntimeException("Incoming request does not appear to be valid!");
-        }
         try {
             VmsPublication payloadPublication = (VmsPublication)
                     d2LogicalModel.getPayloadPublication();
@@ -72,9 +66,7 @@ public class VMSTrafficDataServiceImpl extends AbstractDatexService implements V
             LOG.error(e.getMessage());
         }
 
-        DeliverVMSTrafficDataResponse response = new DeliverVMSTrafficDataResponse();
-        response.setStatus("DeliverVMSTrafficDataRequest: Successful Delivery");
-        return response;
+        LOG.info("VMSTraffic Data Request: Processing Completed Successfuly");
     }
 
 }

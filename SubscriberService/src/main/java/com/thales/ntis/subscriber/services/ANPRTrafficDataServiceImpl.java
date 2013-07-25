@@ -18,58 +18,40 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
-import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverANPRTrafficDataResponse;
-import com.thales.ntis.subscriber.datex.JourneyTimePublication;
+import com.thales.ntis.subscriber.datex.MeasuredDataPublication;
 
 /**
  * This is an example service class implementation.
  * 
  */
 @Service
-public class ANPRTrafficDataServiceImpl extends AbstractDatexService implements
-        ANPRTrafficDataService {
+public class ANPRTrafficDataServiceImpl implements
+        TrafficDataService {
 
     private static final Logger LOG = LoggerFactory
             .getLogger(ANPRTrafficDataServiceImpl.class);
 
     @Override
-    public DeliverANPRTrafficDataResponse handle(
-            DeliverANPRTrafficDataRequest request) {
+    public void handle(
+            D2LogicalModel d2LogicalModel) {
 
-        LOG.info("NEW DeliverANPRTrafficDataRequest RECEIVED!");
+        LOG.info("Handling ANPR Request!");
 
-        D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
-        JourneyTimePublication journeyTimePublication = null;
+        MeasuredDataPublication measuredDataPublication = null;
 
-        // Validate the D2Logical Model
-        if (!validate(d2LogicalModel)) {
-            throw new RuntimeException("Incoming request does not appear to be valid!");
-        }
-
-        // JourneyTimePublication contains one or more journey-times
         try {
-            journeyTimePublication = (JourneyTimePublication) d2LogicalModel
+            measuredDataPublication = (MeasuredDataPublication) d2LogicalModel
                     .getPayloadPublication();
 
-            if (journeyTimePublication != null
-                    && journeyTimePublication.getJourneyTimes()
-                            .getJourneyTime().get(0) != null) {
-                // You could use the JourneyTimePublication and extract the
-                // corresponding fields.
-                LOG.info("JourneyTime: Timestamp is "
-                        + journeyTimePublication.getJourneyTimes()
-                                .getJourneyTime().get(0).getTimeStamp()
-                                .toString());
-            }
+            LOG.info("Got MeasuredDataPublication from request");
+
+            LOG.info("Feed Type " + measuredDataPublication.getFeedType());
+
         } catch (Exception e) {
             LOG.error(e.getMessage());
         }
+        LOG.info("ANPR Request: Processing Completed Successfuly");
 
-        DeliverANPRTrafficDataResponse response = new DeliverANPRTrafficDataResponse();
-        response.setStatus("DeliverANPRTrafficDataRequest: Successful Delivery");
-
-        return response;
     }
 
 }

@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
-import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverSpeedFVDDataResponse;
 import com.thales.ntis.subscriber.datex.ElaboratedData;
 import com.thales.ntis.subscriber.datex.ElaboratedDataPublication;
 import com.thales.ntis.subscriber.datex.TrafficSpeed;
@@ -24,23 +22,16 @@ import com.thales.ntis.subscriber.datex.TravelTimeData;
  * Created: (15 May 2013 11:57:01)
  */
 @Service
-public class FVDTrafficDataServiceImpl extends AbstractDatexService implements FVDTrafficDataService {
+public class FVDTrafficDataServiceImpl implements TrafficDataService {
 
     private static final Logger LOG = LoggerFactory.getLogger(FVDTrafficDataServiceImpl.class);
 
     @Override
-    public DeliverSpeedFVDDataResponse handle(DeliverSpeedFVDDataRequest request) {
+    public void handle(D2LogicalModel d2LogicalModel) {
 
-        LOG.info("NEW DeliverSpeedFVDDataRequest RECEIVED!");
+        LOG.info("handling SpeedFVD Request !");
 
-        D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
         ElaboratedDataPublication elaboratedDataPublication = null;
-
-        // Validate the D2Logical Model
-        if (!validate(d2LogicalModel)) {
-            throw new RuntimeException(
-                    "Incoming request does not appear to be valid!");
-        }
 
         try {
             elaboratedDataPublication = (ElaboratedDataPublication) d2LogicalModel.getPayloadPublication();
@@ -58,11 +49,7 @@ public class FVDTrafficDataServiceImpl extends AbstractDatexService implements F
         } catch (Exception e) {
             LOG.error(e.getMessage());
         }
-
-        DeliverSpeedFVDDataResponse response = new DeliverSpeedFVDDataResponse();
-        response.setStatus("DeliverSpeedFVDDataRequest: Successful Delivery");
-
-        return response;
+        LOG.info("SpeedFVD Request: Processing Completed Successfuly");
     }
 
     private List<ElaboratedData> getElaboratedDataListFor(List<ElaboratedData> payLoadElaboratedDataList,

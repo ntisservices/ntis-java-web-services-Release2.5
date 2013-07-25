@@ -21,8 +21,6 @@ import org.springframework.stereotype.Service;
 
 import com.thales.ntis.subscriber.datex.BasicData;
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
-import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataRequest;
-import com.thales.ntis.subscriber.datex.DeliverTMUTrafficDataResponse;
 import com.thales.ntis.subscriber.datex.MeasuredDataPublication;
 import com.thales.ntis.subscriber.datex.MeasuredValue;
 import com.thales.ntis.subscriber.datex.SiteMeasurements;
@@ -34,21 +32,15 @@ import com.thales.ntis.subscriber.datex.TrafficSpeed;
 import com.thales.ntis.subscriber.datex.VehicleFlowValue;
 
 @Service
-public class TMUTrafficDataServiceImpl extends AbstractDatexService implements
-        TMUTrafficDataService {
+public class TMUTrafficDataServiceImpl implements
+        TrafficDataService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TMUTrafficDataServiceImpl.class);
 
     @Override
-    public DeliverTMUTrafficDataResponse handle(DeliverTMUTrafficDataRequest request) {
-        LOG.info("NEW DeliverTMUTrafficDataRequest RECEIVED!");
+    public void handle(D2LogicalModel d2LogicalModel) {
+        LOG.info("handling TMU Request !");
 
-        D2LogicalModel d2LogicalModel = request.getD2LogicalModel();
-
-        // Validate the D2Logical Model
-        if (!validate(d2LogicalModel)) {
-            throw new RuntimeException("Incoming request does not appear to be valid!");
-        }
         try {
             if (d2LogicalModel.getPayloadPublication() != null) {
                 List<SiteMeasurements> siteMeasurementsList = ((MeasuredDataPublication) d2LogicalModel.getPayloadPublication())
@@ -78,10 +70,7 @@ public class TMUTrafficDataServiceImpl extends AbstractDatexService implements
             e.printStackTrace();
             LOG.error(e.getMessage());
         }
-
-        DeliverTMUTrafficDataResponse response = new DeliverTMUTrafficDataResponse();
-        response.setStatus("DeliverTMUTrafficDataRequest: Successful Delivery");
-        return response;
+        LOG.info("TMU Request: Processing Completed Successfuly");
     }
 
 }

@@ -1,112 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:sws="http://www.springframework.org/schema/web-services"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       		http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd 
+       		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="
-     http://www.springframework.org/schema/beans 
-     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-     http://www.springframework.org/schema/context
-     http://www.springframework.org/schema/context/spring-context-2.5.xsd">
-
-
-	<!-- Scan for endpoints -->
-	<context:annotation-config />
 	<context:component-scan base-package="com.thales.ntis.subscriber.endpoints" />
+	<sws:annotation-driven />
+	
+	<sws:static-wsdl id="push" location="/WEB-INF/wsdl/push.wsdl"/>
 
-	<!-- An XML payload-to-endpoint mapping that uses the @PayloadRoot annotation 
-		on methods in beans annotated with @Endpoint. -->
-	<bean
-		class="org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping">
-		<property name="order" value="1" />
-	</bean>
-
-	<!-- An XML payload-to-endpoint mapping. -->
-	<bean id="payloadMapping"
-		class="org.springframework.ws.server.endpoint.mapping.PayloadRootQNameEndpointMapping">
-		<property name="endpointMap">
-			<map>
-				<entry
-					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverSpeedFVDDataRequest"
-					value-ref="subscriberServiceEndpoint" />
-				<entry
-					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverSpeedSensorDataRequest"
-					value-ref="subscriberServiceEndpoint" />
-				<entry
-					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverMIDASTrafficDataRequest"
-					value-ref="subscriberServiceEndpoint" />
-				<entry
-					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverANPRTrafficDataRequest"
-					value-ref="subscriberServiceEndpoint" />
-				<entry
-					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverVMSTrafficDataRequest"
-					value-ref="subscriberServiceEndpoint" />
-				<entry
-					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverTMUTrafficDataRequest"
-					value-ref="subscriberServiceEndpoint" />
-				<entry
-					key="{http://www.thalesgroup.com/NTIS/SubscriberService}DeliverNtisModelNotificationDataRequest"
-					value-ref="subscriberServiceEndpoint" />
-
-			</map>
-		</property>
-		<property name="order" value="2" />
-	</bean>
-
-	<!-- An endpoint adapter to handle the marshaling of the in/out of the annotated 
-		endpoint. Only needed for the annotated endpoint. -->
-	<bean
-		class="org.springframework.ws.server.endpoint.adapter.MarshallingMethodEndpointAdapter">
-		<constructor-arg ref="marshaller" />
-	</bean>
-
-	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
-		<property name="contextPath" value="com.thales.ntis.subscriber.datex" />
-		<property name="schema" value="/WEB-INF/subscriber.xsd" />
-		<property name="validationEventHandler" ref="validationEventHandler" />
-	</bean>
-
-	<bean id="validationEventHandler"
-		class="com.thales.ntis.subscriber.utils.ValidationEventHandlerImpl" />
-
-	<!-- SoapFaultMappingExceptionResolver to map exceptions thrown from an 
-		endpoint to SOAP faults. -->
-	<bean id="endpointExceptionResolver"
-		class="org.springframework.ws.soap.server.endpoint.SoapFaultMappingExceptionResolver">
-		<property name="defaultFault" value="RECEIVER,Server error" />
-		<property name="exceptionMappings">
-			<props>
-				<prop key="org.springframework.oxm.UnmarshallingException">SENDER,Invalid request</prop>
-				<prop key="org.springframework.oxm.ValidationFailureException">SENDER,Invalid request</prop>
-			</props>
-		</property>
-	</bean>
-
-
-	<!-- DefaultWsdl11Definition to auto-magically generate WSDL from the messages' 
-		XSD. -->
-
-	<bean id="subscriber"
-		class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition">
-		<property name="schemaCollection" ref="schemaCollection" />
-		<property name="portTypeName" value="subscriber" />
-		<property name="locationUri" value="/services" />
-		<property name="targetNamespace"
-			value="http://www.thalesgroup.com/NTIS/SubscriberService" />
-	</bean>
-
-	<bean id="schemaCollection"
-		class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
-		<description>
-			This bean wrap the messages.xsd (which imports
-			types.xsd), and can in-line them as a one.
-		</description>
-		<property name="xsds">
-			<list>
-				<value>/WEB-INF/subscriber.xsd</value>
-			</list>
-		</property>
-		<property name="inline" value="true" />
-	</bean>
-
+	<sws:interceptors>
+	    <bean class="org.springframework.ws.soap.server.endpoint.interceptor.SoapEnvelopeLoggingInterceptor">
+	        <property name="logRequest" value="true"></property>
+	        <property name="logResponse" value="true"></property>
+	    </bean>
+	</sws:interceptors>
 </beans>
