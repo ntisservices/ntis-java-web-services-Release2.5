@@ -41,7 +41,7 @@ eclipseClasspath.dependsOn(cleanEclipseClasspath)
 task jaxb << {	
     ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask',  classpath: configurations.jaxb.asPath)
           ant.xjc(destdir: "src/main/java", package: "com.thales.ntis.subscriber.datex") {
-                  schema(dir: "src/main/webapp/WEB-INF/", includes: 'DATEXIISchema_2_2_0withdefinitions.xsd')
+                  schema(dir: "src/main/webapp/WEB-INF/xsd/", includes: 'DATEXIISchema_2_2_0withdefinitions.xsd')
           }
 }
 eclipseClasspath.dependsOn(jaxb)

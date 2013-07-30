@@ -10,7 +10,7 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
     IN THE SOFTWARE.
  */
-package com.thales.ntis.subscriber.services;
+package com.thales.ntis.subscriber.model;
 
 /**
  * 
@@ -20,11 +20,17 @@ package com.thales.ntis.subscriber.services;
 public enum FeedType {
 
     ANPR("ANPR Journey Time Data"),
+
     MIDAS("MIDAS Loop Traffic Data"),
+
     TMU("TMU Loop Traffic Data"),
+
     FUSED_SENSOR_ONLY("Fused Sensor-only PTD"),
+
     FUSED_FVD_AND_SENSOR_PTD("Fused FVD and Sensor PTD"),
+
     VMS("VMS and Matrix Signal Status Data"),
+
     NTIS_MODEL_UPDATE_NOTIFICATION("NTIS Model Update Notification");
 
     private String feedTypeText;
@@ -33,14 +39,26 @@ public enum FeedType {
         this.feedTypeText = feedTypeText;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String upperCase() {
         return value().toUpperCase();
     }
 
+    /**
+     * 
+     * @return
+     */
     public String lowerCase() {
         return value().toLowerCase();
     }
 
+    /**
+     * 
+     * @return
+     */
     public String value() {
         return feedTypeText;
     }

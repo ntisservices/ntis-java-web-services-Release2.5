@@ -16,11 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
+import com.thales.ntis.subscriber.model.FeedType;
 
 /**
  * 
  * @author Anirudha Deshpande
  * 
+ * I am factory class responsible for creating different TrafficDataService
+ * instances depending on given feedtype
  * 
  */
 public class TrafficDataServiceFactory {
