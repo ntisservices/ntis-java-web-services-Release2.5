@@ -50,7 +50,7 @@
 	</binding>
 	<service name="supplierPushService">
 		<port name="supplierPushSoapEndPoint" binding="tns:supplierPushSoapBinding">
-			<soap:address location="http://localhost:8080/MockSubscriberService/subscriber/one"/>
+			<soap:address location="http://localhost:8880/SubscriberService/services/subscriber/one"/>
 		</port>
 	</service>
 </definitions>
