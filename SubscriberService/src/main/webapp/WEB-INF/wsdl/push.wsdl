@@ -14,7 +14,7 @@
 		Version 2.0 - 5 Juner 2009
 		This document describes the DATEX II Push Service with WSDL 1.1
 		This wsdl document is the reference with which each DATEX II Push Web Service has to be built
-		Refer http://datex2.eu
+		Refer http://datex2.eu.
 	</documentation>
 	<types>
 		<xs:schema targetNamespace="http://datex2.eu/wsdl/supplierPush/2_0">
