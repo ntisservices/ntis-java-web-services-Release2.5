@@ -8,7 +8,7 @@ Prerequisites
 ------------------
 
 1. Softwares to install :
-	Java JDK v1.6
+	JDK v1.6
 
 	Gradle v1.4
 
@@ -16,30 +16,23 @@ Prerequisites
 
 	SoapUI v4.5.2 (for testing)
 
-	git v1.7.10
+Note: Versions listed above are those used to test the install/build process, earlier/later compatible versions should also work.
 
-  Note:  
-    Versions listed above are those used to test the install/build process, earlier/later compatible versions should also work)
+2. Set System environment variable
 
-2. Set System environment variable 
-     PATH=${PATH}:<gradle home>/bin:<java home>/bin
+JAVA_HOME=<INSTALLED JDK Directory>
 
-  Note:  
-    All other Java libraries are downloaded and installed during the gradle-based build process.
+Note: All other Java libraries are downloaded and installed during the gradle-based build process.
 
 
 Importing Project in to eclipse:
 ---------------------------------
 
-1. Open your terminal or command prompt
+1. Download Subscriber Service example application from https://github.com/ntisservices/ntis-java-web-services/archive/master.zip
 
-2. Traverse to the directory where you want to clone example application
+2. Extract zip file in some location on your local file system.
 
-3. To clone SubscriberService project from github enter below command in your terminal. 
-   
-   git clone https://github.com/ntisservices/ntis-java-web-services.git
-
-4. Open eclipse and Import project into Eclipse workspace
+3. Open eclipse and Import project into Eclipse workspace.
 
  a. File->Import
 
@@ -47,19 +40,19 @@ Importing Project in to eclipse:
 
  c. Select the option 'Select root directory' and locate the downloaded project root directory: <download dir>/SubscriberService
 
- d. Click Finish to import the project
+ d. Click Finish to import the project.
 
 
 Eclipse Project Configuration:
 ---------------------------------
 
-Eclipse needs to be confugred to run the gradle build/run commands.  This is achievied through Eclipse's External Tools Configurations;
+Eclipse needs to be confugred to run the gradle build/run commands. This is achievied through Eclipse's External Tools Configurations.
 
-built into the two build/run configurations created to start and stop the SubscriberService.
+Following are three configurations to start and stop the Jetty server which runs the SubscriberService application.
 
 1. Start Service configuration:
 
- a. From Eclipse, select Run->External Tool–>External Tools Configurations...
+ a. From Eclipse, select Run->External Tool–>External Tools Configurations.
 
  b. Create a new configuration by right-clicking Program and selecting New.
 
@@ -69,23 +62,19 @@ built into the two build/run configurations created to start and stop the Subscr
 
    - Set the Location to: <gradle home>/bin/gradle
 
-   - Set the working directory to: ${workspace_loc:/SubscriberService}
+   - Set the working directory to: ${workspace_loc}/SubscriberService
 
-   - Specify arguments: -i clean eC jettyRunWar   
-
-	where: 
-
-         -i is used to set the log level to info
-
-         eC is used to generate eclipse specific project artifacts.
-
-         jettyRunWar - is a gradle tasks which Assembles the webapp into a war and deploys it to Jetty server.    
+   - Specify arguments: -i ec jettyRunWar
+	Where:
+	     -i is used to set the log level to info.
+	     eC is used to generate eclipse specific project artifacts.
+	     jettyRunWar - is a gradle tasks which assembles the webapp into a war and deploys it to Jetty server.
 
  d. In the Environment tab:
 
    - Set the JAVA_HOME variable to the installed JDK root directory
 
- e. Apply to save the configuration
+ e. Apply to save the configuration.
 
 2. Stop Service configuration:
 
@@ -97,60 +86,94 @@ built into the two build/run configurations created to start and stop the Subscr
 
    - Set the Location to: <gradle home>/bin/gradle
 
-   - Set the working directory to: ${workspace_loc:/SubscriberService}
+   - Set the working directory to: ${workspace_loc}/SubscriberService
 
-   - Specify arguments: -i jettyStop           
-    
+   - Specify arguments: -i jettyStop
+
 	Where:
-             -i is used to set the log level to info             
-
-             jettyStop  - Stops Jetty.
+	  -i is used to set the log level to info
+	  jettyStop  - Stops Jetty.
 
  d. In the Environment tab:
 
    - Set the JAVA_HOME variable to the installed JDK root directory
 
- e. Apply to save the configuration
+ e. Apply to save the configuration.
 
 
-Build/Run:
------------
+3. Build War from Source Configuration.
 
-Follow Steps 1 & 2 under 'Eclipse Project Configuration' to setup the start and stop configuration in eclipse. 
+ a. Create a new configuration by right-clicking Program and selecting New.
 
-To run your new External Tools Configuration select Run –> External Tool –> 'Start Subscriber Service'. 
+ b. In the Main tab:
 
-It will execute the Gradle command and output the result in the Eclipse console view.
+   - Specify the Name 'Build War- Subscriber Service'
+
+   - Set the Location to: <gradle home>/bin/gradle
+
+   - Set the working directory to: ${workspace_loc}/SubscriberService
+
+   - Specify arguments: -i build
+
+	Where:
+	  -i is used to set the log level to info
+	  build  - builds projects and packages it to war.
+
+ d. In the Environment tab:
+
+   - Set the JAVA_HOME variable to the installed JDK root directory
+
+ e. Apply to save the configuration.
+
+Build/Run Jetty Server:
+------------------------
+
+Select Run –> External Tool –> 'Start Subscriber Service'.
+
+When you run 'Start Subscriber Service' command it will execute the Gradle  command and output the result in the Eclipse console view.
 
 wsdl could be accessed from http://localhost:8880/SubscriberService/services/push.wsdl 
 
-  Note: 
 
-   Build procedure is managed by Gradle - refer to the build.gradle file, supplied with the project.
+Building a WAR from source
+------------------------------
 
+Select Run –> External Tool –> 'Build War- Subscriber Service'.
+
+This will build the SubscriberService.war file under build/libs.
+
+Note:Build procedure is managed by Gradle - refer to the build.gradle file, supplied with the project.
+
+Deploy on Other servers
+---------------------------
+
+Simply copy the SubscriberService.war file from build/libs folder to your fauvorite server's deploy folder.
+
+Once deployed you could invoke the WSDL from http://localhost:8880/SubscriberService/services/subscriber.wsdl.
+
+Note: Above Url may change depending on your sever configuration.
 
 Testing application with SoapUI
 --------------------------------
 
- First deploy application and run Jetty server. 
+1. First deploy application and run Jetty server.
 
- Open SoapUI Application and click on menu File -> New SoapUI Project. This should bring up a New SoapUI Project dialog box.
+2. Open SoapUI Application and click on menu File -> New SoapUI Project. This should bring up a New SoapUI Project dialog box.
 
- Enter Project Name as 'Subscriber Service'.  
+3. Enter Project Name as 'Subscriber Service'.
 
- In Initial WSDL/WADL field copy and paste path 'http://localhost:8880/SubscriberService/services/push.wsdl' 
+4. In Initial WSDL/WADL field copy and paste path 'http://localhost:8880/SubscriberService/services/push.wsdl'
 
- Click 'Ok' button. Now it should create SoapUI project and you should able to see puDatex2Data operation. 
+5. Click 'Ok' button. Now it will create SoapUI project and you should able to see puDatex2Data operation.
   
- Under puDatex2Data double click on Request1 element. This will open up a request dialog window in SoapUI.
+6. Under puDatex2Data double click on Request1 element. This will open up a request dialog window in SoapUI.
 
- Now from your downloaded project folder open DeliverANPRTrafficDataRequest.xml in to your favourite text editor (i.e. {workspace_loc}/SubscriberService/src/test/resources/exampleRequests/
+7. Now from your downloaded project folder open DeliverANPRTrafficDataRequest.xml in to your favourite text editor (i.e. {workspace_loc}/SubscriberService/src/test/resources/exampleRequests/
+   DeliverANPRTrafficDataRequest.xml)
+
+8. Copy and replace Soap request XML from  DeliverANPRTrafficDataRequest.xml in to the SoapUI request window .
+
+9. In SoapUi click on Green Solid arrow Icon button to send this request to the specified endpoint. If everything is all right then you should able to see some logs printed on the
   
- DeliverANPRTrafficDataRequest.xml)
-
- Copy and replace Soap request XML from  DeliverANPRTrafficDataRequest.xml in to the SoapUI request window .
-
- In SoapUi click on Green Solid arrow Icon button to send this request to the specified endpoint. If everything is all right then you should able to see some logs printed on the
-  
- Similarly you should able to test all other Notification by using requests from folder 'exampleRequests'.
+10. Similarly you should able to test all other Notification by using requests from folder 'exampleRequests'.
 
