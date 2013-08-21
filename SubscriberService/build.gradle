@@ -1,6 +1,8 @@
 apply plugin: 'war'
 apply plugin: 'eclipse'
 apply plugin: 'jetty'
+
+version = 2.5
  
 sourceCompatibility = 1.6
 
