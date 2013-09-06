@@ -49,7 +49,6 @@ task jaxb << {
 eclipseClasspath.dependsOn(jaxb)
 compileJava.dependsOn(jaxb)
 
-
 //To deploy war file to Tomcat, CATALINA_HOME should be set in the System's environment variables
 task deployTomcat(type: Copy) {
 	env = System.getenv()
@@ -57,7 +56,6 @@ task deployTomcat(type: Copy) {
     into env.CATALINA_HOME+'\\webapps'
 }
 deployTomcat.dependsOn(war)
-
 
 //This is the port where Jetty will be running. Amend accordingly.
 httpPort = 8880
