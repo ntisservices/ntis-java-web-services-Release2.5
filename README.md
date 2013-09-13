@@ -176,4 +176,3 @@ Testing application with SoapUI
 9. In SoapUi click on Green Solid arrow Icon button to send this request to the specified endpoint. If everything is all right then you should able to see some logs printed on the
   
 10. Similarly you should able to test all other Notification by using requests from folder 'exampleRequests'.
-
