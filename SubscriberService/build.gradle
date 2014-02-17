@@ -51,7 +51,7 @@ compileJava.dependsOn(jaxb)
 
 //To deploy war file to Tomcat, CATALINA_HOME should be set in the System's environment variables
 task deployTomcat(type: Copy) {
-	env = System.getenv()
+	ext.env = System.getenv()
     from 'build/libs/SubscriberService.war'
     into env.CATALINA_HOME+'\\webapps'
 }
