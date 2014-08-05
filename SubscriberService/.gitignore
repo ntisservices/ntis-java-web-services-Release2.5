@@ -4,3 +4,4 @@
 /bin
 /SubscriberService.log*
 /.settings
+/src/main/java/com/thales/ntis/subscriber/datex
