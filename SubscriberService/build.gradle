@@ -2,10 +2,6 @@ apply plugin: 'war'
 apply plugin: 'eclipse'
 apply plugin: 'jetty'
 
-version = 2.5
- 
-
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -49,14 +45,6 @@ task jaxb << {
 eclipseClasspath.dependsOn(jaxb)
 compileJava.dependsOn(jaxb)
 
-//To deploy war file to Tomcat, CATALINA_HOME should be set in the System's environment variables
-task deployTomcat(type: Copy) {
-	ext.env = System.getenv()
-    from 'build/libs/SubscriberService.war'
-    into env.CATALINA_HOME+'\\webapps'
-}
-deployTomcat.dependsOn(war)
-
 //This is the port where Jetty will be running. Amend accordingly.
 httpPort = 8880
 stopPort = 8890
@@ -70,4 +58,4 @@ gradle.taskGraph.whenReady {graph ->
     }
 }
 
-//Note: To deploy on jetty run "gradle -i jettyRunWar". To stop jetty run "gradle -i jettyStop"
+//Note: To deploy on jetty run "gradle jettyRunWar". To stop jetty run "gradle jettyStop"

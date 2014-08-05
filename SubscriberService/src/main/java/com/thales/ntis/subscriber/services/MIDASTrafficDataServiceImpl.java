@@ -1,19 +1,5 @@
-/*
-	Copyright (C) 2012 Thales Transportation Systems UK
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
-	to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-	and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
-	IN THE SOFTWARE.
- */
-
 package com.thales.ntis.subscriber.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,13 +10,13 @@ import com.thales.ntis.subscriber.datex.BasicData;
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
 import com.thales.ntis.subscriber.datex.MeasuredDataPublication;
 import com.thales.ntis.subscriber.datex.MeasuredValue;
+import com.thales.ntis.subscriber.datex.MultilingualStringValue;
 import com.thales.ntis.subscriber.datex.SiteMeasurements;
 import com.thales.ntis.subscriber.datex.SiteMeasurementsIndexMeasuredValue;
 import com.thales.ntis.subscriber.datex.TrafficConcentration;
 import com.thales.ntis.subscriber.datex.TrafficFlow;
 import com.thales.ntis.subscriber.datex.TrafficHeadway;
 import com.thales.ntis.subscriber.datex.TrafficSpeed;
-import com.thales.ntis.subscriber.model.TrafficData;
 
 /**
  * This is an example service class implementation.
@@ -41,141 +27,77 @@ public class MIDASTrafficDataServiceImpl implements
         TrafficDataService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MIDASTrafficDataServiceImpl.class);
+    private static final String PUBLICATION_TYPE = "MIDAS Traffic Data Publication";
 
-    private static final int MAX_SENSOR_READINGS = 7;
-
-    /**
-     * This method extracts the D2LogicalModel from the incoming request and
-     * shows how to extract the Individual sensor readings for the MIDAS sites.
-     * 
-     */
     @Override
-    public void handle(
-            D2LogicalModel d2LogicalModel) {
+    public void handle(D2LogicalModel d2LogicalModel) {
 
-        LOG.info("handling MIDAS Request !");
+        LOG.info(PUBLICATION_TYPE + ": received...");
+
         MeasuredDataPublication measuredDataPublication = null;
 
-        // MeasuredDataPublication class contains the feed description, feed
-        // type, site measurements, publication time and
-        // other header information.
         try {
-            measuredDataPublication = (MeasuredDataPublication) d2LogicalModel
-                    .getPayloadPublication();
+            measuredDataPublication = (MeasuredDataPublication) d2LogicalModel.getPayloadPublication();
+            if (measuredDataPublication != null) {
+                List<SiteMeasurements> siteMeasurementsInPayload = measuredDataPublication.getSiteMeasurements();
 
-            LOG.info("Got MeasuredDataPublication from request");
+                LOG.info("Number of Site Measurements in payload: " + siteMeasurementsInPayload.size());
 
-            if (measuredDataPublication != null
-                    && measuredDataPublication.getHeaderInformation() != null) {
+                for (SiteMeasurements measurementsForSite : siteMeasurementsInPayload) {
+                    extractTrafficDataFromSiteMeasurements(measurementsForSite);
+                }
+                LOG.info(PUBLICATION_TYPE + ": processed successfully.");
+            }
+        } catch (Exception e) {
+                LOG.error(e.getMessage());
+        }
+    }
 
-                LOG.info("measurementSiteReference ID is "
-                        + measuredDataPublication.getSiteMeasurements().get(0)
-                                .getMeasurementSiteReference().getId());
+    private void extractTrafficDataFromSiteMeasurements(SiteMeasurements measurementsForSite) {
 
-                LOG.info("measurementSiteReference time default is "
-                        + measuredDataPublication.getSiteMeasurements().get(0)
-                                .getMeasurementTimeDefault().toString());
+        String siteGUID = measurementsForSite.getMeasurementSiteReference().getId();
+        LOG.info("MIDAS site ID: " + siteGUID);
+        LOG.info("Number of measurements for MIDAS site: " + measurementsForSite.getMeasuredValue().size());
 
-                // Each MIDAS site is encapsulated within a SiteMeasurements
-                // object. Cycle through these to get to the sensor readings for
-                // a MIDAS site.
-                for (SiteMeasurements siteMeasurements : measuredDataPublication
-                        .getSiteMeasurements()) {
+        // There can be a number of measured values reported for the site
+        for (SiteMeasurementsIndexMeasuredValue measuredValue : measurementsForSite.getMeasuredValue()) {
 
-                    // Each MIDAS site has a GUID; a unique identifier for the
-                    // site. This GUID should be used to find comprehensive
-                    // details about the MIDAS site (road name, location,
-                    // number of lanes, etc) from the Network Model (found at
-                    // TIH website)
-                    String siteGUID = siteMeasurements.getMeasurementSiteReference().getId();
-                    LOG.info("Retrieved traffic data info for MIDAS site " + siteGUID);
+            MeasuredValue mv = measuredValue.getMeasuredValue();
+            BasicData basicData = mv.getBasicData();
+            
+            // The index number of the site measurement is important - as this relates the data
+            // to the NTIS reference model, which adds context to the value (e.g. lane information, 
+            // or vehicle characteristics)
+            int index = measuredValue.getIndex();
 
-                    // Cycle through the MeasuredValues to get the individual
-                    // sensor readings for a MIDAS site.
-                    for (SiteMeasurementsIndexMeasuredValue measuredValue : siteMeasurements.getMeasuredValue()) {
-
-                        // To determine what type the sensor reading is,
-                        // cast the basic data value to the appropriate type and
-                        // retrieve the value of interest
-                        MeasuredValue mv = measuredValue.getMeasuredValue();
-                        BasicData basicData = mv.getBasicData();
-
-                        if (basicData instanceof TrafficFlow) {
-                            // For a lane, TrafficFlow will appear 4 times i.e.
-                            // flow1, flow2 .... flow4. It will appear in
-                            // order.
-
-                        } else if (basicData instanceof TrafficSpeed) {
-                            // Now you have TrafficSpeed. Cast it appropriately
-                            // to retrieve values you are interested in.
-
-                        } else if (basicData instanceof TrafficHeadway) {
-                            // Now you have TrafficHeadway. Cast it
-                            // appropriately to retrieve values you are
-                            // interested in.
-
-                        } else if (basicData instanceof TrafficConcentration) {
-                            // Now you have TrafficConcentration. Cast it
-                            // appropriately to retrieve values you are
-                            // interested in.
-
-                        }
-
+            // Determine what class (type) of traffic data is contained in the basic data
+            if (TrafficFlow.class.equals(basicData.getClass())) {
+                TrafficFlow flow = (TrafficFlow)basicData;
+                LOG.info("[Measurement Index : " + index + "] Vehicle Flow Rate: " + flow.getVehicleFlow().getVehicleFlowRate());
+                
+                if(flow.getVehicleFlow().isDataError()) {
+                    List<MultilingualStringValue> errorReason = flow.getVehicleFlow().getReasonForDataError().getValues().getValue();
+                    for(MultilingualStringValue value : errorReason) {
+                        LOG.info("    Data in error. Reason: \"" + value.getValue() + "\"");
                     }
                 }
 
-                // You can convert the site measurements to your model objects
-                // and subsequently persist/manipulate your model objects
-                @SuppressWarnings("unused")
-                List<TrafficData> trafficData = convertToModelObjects(measuredDataPublication
-                        .getSiteMeasurements());
+            } else if (TrafficSpeed.class.equals(basicData.getClass())) {
+                TrafficSpeed speed = (TrafficSpeed) basicData;
+                LOG.info("[Measurement Index : " + index + "] Average Speed: " + speed.getAverageVehicleSpeed().getSpeed());
 
+            } else if (TrafficHeadway.class.equals(basicData.getClass())) {
+                TrafficHeadway headway = (TrafficHeadway) basicData;
+                LOG.info("[Measurement Index : " + index + "] Average Headway: " + headway.getAverageTimeHeadway().getDuration());
+
+            } else if (TrafficConcentration.class.equals(basicData.getClass())) {
+                TrafficConcentration concentration = (TrafficConcentration) basicData;
+                LOG.info("[Measurement Index : " + index + "] Traffic Occupancy (%): "
+                        + concentration.getOccupancy().getPercentage());
+
+            } else {
+                LOG.error("Unexpected traffic data type contained in publication: " + basicData.getClass().getSimpleName());
             }
-
-        } catch (Exception e) {
-            LOG.error("Error while obtaining MeasuredDataPublication");
-            LOG.error(e.getMessage());
         }
-
-        LOG.info("MIDAS Request: Processing Completed Successfuly");
-    }
-
-    /**
-     * The method below demonstrates how to extract SiteMeasurement from the
-     * incoming requests and convert it into a list of your own model classes.
-     * 
-     * @param siteMeasurements
-     * @return
-     */
-    public List<TrafficData> convertToModelObjects(final List<SiteMeasurements> siteMeasurements) {
-
-        LOG.info("Cycling through the list of site measurements");
-        LOG.info("Number of site measurements returned: " + siteMeasurements.size());
-
-        List<TrafficData> trafficDataList = new ArrayList<TrafficData>();
-
-        for (SiteMeasurements measurement : siteMeasurements) {
-            TrafficData trafficDatum = new TrafficData();
-
-            // This is how you can the Site Reference ID and set it on your
-            // domain class.
-            trafficDatum.setGuid(measurement.getMeasurementSiteReference()
-                    .getId());
-
-            /*
-             * You could calculate the lane and set it on your model object. For
-             * example trafficDatum.setLaneNumber(0);
-             * 
-             * Convert the basic data to either TrafficFlow,
-             * TrafficConcentration, TrafficSpeed or TrafficHeadway object and
-             * extract the values as below.
-             * 
-             * TrafficSpeed trafficSpeed = (TrafficSpeed) measurement
-             * .getMeasuredValue().get(0).getMeasuredValue() .getBasicData();
-             */
-
-            trafficDataList.add(trafficDatum);
-        }
-        return trafficDataList;
     }
 }

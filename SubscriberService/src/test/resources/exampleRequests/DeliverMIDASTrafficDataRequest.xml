@@ -1,8 +1,9 @@
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
 	<soapenv:Header />
 	<soapenv:Body>
-		<d2lm:d2LogicalModel modelBaseVersion="2"
-			xmlns:d2lm="http://datex2.eu/schema/2/2_0">
+		<d2lm:d2LogicalModel xmlns:d2lm="http://datex2.eu/schema/2/2_0"
+			modelBaseVersion="2" extensionName="NTIS Published Services"
+			extensionVersion="2.0">
 			<d2lm:exchange>
 				<d2lm:supplierIdentification>
 					<d2lm:country>gb</d2lm:country>
@@ -12,8 +13,7 @@
 			<d2lm:payloadPublication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				xsi:type="d2lm:MeasuredDataPublication" lang="en">
 				<d2lm:feedType>MIDAS Loop Traffic Data</d2lm:feedType>
-				<d2lm:publicationTime>2013-07-10T14:59:10.421+01:00
-				</d2lm:publicationTime>
+				<d2lm:publicationTime>2013-07-10T14:59:10.421+01:00</d2lm:publicationTime>
 				<d2lm:publicationCreator>
 					<d2lm:country>gb</d2lm:country>
 					<d2lm:nationalIdentifier>NTIS</d2lm:nationalIdentifier>
@@ -22,8 +22,7 @@
 					targetClass="MeasurementSiteTable" version="56.0"
 					id="NTIS_MIDAS_Measurement_Sites" />
 				<d2lm:headerInformation>
-					<d2lm:confidentiality>restrictedToAuthoritiesTrafficOperatorsAndPublishers
-					</d2lm:confidentiality>
+					<d2lm:confidentiality>restrictedToAuthoritiesTrafficOperatorsAndPublishers</d2lm:confidentiality>
 					<d2lm:informationStatus>real</d2lm:informationStatus>
 					<d2lm:urgency>normalUrgency</d2lm:urgency>
 				</d2lm:headerInformation>
@@ -31,8 +30,7 @@
 					<d2lm:measurementSiteReference
 						targetClass="MeasurementSiteRecord" version="56.0"
 						id="8C5428D934044877AD6497A34BE91760" />
-					<d2lm:measurementTimeDefault>2013-07-05T14:58:23.001Z
-					</d2lm:measurementTimeDefault>
+					<d2lm:measurementTimeDefault>2014-02-05T14:58:23.001Z</d2lm:measurementTimeDefault>
 					<d2lm:measuredValue index="0">
 						<d2lm:measuredValue>
 							<d2lm:basicData xsi:type="d2lm:TrafficSpeed">
@@ -67,7 +65,12 @@
 						<d2lm:measuredValue>
 							<d2lm:basicData xsi:type="d2lm:TrafficFlow">
 								<d2lm:vehicleFlow>
-									<d2lm:dataError>false</d2lm:dataError>
+									<d2lm:dataError>true</d2lm:dataError>
+									<d2lm:reasonForDataError>
+                						<d2lm:values>
+                  							<d2lm:value>suspect equipment</d2lm:value>
+                						</d2lm:values>
+              						</d2lm:reasonForDataError>
 									<d2lm:vehicleFlowRate>35</d2lm:vehicleFlowRate>
 								</d2lm:vehicleFlow>
 							</d2lm:basicData>

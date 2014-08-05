@@ -11,11 +11,11 @@ Prerequisites
 
  JDK v1.6
 
- Gradle v1.4
+ Gradle v1.11
 
  Eclipse J2EE IDE v3.6.2
  
- SoapUI v4.5.2 (for testing)
+ SoapUI v5.0.0 (for testing)
  
  *Note: Versions listed above are those used to test the install/build process, earlier/later compatible versions should also work.*
 
@@ -32,7 +32,7 @@ Prerequisites
 Importing Project in to Eclipse
 ---------------------------------
 
-1. Download the SubscriberService example application from https://github.com/ntisservices/ntis-java-web-services-Release2.4/archive/master.zip
+1. Download the SubscriberService example application from https://github.com/ntisservices/ntis-java-web-services-Release2.5/archive/master.zip
 
 2. Extract the zip file into the target location on your local file system.
 
@@ -46,124 +46,50 @@ Importing Project in to Eclipse
 
  d. Click Finish to import the project.
 
-Eclipse Project Configuration
--------------------------------
+Building the Project
+--------------------
 
-Eclipse needs to be configured to run the gradle build/run commands. This is achievied through Eclipse's External Tools Configuration.
-
-The following Eclipse configurations perform the basic build/run operations for the project:
-
-1. Start Service configuration:
-
- a. From Eclipse, select Run->External Tool–>External Tools Configurations.
-
- b. Create a new configuration by right-clicking Program and selecting New.
-
- c. In the Main tab:
- 
-  1. Specify the Name 'Start Subscriber Service'
-
-  1. Set the Location to: ${GRADLE_HOME}/bin/gradle
-
-  1. Set the working directory to: ${workspace_loc:/SubscriberService}
-
-  1. Specify the arguments '-i ec jettyRunWar', where:  
-    * '-i' is used to set the log level to info.  
-    * 'eC' is used to generate eclipse specific project artifacts.  
-    * 'jettyRunWar' is a defined gradle task (see build.gradle) which assembles the webapp into a war and deploys it to Jetty server.
-
- d. In the Environment tab, set the JAVA_HOME variable to the installed JDK root directory.
-
- e. Apply to save the configuration.
-
-2. Stop Service configuration:
-
- a. Create a new configuration by right-clicking Program and selecting New.
-
- b. In the Main tab:
-
-  1. Specify the Name 'Stop Subscriber Service'
-
-  1. Set the Location to: ${GRADLE_HOME}/bin/gradle
-
-  1. Set the working directory to: ${workspace_loc:/SubscriberService}
-
-  1. Specify the arguments '-i jettyStop', where:
-    * '-i' is used to set the log level to info.
-    * 'jettyStop' is a defined gradle task (see build.gradle) which stops Jetty.
-
- c. In the Environment tab, set the JAVA_HOME variable to the installed JDK root directory.
-
- d. Apply to save the configuration.
-
-3. Build WAR file from Source Configuration:
-
- a. Create a new configuration by right-clicking Program and selecting New.
-
- b. In the Main tab:
-
-  1. Specify the Name 'Build WAR - Subscriber Service'
-
-  1. Set the Location to: ${GRADLE_HOME}/bin/gradle
-
-  1. Set the working directory to: ${workspace_loc:/SubscriberService}
-
-  1. Specify the arguments: '-i build', where:
-    * '-i' is used to set the log level to info.
-    * 'build' builds the project and packages it as a WAR file.
-
- c. In the Environment tab, set the JAVA_HOME variable to the installed JDK root directory.
-
- d. Apply to save the configuration.
-
-Build/Run Jetty Server
-------------------------
-
-From Eclipse, select Run–>External Tool–>Start Subscriber Service.
-
-When you run the 'Start Subscriber Service' command it will execute the Gradle command and output the result in the Eclipse console view.
-
-Select the project in Project Explorer, right click and refresh it.
-
-The WSDL can be accessed from http://localhost:8080/SubscriberService/services/push.wsdl 
-
-Building a WAR from source
----------------------------
-
-From Eclipse, select Run–>External Tool–>Build WAR - Subscriber Service.
-
-This will build the SubscriberService.war file under build/libs.
+From the command line, execute the following (from the project root directory {workspace_loc}/SubscriberService): 'gradle eC clean build'
 
 *Note: the build procedure is managed by Gradle - refer to the build.gradle file, supplied with the project.*
 
-Deploy on Other servers
----------------------------
+Running on the Jetty Application Server
+---------------------------------------
 
-Simply copy the SubscriberService.war file from build/libs folder to a target application server deployment folder.
+To start the application, execute the following from the command line (from {workspace_loc}/SubscriberService): 'gradle jettyRunWar'
 
-Once deployed you could invoke the WSDL from http://localhost:8080/SubscriberService/services/subscriber.wsdl.
+*Note: this command will automatically (re)build the application before deploying and running on the Jetty application server.*
 
-*Note: Above URL may change depending on your sever configuration.*
+The WSDL can be accessed from http://localhost:8880/SubscriberService/services/push.wsdl (this URL may vary, depending on your server/project configuration)
 
-Testing application with SoapUI
---------------------------------
+The application logs information and errors to the local console and also to the log file SubscriberService.log.
 
-1. First deploy application and run Jetty server.
+To terminate the application, enter Ctrl-C into the console in which the start command, above, was executed.  If the application was run in the background, or the orignal console window is otherwise unavailable, use the command 'gradle jettyStop' to terminate the application.
 
-2. Open SoapUI Application and click on menu File -> New SoapUI Project. This should bring up a New SoapUI Project dialog box.
+Deploy on Other Servers
+-----------------------
 
-3. Enter a Project Name, for example 'Subscriber Service'.
+Simply copy the SubscriberService.war file from the build/libs folder to a target application server deployment folder.
 
-4. In the 'Initial WSDL/WADL' field copy and paste the path 'http://localhost:8080/SubscriberService/services/push.wsdl'
+Once deployed, the WSDL can be invoked from http://localhost:8880/SubscriberService/services/subscriber.wsdl (this URL may vary, depending on your server/project configuration)
+
+Testing the Application with SoapUI
+-----------------------------------
+
+1. First deploy application and run on the Jetty application server (see above).
+
+2. Open the SoapUI Application and click on menu File -> New SOAP Project. This should bring up a New SOAP Project dialog box.
+
+3. Enter a Project Name, for example 'NTIS Subscriber Service'.
+
+4. In the 'Initial WSDL/WADL' field copy and paste the path 'http://localhost:8880/SubscriberService/services/push.wsdl' (this URL may vary, depending on your server/project configuration)
 
 5. Click the 'Ok' button; a SoapUI project will be created and you should be able to see the putDatex2Data operation.
   
 6. Under putDatex2Data, double click on the Request1 element. This will open up a request dialog window in SoapUI.
 
-7. From your downloaded project folder, open DeliverANPRTrafficDataRequest.xml in a text editor (i.e. {workspace_loc}/SubscriberService/src/test/resources/exampleRequests/DeliverANPRTrafficDataRequest.xml).  This file contains an example publication of ANPR travel time data, that can be received and processed by the web service.
+7. Open one of the SOAP example request files provided with the project in Eclipse - or any another text editor.  The example request files are located in {workspace_loc}/SubscriberService/src/test/resources/exampleRequests.  These files contain example publications of all the different DATEXII Feed Types published by the NTIS system.
 
-8. Copy and replace the SOAP request XML from DeliverANPRTrafficDataRequest.xml in to the SoapUI request window.
+8. Copy/paste the full content of the example request file into the SoapUI request window (wholly replacing any XML already in the request window).
 
-9. In SoapUI click on the green arrow icon button to send this request to the specified endpoint.  The running code will output success or failure logs to the console.  Additionally, SoapUI also contains various monitoring windows (such as a HTTP log) that can be utilised to test the connection and service request.
-
-10. Similarly, the other XML files in the project 'exampleRequests' directory can be used to test the web service processing of other data feed types.
+9. Click on the green arrow icon button in the SoapUI request window to send this request to the specified endpoint.  The application will output success or failure logs to the console and to the SubscriberService.log file.  Additionally, SoapUI also contains various monitoring windows (such as a HTTP log) that can be utilised to test the connection and service request.

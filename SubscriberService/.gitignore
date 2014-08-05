@@ -2,4 +2,5 @@
 /build
 /.classpath
 /bin
-/SubscriberService.log
+/SubscriberService.log*
+/.settings

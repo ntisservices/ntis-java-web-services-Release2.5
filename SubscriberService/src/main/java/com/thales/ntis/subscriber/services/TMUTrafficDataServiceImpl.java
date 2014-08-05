@@ -1,16 +1,3 @@
-/*
-	Copyright (C) 2012 Thales Transportation Systems UK
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
-	to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-	and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
-	IN THE SOFTWARE.
- */
-
 package com.thales.ntis.subscriber.services;
 
 import java.util.List;
@@ -23,54 +10,98 @@ import com.thales.ntis.subscriber.datex.BasicData;
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
 import com.thales.ntis.subscriber.datex.MeasuredDataPublication;
 import com.thales.ntis.subscriber.datex.MeasuredValue;
+import com.thales.ntis.subscriber.datex.MultilingualStringValue;
 import com.thales.ntis.subscriber.datex.SiteMeasurements;
 import com.thales.ntis.subscriber.datex.SiteMeasurementsIndexMeasuredValue;
 import com.thales.ntis.subscriber.datex.TrafficConcentration;
 import com.thales.ntis.subscriber.datex.TrafficFlow;
 import com.thales.ntis.subscriber.datex.TrafficHeadway;
 import com.thales.ntis.subscriber.datex.TrafficSpeed;
-import com.thales.ntis.subscriber.datex.VehicleFlowValue;
 
+/**
+ * This is an example service class implementation.
+ * 
+ */
 @Service
 public class TMUTrafficDataServiceImpl implements
         TrafficDataService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TMUTrafficDataServiceImpl.class);
+    private static final String PUBLICATION_TYPE = "TMU Traffic Data Publication";
 
     @Override
     public void handle(D2LogicalModel d2LogicalModel) {
-        LOG.info("handling TMU Request !");
+
+        LOG.info(PUBLICATION_TYPE + ": received...");
+
+        MeasuredDataPublication measuredDataPublication = null;
 
         try {
-            if (d2LogicalModel.getPayloadPublication() != null) {
-                List<SiteMeasurements> siteMeasurementsList = ((MeasuredDataPublication) d2LogicalModel.getPayloadPublication())
-                        .getSiteMeasurements();
-                for (SiteMeasurements siteMeasurements : siteMeasurementsList) {
-                    List<SiteMeasurementsIndexMeasuredValue> measuredValueList = siteMeasurements.getMeasuredValue();
-                    for (SiteMeasurementsIndexMeasuredValue siteMeasurementsIndexMeasuredValue : measuredValueList) {
-                        MeasuredValue measuredValue = siteMeasurementsIndexMeasuredValue.getMeasuredValue();
-                        BasicData basicData = measuredValue.getBasicData();
-                        if (basicData instanceof TrafficFlow) {
-                            VehicleFlowValue value = ((TrafficFlow) basicData).getVehicleFlow();
-                            LOG.info("Vehicle flow rate : " + value.getVehicleFlowRate().intValue());
-                        } else if (basicData instanceof TrafficSpeed) {
-                            float speed = ((TrafficSpeed) basicData).getAverageVehicleSpeed().getSpeed();
-                            LOG.info("Traffic speed : " + speed);
-                        } else if (basicData instanceof TrafficHeadway) {
-                            float headWay = ((TrafficHeadway) basicData).getAverageTimeHeadway().getDuration();
-                            LOG.info("Traffic Headway : " + headWay);
-                        } else if (basicData instanceof TrafficConcentration) {
-                            float percentage = ((TrafficConcentration) basicData).getOccupancy().getPercentage();
-                            LOG.info("Traffic concentration percentage : " + percentage);
-                        }
-                    }
+            measuredDataPublication = (MeasuredDataPublication) d2LogicalModel.getPayloadPublication();
+            if (measuredDataPublication != null) {
+                List<SiteMeasurements> siteMeasurementsInPayload = measuredDataPublication.getSiteMeasurements();
+
+                LOG.info("Number of Site Measurements in payload: " + siteMeasurementsInPayload.size());
+
+                for (SiteMeasurements measurementsForSite : siteMeasurementsInPayload) {
+                    extractTrafficDataFromSiteMeasurements(measurementsForSite);
                 }
+                LOG.info(PUBLICATION_TYPE + ": processed successfully.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             LOG.error(e.getMessage());
         }
-        LOG.info("TMU Request: Processing Completed Successfuly");
     }
 
+    private void extractTrafficDataFromSiteMeasurements(SiteMeasurements measurementsForSite) {
+
+        String siteGUID = measurementsForSite.getMeasurementSiteReference().getId();
+        LOG.info("TMU site ID: " + siteGUID);
+        LOG.info("Number of measurements for TMU site: " + measurementsForSite.getMeasuredValue().size());
+
+        // There can be a number of measured values reported for the site
+        for (SiteMeasurementsIndexMeasuredValue measuredValue : measurementsForSite.getMeasuredValue()) {
+
+            MeasuredValue mv = measuredValue.getMeasuredValue();
+            BasicData basicData = mv.getBasicData();
+
+            // The index number of the site measurement is important - as this
+            // relates the data
+            // to the NTIS reference model, which adds context to the value
+            // (e.g. lane information,
+            // or vehicle characteristics)
+            int index = measuredValue.getIndex();
+
+            // Determine what class (type) of traffic data is contained in the
+            // basic data
+            if (TrafficFlow.class.equals(basicData.getClass())) {
+                TrafficFlow flow = (TrafficFlow) basicData;
+                LOG.info("[Measurement Index : " + index + "] Vehicle Flow Rate: " + flow.getVehicleFlow().getVehicleFlowRate());
+
+                if (flow.getVehicleFlow().isDataError()) {
+                    List<MultilingualStringValue> errorReason = flow.getVehicleFlow().getReasonForDataError().getValues()
+                            .getValue();
+                    for (MultilingualStringValue value : errorReason) {
+                        LOG.info("    Data in error. Reason: \"" + value.getValue() + "\"");
+                    }
+                }
+
+            } else if (TrafficSpeed.class.equals(basicData.getClass())) {
+                TrafficSpeed speed = (TrafficSpeed) basicData;
+                LOG.info("[Measurement Index : " + index + "] Average Speed: " + speed.getAverageVehicleSpeed().getSpeed());
+
+            } else if (TrafficHeadway.class.equals(basicData.getClass())) {
+                TrafficHeadway headway = (TrafficHeadway) basicData;
+                LOG.info("[Measurement Index : " + index + "] Average Headway: " + headway.getAverageTimeHeadway().getDuration());
+
+            } else if (TrafficConcentration.class.equals(basicData.getClass())) {
+                TrafficConcentration concentration = (TrafficConcentration) basicData;
+                LOG.info("[Measurement Index : " + index + "] Traffic Occupancy (%): "
+                        + concentration.getOccupancy().getPercentage());
+
+            } else {
+                LOG.error("Unexpected traffic data type contained in publication: " + basicData.getClass().getSimpleName());
+            }
+        }
+    }
 }

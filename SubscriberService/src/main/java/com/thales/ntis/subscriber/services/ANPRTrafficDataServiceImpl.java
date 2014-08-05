@@ -1,17 +1,6 @@
-/*
-	Copyright (C) 2012 Thales Transportation Systems UK
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
-	to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-	and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
-	IN THE SOFTWARE.
- */
-
 package com.thales.ntis.subscriber.services;
+
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.thales.ntis.subscriber.datex.D2LogicalModel;
 import com.thales.ntis.subscriber.datex.MeasuredDataPublication;
+import com.thales.ntis.subscriber.datex.MeasuredValue;
+import com.thales.ntis.subscriber.datex.SiteMeasurements;
+import com.thales.ntis.subscriber.datex.TravelTimeData;
 
 /**
  * This is an example service class implementation.
@@ -28,30 +20,43 @@ import com.thales.ntis.subscriber.datex.MeasuredDataPublication;
 public class ANPRTrafficDataServiceImpl implements
         TrafficDataService {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ANPRTrafficDataServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ANPRTrafficDataServiceImpl.class);
+    private static final String PUBLICATION_TYPE = "ANPR Publication";
 
     @Override
     public void handle(
             D2LogicalModel d2LogicalModel) {
 
-        LOG.info("Handling ANPR Request!");
+        LOG.info(PUBLICATION_TYPE + ": received...");
 
         MeasuredDataPublication measuredDataPublication = null;
 
         try {
-            measuredDataPublication = (MeasuredDataPublication) d2LogicalModel
-                    .getPayloadPublication();
+            measuredDataPublication = (MeasuredDataPublication) d2LogicalModel.getPayloadPublication();
+            if (measuredDataPublication != null) {
+                List<SiteMeasurements> siteMeasurementsInPayload = measuredDataPublication.getSiteMeasurements();
 
-            LOG.info("Got MeasuredDataPublication from request");
+                LOG.info("Number of Site Measurements in payload: " + siteMeasurementsInPayload.size());
 
-            LOG.info("Feed Type " + measuredDataPublication.getFeedType());
-
+                for (SiteMeasurements measurementsForSite : siteMeasurementsInPayload) {
+                    extractTravelTimesFromSiteMeasurements(measurementsForSite);
+                }
+                LOG.info(PUBLICATION_TYPE + ": processed successfully.");
+            }
         } catch (Exception e) {
             LOG.error(e.getMessage());
         }
-        LOG.info("ANPR Request: Processing Completed Successfuly");
-
     }
 
+    private void extractTravelTimesFromSiteMeasurements(SiteMeasurements siteMeasurements) {
+        String anprRouteId = siteMeasurements.getMeasurementSiteReference().getId();
+        // Should only be one travel time value per SiteMeasurements
+        // element (index=0)
+        MeasuredValue value = siteMeasurements.getMeasuredValue().get(0).getMeasuredValue();
+        if (TravelTimeData.class.equals(value.getBasicData().getClass()))
+        {
+            TravelTimeData ttData = (TravelTimeData) value.getBasicData();
+            LOG.info("Travel Time for ANPR Route " + anprRouteId + " : " + ttData.getTravelTime().getDuration() + "s");
+        }
+    }
 }
