@@ -3,7 +3,10 @@ NTIS Subscriber Service example - README
 	
 This is an example implementation of an NTIS Subscriber Service that uses the Spring web-services framework. 
 You can import the project into Eclipse and tailor it to suit your needs.
-	
+
+The NTIS Subscriber Service enables you to receive DATEXII traffic data publications from the Highways Agency NTIS system.
+Refer to the general information file NTISSubscriberService-Information.txt (located in this repository) for further information.
+
 Prerequisites	
 ------------------
 
